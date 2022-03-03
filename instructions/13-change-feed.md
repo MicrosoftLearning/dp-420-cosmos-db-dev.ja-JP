@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
   module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 6dbff97f3a587513714610617007080ccd371778
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 6baf04cd68c510697e9567d240b2c641b812c125
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057406"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024973"
 ---
 # <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
 
@@ -21,7 +21,7 @@ Azure Cosmos DB SQL API の変更フィードは、プラットフォームか�
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]をご覧ください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
@@ -44,12 +44,12 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **サブスクリプション** | *既存の Azure サブスクリプション* |
     | **リソース グループ** | *既存のリソース グループを選択するか、新規作成する* |
     | **アカウント名** | *グローバルに一意の名前を入力する* |
-    | **場所** | *使用可能な任意のリージョンを選択する* |
+    | **Location** | *使用可能な任意のリージョンを選択する* |
     | **容量モード** | *サーバーレス* |
 
     > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
-1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
+1. このタスクを続行する前に、デプロイ タスクが完了するのを待ちます。
 
 1. 新しく作成した **Azure Cosmos DB** アカウント リソースにアクセスし、 **[キー]** ペインに移動します。
 
@@ -78,10 +78,10 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | *既存のものを使用* &vert; *cosmicworks* |
-    | **コンテナー ID** | *製品* |
+    | **コンテナー ID** | *products* |
     | **パーティション キー** | */categoryId* |
 
-1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
 
 1. **[データ エクスプローラー]** ペインで、 **[新しいコンテナー]** を再度選択します。
 
@@ -109,7 +109,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインに戻り、**script.cs** コード ファイルを開きます。
 
-1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **endpoint** に設定された値で更新します。
+1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定されている値で更新します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -223,13 +223,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    using CosmosClient client = new(endpoint, key);
     
     Container sourceContainer = client.GetContainer("cosmicworks", "products");
     Container leaseContainer = client.GetContainer("cosmicworks", "productslease");
@@ -292,7 +286,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドで、警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
 
-1. cosmicworks を実行して、次のコマンドライン オプションを使用して Azure Cosmos DB アカウントをシードします。
+1. cosmicworks を実行し、次のコマンドライン オプションを使用して Azure Cosmos DB アカウントにシードを設定します。
 
     | **オプション** | **Value** |
     | ---: | :--- |

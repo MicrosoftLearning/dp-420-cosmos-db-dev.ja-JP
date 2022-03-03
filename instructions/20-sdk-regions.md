@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して異なるリージョンに接続する
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 758a51237ee4c8b4e4eb173addb1e66fbcafbe9e
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 8d6439943bc1baac6e5c1cdb8e40f98cf6665119
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057400"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138025085"
 ---
 # <a name="connect-to-different-regions-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して異なるリージョンに接続する
 
@@ -44,7 +44,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **サブスクリプション** | *既存の Azure サブスクリプション* |
     | **リソース グループ** | *既存のリソース グループを選択するか、新規作成する* |
     | **アカウント名** | *グローバルに一意の名前を入力する* |
-    | **場所** | *使用可能な任意のリージョンを選択する* |
+    | **Location** | *使用可能な任意のリージョンを選択する* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -74,11 +74,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | 新しい &vert; *cosmicworks* *を作成する* |
     | **コンテナー間でスループットを共有する** | *選択しない* |
-    | **コンテナー ID** | *製品* |
+    | **コンテナー ID** | *products* |
     | **パーティション キー** | */categoryId* |
     | **コンテナーのスループット** | *手動* &vert; *400* |
 
-1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
 
 1. **[データ エクスプローラー]** ペインで、**cosmicworks** データベース ノード、**products** コンテナー ノードの順に展開してから、 **[項目]** を選択します。
 
@@ -174,8 +174,6 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -226,8 +224,6 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     using CosmosClient client = new(endpoint, key, options);

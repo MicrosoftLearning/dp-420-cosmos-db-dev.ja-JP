@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: b4b167618243026dd3b2d9510da1b73555b1c136
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: 5aa8e7ec314243dce08e3d14a561e45d2ac83049
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039324"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024985"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
 
@@ -44,13 +44,13 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **サブスクリプション** | *既存の Azure サブスクリプション* |
     | **リソース グループ** | *既存のリソース グループを選択するか、新規作成する* |
     | **アカウント名** | *グローバルに一意の名前を入力する* |
-    | **場所** | *使用可能な任意のリージョンを選択する* |
+    | **Location** | *使用可能な任意のリージョンを選択する* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
     > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
-1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
+1. このタスクを続行する前に、デプロイ タスクが完了するのを待ちます。
 
 1. 新しく作成した **Azure Cosmos DB** アカウント リソースにアクセスし、 **[キー]** ペインに移動します。
 
@@ -121,13 +121,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -211,13 +205,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -313,13 +301,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -409,13 +391,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     

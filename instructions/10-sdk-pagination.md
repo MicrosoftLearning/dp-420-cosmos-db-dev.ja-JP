@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 18f176a3f54fe4143f3d1966327a83d862bd617c
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: ac9e8181d606a62011f4980d1dd90055578ce22a
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057391"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138025057"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
 
@@ -17,78 +17,78 @@ Azure Cosmos DB クエリには、通常、複数の結果ページがありま�
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; コマンド パレットは、**Ctrl + Shift + P** キーボード ショートカットを使用して開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用して、コマンド パレットを開くことができます。
 
-1. リポジトリをクローンしたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **SQL API**) を選択します。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する際に使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、それらを使用して、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続できます。
 
-1. Web ブラウザーの新しいウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB SQL API** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新規作成する* |
-    | **アカウント名** | *グローバルに一意の名前を入力する* |
-    | **場所** | *使用可能な任意のリージョンを選択する* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
+    | **Location** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
-    > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
-1. このタスクを続行する前に、デプロイ タスクが完了するのを待ちます。
+1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
-1. 新しく作成した **Azure Cosmos DB** アカウント リソースにアクセスし、 **[キー]** ペインに移動します。
+1. 新しく作成された **Azure Cosmos DB** アカウント リソースに移動し、 **[キー]** ペインに移動します。
 
-1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が表示されます。 具体的な内容は次のとおりです。
+1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** 値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** 値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
 ## <a name="seed-the-azure-cosmos-db-sql-api-account-with-data"></a>Azure Cosmos DB SQL API アカウントにデータをシードする
 
-[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB SQL API アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
+[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールでは、Azure Cosmos DB SQL API アカウントにサンプル データをデプロイします。 このツールはオープンソースであり、NuGet を介して使用できます。 このツールを Azure Cloud Shell にインストールしてから、それを使用してデータベースをシードします。
 
 1. **Visual Studio Code** で、 **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
-1. [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをご自分のコンピューターでグローバルに使用できるようにインストールします。
+1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
     dotnet tool install --global cosmicworks
     ```
 
-    > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドで、警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
+    > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
 
-1. cosmicworks を実行し、次のコマンドライン オプションを使用して Azure Cosmos DB アカウントにシードを設定します。
+1. cosmicworks を実行し、次のコマンドライン オプションを使用して Azure Cosmos DB アカウントをシードします。
 
     | **オプション** | **Value** |
     | ---: | :--- |
-    | **--endpoint** | *このラボで先ほどコピーしたエンドポイント値* |
-    | **--key** | *このラボで先ほどコピーしたキー値* |
+    | **--endpoint** | ''*このラボで先ほどコピーしたエンドポイントの値*'' |
+    | **--key** | ''*このラボで先ほどコピーしたキーの値*'' |
     | **--datasets** | *product* |
 
     ```
     cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
     ```
 
-    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
+    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
 
 1. **cosmicworks** コマンドによって、データベース、コンテナー、および項目がアカウントに設定されるまで待ちます。
 
@@ -106,15 +106,15 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインに戻り、**script.cs** コード ファイルを開きます。
 
-1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定されている値で更新します。
+1. 先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に値が設定された **endpoint** という名前の既存の変数を更新します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. **key** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定されている値で更新します。
+1. 先ほど作成した Azure Cosmos DB アカウントの **キー** に値が設定された **key** という名前の既存の変数を更新します。
 
     ```
     string key = "<cosmos-key>";
@@ -204,13 +204,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
