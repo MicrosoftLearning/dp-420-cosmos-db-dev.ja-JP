@@ -64,7 +64,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | *既存のものを使用* &vert; *cosmicworks* |
-    | **コンテナー ID** | *製品* |
+    | **コンテナー ID** | *products* |
     | **パーティション キー** | */categoryId* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
@@ -117,7 +117,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **新規関数** | *ItemsListener* |
     | **Cosmos DB アカウント接続** | *[新規選択]* &vert; *[Azure Cosmos DB アカウントを選択]* &vert; *[先ほど作成した Azure Cosmos DB アカウントを選択]* |
     | **データベース名** | *cosmicworks* |
-    | **[コレクション名]** | *製品* |
+    | **[コレクション名]** | *products* |
     | **リースのコレクション名** | *productslease* |
     | **リースのコレクションが存在しない場合、作成します** | *いいえ* |
 
