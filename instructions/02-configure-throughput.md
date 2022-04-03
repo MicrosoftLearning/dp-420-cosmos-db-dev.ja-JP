@@ -2,12 +2,12 @@
 lab:
   title: Azure portal を使用して Azure Cosmos DB SQL API のスループットを構成する
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 5d9829917435948bebede48324897fb38dd6374b
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 021e34b83692f0e8930362cb54749f81b8ffe945
+ms.sourcegitcommit: 3dcd91627a28a2718744929be8f23b427f701793
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025061"
+ms.lasthandoff: 03/08/2022
+ms.locfileid: "139616130"
 ---
 # <a name="configure-throughput-for-azure-cosmos-db-sql-api-with-the-azure-portal"></a>Azure portal を使用して Azure Cosmos DB SQL API のスループットを構成する
 
@@ -68,7 +68,7 @@ ms.locfileid: "138025061"
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | ''*既存の* &vert; *cosmicworks を使用します*'' |
-    | **コンテナー ID** | *products* |
+    | **コンテナー ID** | *製品* |
     | **パーティション キー** | */categoryId* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
@@ -115,7 +115,7 @@ ms.locfileid: "138025061"
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | *nothroughputdb* |
-    | **コンテナー間でスループットを共有する** | ''*選択しないでください*'' |
+    | **スループットのプロビジョニング** | ''*選択しないでください*'' |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **nothroughputdb** データベース ノードを確認します。
 
@@ -140,7 +140,7 @@ ms.locfileid: "138025061"
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | *manualthroughputdb* |
-    | **コンテナー間でスループットを共有する** | ''*このオプションを選択します*'' |
+    | **スループットのプロビジョニング** | ''*このオプションを選択します*'' |
     | **データベースのスループット** | *[手動]* |
     | **RU/秒** | *400* |
 
@@ -152,11 +152,11 @@ ms.locfileid: "138025061"
 
     | **設定** | **Value** |
     | --: | :-- |
-    | **データベース ID** | ''*新しい* &vert; *manualthroughputdb を作成します*'' |
-    | **コンテナー間でスループットを共有する** | ''*このオプションを選択します*'' |
-    | **データベースのスループット** | *[手動]* |
-    | **RU/秒** | *1000* |
+    | **データベース ID** | ''既存の &vert; *manualthroughputdb* を使用します'' |
     | **コンテナー ID** | *childcontainer* |
     | **パーティション キー** | */primarykey* |
+    | **このコンテナーの専用スループットをプロビジョニングする** | ''*このオプションを選択します*'' |
+    | **コンテナーのスループット** | *[手動]* |
+    | **RU/秒** | *1000* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**manualthroughputdb** データベース ノードを展開し、階層内の **childcontainer** コンテナー ノードを確認します。

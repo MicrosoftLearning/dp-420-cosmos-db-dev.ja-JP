@@ -17,7 +17,7 @@ Azure Data Factory では、Azure Cosmos DB がデータ取り込みのソース
 
 ## <a name="create-and-seed-your-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成してシードする
 
-**4,000** RU/s (秒あたりの要求ユニット数) で **cosmicworks** データベースと **products** コンテナーを作成するコマンドライン ユーティリティを使用します。 作成後、スループットを調整して 400 RU/s に下げます。
+コマンドライン ユーティリティを使用して、**4,000** RU/s (秒あたりの要求ユニット数) の **cosmicworks** データベースと **products** コンテナーを作成します。 作成後、スループットを調整して 400 RU/s に下げます。
 
 products コンテナーを加えるために、このラボの最後に ETL 変換と読み込み操作のターゲットとなる **flatproducts** コンテナーを手動で作成します。
 
