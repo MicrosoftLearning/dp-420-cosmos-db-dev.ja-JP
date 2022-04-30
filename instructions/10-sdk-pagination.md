@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: ac9e8181d606a62011f4980d1dd90055578ce22a
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: f03064bd16ad52920c6a25dfaee2b985bffdb570
+ms.sourcegitcommit: 83a535ff82225114232d911bf4654d3b66d40dc4
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025057"
+ms.lasthandoff: 04/26/2022
+ms.locfileid: "144012122"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
 
@@ -21,17 +21,17 @@ Azure Cosmos DB クエリには、通常、複数の結果ページがありま�
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用して、コマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、それらを使用して、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
@@ -44,7 +44,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **Location** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -64,7 +64,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 ## <a name="seed-the-azure-cosmos-db-sql-api-account-with-data"></a>Azure Cosmos DB SQL API アカウントにデータをシードする
 
-[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールでは、Azure Cosmos DB SQL API アカウントにサンプル データをデプロイします。 このツールはオープンソースであり、NuGet を介して使用できます。 このツールを Azure Cloud Shell にインストールしてから、それを使用してデータベースをシードします。
+[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB SQL API アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
 
 1. **Visual Studio Code** で、 **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -106,15 +106,15 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインに戻り、**script.cs** コード ファイルを開きます。
 
-1. 先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に値が設定された **endpoint** という名前の既存の変数を更新します。
+1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **endpoint** に設定された値で更新します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. 先ほど作成した Azure Cosmos DB アカウントの **キー** に値が設定された **key** という名前の既存の変数を更新します。
+1. **key** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **key** に設定された値で更新します。
 
     ```
     string key = "<cosmos-key>";
@@ -125,7 +125,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. 値が **SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags** の *string* 型の **sql** という名前の新しい変数を作成します。
 
     ```
-    string sql = "SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags";
+    string sql = "SELECT p.id, p.name, p.price FROM products p ";
     ```
 
 1. コンストラクターへのパラメーターとして [sql][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.querydefinition] 変数を渡す **QueryDefinition** 型の新しい変数を作成します。
@@ -179,7 +179,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. **foreach** ループ内で、組み込みの **Console.WriteLine** 静的メソッドを使用して、**product** 変数の **id**、**name**、および **price** プロパティを書式設定して出力します。
 
     ```
-    Console.WriteLine($"[{product.name,40}]\t{product.tag}");
+    Console.WriteLine($"[{product.id}]\t[{product.name,40}]\t[{product.price,10}]");
     ```
 
 1. **while** ループ内に戻り、組み込みの **Console.WriteLine** 静的メソッドを使用して、*Press any key to get more results* というメッセージを出力します。
@@ -204,13 +204,19 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
 
-    string sql = "SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags";
+    string sql = "SELECT p.id, p.name, p.price FROM products p ";
     QueryDefinition query = new (sql);
 
     QueryRequestOptions options = new ();
@@ -223,7 +229,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
         FeedResponse<Product> products = await iterator.ReadNextAsync();
         foreach (Product product in products)
         {
-            Console.WriteLine($"[{product.name,40}]\t{product.tag}");
+            Console.WriteLine($"[{product.id}]\t[{product.name,40}]\t[{product.price,10}]");
         }
 
         Console.WriteLine("Press any key for next page of results");
