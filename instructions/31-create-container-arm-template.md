@@ -2,12 +2,12 @@
 lab:
   title: Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 55e5430aac14807552378acfc01791818da5f267
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: caae313721f68a3a41013c5bdcb586b2003f8151
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024954"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971463"
 ---
 # <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
 
@@ -17,15 +17,15 @@ Azure Resource Manager テンプレートは、Azure にデプロイするイン
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだ複製していない場合は、次の手順に従って複製します。 それ以外の場合は、以前に複製されたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリを複製します。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **CTRL + SHIFT + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -86,6 +86,37 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **31-create-container-arm-template** フォルダーに既に設定されているターミナルが開きます。
 
+1. 次のコマンドを使用して、Azure CLI の対話型ログイン プロシージャを開始します。
+
+    ```
+    az login
+    ```
+
+1. Azure CLI では、Web ブラウザーのウィンドウまたはタブが自動的に開き、ブラウザー インスタンス内で、サブスクリプションに関連付けられている Microsoft 資格情報を使用して Azure CLI にサインインします。
+
+1. Web ブラウザーのウィンドウまたはタブを閉じます。
+
+1. 自分用のリソース グループをラボ プロバイダーが作成済みかどうかを確認します。それが済んでいる場合は、次のセクションで必要になるので、その名前をメモします。
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    このコマンドを実行すると、複数のリソース グループ名を返すことができます。
+
+1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。*_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
+
+    i. この一覧から、自分に最も近い場所の名前を取得します。
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. リソース グループを作成します。  *ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。*
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
+
 1. 次のコマンドを使用して、このラボで以前に作成または表示したリソース グループの名前を使用して、新しい変数名 **resourceGroup** を作成します。
 
     ```
@@ -99,14 +130,6 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
     ```
     echo $resourceGroup
     ```
-
-1. 次のコマンドを使用して、Azure CLI の対話型ログイン プロシージャを開始します。
-
-    ```
-    az login
-    ```
-
-1. Azure CLI では、Web ブラウザーのウィンドウまたはタブが自動的に開き、ブラウザー インスタンス内で、サブスクリプションに関連付けられている Microsoft 資格情報を使用して Azure CLI にサインインします。
 
 1. [az deployment group create][docs.microsoft.com/cli/azure/deployment/group] コマンドを使用して Azure Resource Manager テンプレートをデプロイします。
 

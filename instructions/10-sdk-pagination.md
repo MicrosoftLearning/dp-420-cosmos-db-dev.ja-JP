@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 77429a01ed632556a95096f830ef3c4f640e3588
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 0a353068db4047cb710b6937a89c5f3ccb652aed
+ms.sourcegitcommit: 63494c7409f08210c57aab19f2a61dd35851fd3b
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773623"
+ms.lasthandoff: 05/11/2022
+ms.locfileid: "144940128"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
 
@@ -23,7 +23,7 @@ Azure Cosmos DB クエリには、通常、複数の結果ページがありま�
 
     > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
@@ -120,9 +120,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
-1. 値が **SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags** の *string* 型の **sql** という名前の新しい変数を作成します。
+1. *string* 型の **sql** という名前の新しい変数を **SELECT p.id, p.name, p.price FROM products p** の値で作成します。
 
     ```
     string sql = "SELECT p.id, p.name, p.price FROM products p ";
