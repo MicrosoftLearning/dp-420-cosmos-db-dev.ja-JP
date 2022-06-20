@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して複数のポイント操作をまとめてバッチ処理する
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 83babc282624763d5df6b51f83c2ad1bfc58c1dd
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: a532bcefbd68b6ba99373035977522ad2c04d0a9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773632"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919952"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して複数のポイント操作をまとめてバッチ処理する
 
@@ -87,6 +87,12 @@ ms.locfileid: "144773632"
 1. **07-sdk-batch** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **07-sdk-batch** フォルダーに既に設定されているターミナルが開きます。
+
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] コマンドを使用してプロジェクトをビルドします。
 

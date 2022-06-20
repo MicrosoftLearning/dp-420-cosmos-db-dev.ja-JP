@@ -2,12 +2,12 @@
 lab:
   title: ポータルと Azure Cosmos DB SQL API SDK で整合性モデルを構成する
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: fd7f7832336a672036462dad6e3850def3b9bc3f
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 5b6fc9dd51677f854b341bb32838e65cdb8d79de
+ms.sourcegitcommit: 403c2ecd84a8d6cb1672752734a0844749d6cba5
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773605"
+ms.lasthandoff: 06/01/2022
+ms.locfileid: "145987798"
 ---
 # <a name="configure-consistency-models-in-the-portal-and-the-azure-cosmos-db-sql-api-sdk"></a>ポータルと Azure Cosmos DB SQL API SDK で整合性モデルを構成する
 
@@ -27,7 +27,7 @@ ms.locfileid: "144773605"
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
 
@@ -200,13 +200,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container container = client.GetContainer("cosmicworks", "products");
     

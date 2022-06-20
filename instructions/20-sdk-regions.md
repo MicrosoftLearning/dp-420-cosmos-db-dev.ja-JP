@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して異なるリージョンに接続する
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 8d6439943bc1baac6e5c1cdb8e40f98cf6665119
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 758a51237ee4c8b4e4eb173addb1e66fbcafbe9e
+ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025085"
+ms.lasthandoff: 02/17/2022
+ms.locfileid: "139057400"
 ---
 # <a name="connect-to-different-regions-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して異なるリージョンに接続する
 
@@ -17,7 +17,7 @@ Azure Cosmos DB SQL API アカウントの geo 冗長性を有効にすると、
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
@@ -25,32 +25,32 @@ Azure Cosmos DB SQL API アカウントの geo 冗長性を有効にすると、
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; コマンド パレットは、**Ctrl + Shift + P** キーボード ショートカットを使用して開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリをクローンしたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **SQL API**) を選択します。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する際に使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
 
-1. Web ブラウザーの新しいウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB SQL API** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新規作成する* |
-    | **アカウント名** | *グローバルに一意の名前を入力する* |
-    | **Location** | *使用可能な任意のリージョンを選択する* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
-    > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
-1. このタスクを続行する前に、デプロイ タスクが完了するのを待ちます。
+1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
 1. 新しく作成した **Azure Cosmos DB** アカウント リソースにアクセスし、 **[データをグローバルにレプリケートする]** ペインに移動します。
 
@@ -74,7 +74,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | 新しい &vert; *cosmicworks* *を作成する* |
     | **コンテナー間でスループットを共有する** | *選択しない* |
-    | **コンテナー ID** | *products* |
+    | **コンテナー ID** | *製品* |
     | **パーティション キー** | */categoryId* |
     | **コンテナーのスループット** | *手動* &vert; *400* |
 
@@ -101,11 +101,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. リソース ブレードで、 **[キー]** ペインに移動します。
 
-1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が表示されます。 具体的な内容は次のとおりです。
+1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** 値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** 値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -174,6 +174,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
+        , RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -224,6 +226,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
+        , RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     using CosmosClient client = new(endpoint, key, options);

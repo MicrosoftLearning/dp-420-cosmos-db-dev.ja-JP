@@ -2,12 +2,12 @@
 lab:
   title: Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: caae313721f68a3a41013c5bdcb586b2003f8151
-ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
+ms.openlocfilehash: d82920cf333d5d59f74d1990b623e9be33582647
+ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 05/12/2022
-ms.locfileid: "144971463"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145890690"
 ---
 # <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
 
@@ -142,6 +142,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB SQL API データベースを作成します。
 
     ```
+    ,
     {
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
         "apiVersion": "2021-05-15",
@@ -182,6 +183,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB SQL API コンテナーを作成します。
 
     ```
+    ,
     {
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
         "apiVersion": "2021-05-15",
