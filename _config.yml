@@ -1,25 +1,18 @@
-### YamlMime:Yaml
-ms.openlocfilehash: b2da6eed65a6ab504ecdcf28b942280aa96c98db
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "145884240"
-title: 'DP-420: Microsoft Azure Cosmos DB を使用したクラウドネイティブ アプリケーションの設計と実装'
+title: 'DP-420: Designing and Implementing Cloud-Native Applications Using Microsoft Azure Cosmos DB'
 remote_theme: MicrosoftLearning/Jekyll-Theme-Online
 exclude:
-- readme.md
-- .github/
+  - readme.md
+  - .github/
 header_pages:
-- index.html
+  - index.html
 author: Microsoft Learning
 twitter_username: mslearning
-github_username: MicrosoftLearning
+github_username:  MicrosoftLearning
 plugins:
-- jekyll-sitemap
-- jekyll-mentions
-- jemoji
+  - jekyll-sitemap
+  - jekyll-mentions
+  - jemoji
 markdown: kramdown
 kramdown:
-  syntax_highlighter_opts:
-    disable: true
+   syntax_highlighter_opts:
+      disable : true
