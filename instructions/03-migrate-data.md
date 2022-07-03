@@ -2,12 +2,12 @@
 lab:
   title: Azure Data Factory を使用して既存のデータを移行する
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 0ea95a45f5e20ef089d712939fde0c3d8767601e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 15a34904589e5ce2e266ec3078f9b794ae744d73
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024975"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919955"
 ---
 # <a name="migrate-existing-data-using-azure-data-factory"></a>Azure Data Factory を使用して既存のデータを移行する
 
@@ -32,9 +32,10 @@ products コンテナーを加えるために、このラボの最後に ETL 変
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **Location** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
+    | **このアカウントでプロビジョニングできるスループットの総量を制限する** | *Unchecked* |
 
     > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
@@ -105,10 +106,10 @@ products コンテナーを加えるために、このラボの最後に ETL 変
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | ''*既存の* &vert; *cosmicworks を使用します*'' |
-    | **コンテナー ID** | *flatproducts* |
-    | **パーティション キー** | */category* |
+    | **コンテナー ID** | *`flatproducts`* |
+    | **パーティション キー** | *`/category`* |
     | **コンテナーのスループット (自動スケーリング)** | *[手動]* |
-    | **RU/秒** | *400* |
+    | **RU/秒** | *`400`* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **flatproducts** コンテナー ノードを確認します。
 
@@ -151,7 +152,7 @@ Azure Cosmos DB SQL API リソースが配置されたので、Azure Data Factor
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **名前** | *CosmosSqlConn* |
+    | **名前** | *`CosmosSqlConn`* |
     | **統合ランタイム経由で接続** | *AutoResolveIntegrationRuntime* |
     | **認証方法** | ''*アカウント キー* &vert; *接続文字列*'' |
     | **Account selection method (アカウントの選択方法)** | *Azure サブスクリプションから* |
@@ -182,7 +183,7 @@ Azure Cosmos DB SQL API リソースが配置されたので、Azure Data Factor
 
 1. **[ターゲット]** 一覧で、 **[flatproducts]** を選択してから、 **[次へ]** を選択してウィザードの **[設定]** ステップに進みます。
 
-1. ウィザードの **[設定]** ステップで、 **[タスク名]** フィールドに「**FlattenAndMoveData**」と入力します。
+1. ウィザードの **[設定]** ステップで、 **[タスク名]** フィールドに「 **`FlattenAndMoveData`** 」と入力します。
 
 1. 残りのすべてのフィールドは既定の空白値のままにし、 **[次へ]** を選択してウィザードの最後のステップに進みます。
 
