@@ -83,7 +83,7 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
     Console.WriteLine($"New Database:\tId: {database.Id}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -149,7 +149,7 @@ Azure Cosmos DB Emulator に新しいデータベースを作成したので、�
     Console.WriteLine($"New Container:\tId: {container.Id}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;

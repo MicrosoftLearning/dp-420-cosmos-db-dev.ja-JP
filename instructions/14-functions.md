@@ -175,7 +175,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     log.LogInformation($"Detected Operation:\t{item.Id}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     #r "Microsoft.Azure.DocumentDB.Core"

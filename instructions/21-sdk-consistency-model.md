@@ -192,7 +192,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"STRONG Request Charge:\t{response.RequestCharge:0.00} RUs");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
 
     ```
     using Microsoft.Azure.Cosmos;
@@ -261,7 +261,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"EVENTUAL Request Charge:\t{response.RequestCharge:0.00} RUs");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
 
     ```
     using Microsoft.Azure.Cosmos;

@@ -146,7 +146,7 @@ ms.locfileid: "145919952"
     Console.WriteLine($"Status:\t{response.StatusCode}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -249,7 +249,7 @@ ms.locfileid: "145919952"
     Console.WriteLine($"Status:\t{response.StatusCode}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;

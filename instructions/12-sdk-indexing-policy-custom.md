@@ -138,7 +138,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"Container Created [{container.Id}]");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;

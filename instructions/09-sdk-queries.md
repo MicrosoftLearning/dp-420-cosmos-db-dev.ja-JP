@@ -150,7 +150,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"[{product.id}]\t{product.name,35}\t{product.price,15:C}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
