@@ -6,14 +6,14 @@
             "type": "string",
             "defaultValue": "[concat('cosmicworks-', uniqueString(resourceGroup().id))]",
             "metadata": {
-                "description": "Cosmos DB account name, max length 44 characters, lowercase"
+                "description": "Cosmos DB アカウント名、最大長 44 文字、小文字"
             }
         },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
-                "description": "Location for the Cosmos DB account."
+                "description": "Cosmos DB アカウントの場所。"
             }
         },
         "autoscaleMaxThroughput": {
@@ -22,7 +22,7 @@
             "minValue": 4000,
             "maxValue": 1000000,
             "metadata": {
-                "description": "Maximum throughput when using Autoscale Throughput Policy for the database"
+                "description": "データベースに自動スケーリングのスループット ポリシーを使う場合の最大スループット"
             }
         }
     },
@@ -124,7 +124,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -148,7 +149,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -172,7 +174,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -196,7 +199,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -220,7 +224,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -244,7 +249,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -268,7 +274,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -292,7 +299,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -316,7 +324,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -340,7 +349,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -364,7 +374,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -388,7 +399,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -412,7 +424,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -436,7 +449,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -460,7 +474,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -484,7 +499,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -508,11 +524,12 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
-                {
+        {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2021-04-15",
             "name": "[concat(parameters('accountName'), '/database-v3/productTag')]",
@@ -532,7 +549,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -556,7 +574,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -580,7 +599,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -604,7 +624,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -628,7 +649,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         },
@@ -652,7 +674,8 @@
                 },
                 "options": {
                     "autoscaleSettings": {
-                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]" }
+                        "maxThroughput": "[parameters('autoscaleMaxThroughput')]"
+                    }
                 }
             }
         }

@@ -2,12 +2,12 @@
 lab:
   title: SDK を使用して Azure Cosmos DB SQL API に接続する
   module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: f9db9f7086f5d8f784ff1035d95218cb675e416f
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: df1c9fd90b00e59edbe9e078f8d99ccc043ec209
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024960"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919970"
 ---
 # <a name="connect-to-azure-cosmos-db-sql-api-with-the-sdk"></a>SDK を使用して Azure Cosmos DB SQL API に接続する
 
@@ -17,15 +17,15 @@ Azure SDK for .NET は、多くの Azure サービスと対話するための一
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだ複製していない場合は、次の手順に従って複製します。 それ以外の場合は、以前に複製されたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリを複製します。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **CTRL + SHIFT + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -37,18 +37,19 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、 *[Cosmos DB]* を検索してから、次の設定で新しい **[Azure Cosmos DB SQL API]** アカウント リソースを作成し、残りのすべての設定を規定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
-    | **アカウント名** | *グローバルに一意の名前を入力します* |
-    | **Location** | *使用可能な任意のリージョンを選択します* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
+    | **このアカウントでプロビジョニングできるスループットの総量を制限する** | *Unchecked* |
 
-    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -56,7 +57,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **endpoint** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
 
     1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
 

@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用してアプリケーションのトラブルシューティングを行う
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: e87e27c83e9aa41ed7494097ce3e0e64a2b46a2f
-ms.sourcegitcommit: c3778722311b55568f083480ecc69c9b3e837a18
+ms.openlocfilehash: 9e1d3220eac65806d0512c6a22b3ff1b4fe6d778
+ms.sourcegitcommit: e85dbb2b871e28631beea55bfbb47191bd979628
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/19/2022
-ms.locfileid: "138025142"
+ms.lasthandoff: 06/13/2022
+ms.locfileid: "146316630"
 ---
 # <a name="troubleshoot-an-application-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用してアプリケーションのトラブルシューティングを行う
 
@@ -17,15 +17,15 @@ Azure Cosmos DB には、さまざまな操作の型で発生する可能性の�
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだ複製していない場合は、これらの手順に従って行います。 それ以外の場合は、以前に複製されたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだ複製していない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリを複製します。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **CTRL + SHIFT + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -37,18 +37,18 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、 *[Cosmos DB]* を検索してから、次の設定で新しい **[Azure Cosmos DB SQL API]** アカウント リソースを作成し、残りのすべての設定を規定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
-    | **アカウント名** | *グローバルに一意の名前を入力します* |
-    | **Location** | *使用可能な任意のリージョンを選択します* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *`Do Not Apply`* |
 
-    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -137,19 +137,20 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. ドキュメントを挿入しているため、ドキュメントの作成時に返される一般的な[ドキュメント作成ステータス コード][/rest/api/cosmos-db/create-a-document#status-codes]の一覧を確認する必要があります。 このコードの説明は次のとおりです。*新しいドキュメント用に指定した ID が、既存のドキュメントによって取得されています*。 少し前にメニュー オプションを実行して同じドキュメントを作成したので、これは明らかです。
 
-1. スタックをさらに掘り下げると、この例外が 99 行目から呼び出され、次に 52 行目から呼び出されたことがわかります。
+1. スタックをさらに掘り下げると、この例外が 100 行目から呼び出され、次に 64 行目から呼び出されたことがわかります。
 
     ```
-    at Program.CreateDocument1(Container Customer) in C:\WWL\Git\DP-420\Git\dp-420-cosmos-db-dev\26-sdk-troubleshoot\Program.cs:line 101   at Program.Main(String[] args) in C:\WWL\Git\DP-420\Git\dp-420-cosmos-db-dev\26-sdk-troubleshoot\Program.cs:line 47
+    at Program.CreateDocument1(Container Customer) in C:\Git\dp-420-cosmos-db-dev\26-sdk-troubleshoot\Program.cs:line 100   
+   at Program.CompleteTaskOnCosmosDB(String consoleinputcharacter, Container container) in C:\Git\dp-420-cosmos-db-dev\26-sdk-troubleshoot\Program.cs:line 64
     ```
 
-1. 101 行目を確認すると、予期した通り、エラーは CreateItemAsync 操作が原因で発生しました。 
+1. 100 行目を確認すると、予期したとおり、エラーは *CreateItemAsync* 操作が原因で発生しました。 
 
     ```C#
         ItemResponse<customerInfo> response = await Customer.CreateItemAsync<customerInfo>(customer, new PartitionKey(customerID));
     ```
 
-1. さらに、101 行目から 104 行目を確認すると、このコードにエラー処理が存在しないのは明らかです。 これを修正する必要があります。 
+1. さらに、100 行目から 103 行目を確認すると、このコードにエラー処理が存在しないのは明らかです。 これを修正する必要があります。 
 
     ```C#
         ItemResponse<customerInfo> response = await Customer.CreateItemAsync<customerInfo>(customer, new PartitionKey(customerID));
@@ -159,14 +160,14 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. エラー処理コードで何を実行する必要があるかを決定する必要があります。 [ドキュメント状態コードの作成][/rest/api/cosmos-db/create-a-document#status-codes]を確認すると、この操作で発生する可能性のあるすべての状態コードに対してエラー処理コードを作成することを選択できます。  このラボでは、この一覧の状態コード 403 a 409 のみを考慮します。  返される他のすべての状態コードでは、システム エラー メッセージだけが表示されます。
 
-    > &#128221; 403 例外が発生した場合に実行するタスクをコード化しますが、このラボでは、例外を含むその種類のエラーは生成しません。
+    > &#128221; 403 例外に対してエラーを発生させるタスクをコーディングしますが、このラボでは 403 例外は生成されないことに注意してください。
 
-1. `CompeteTaskOnCosmosDB` という名前の上位関数のエラー処理を追加しましょう。 45 行目について関数 `Main` で `while` サイクルを見つけ、`CompeteTaskOnCosmosDB` の呼び出しをエラー処理でラップします。 この新しいコードで最初に気付くのは、**catch** で型 `CosmosException` クラスの例外をキャプチャしているということです。  このクラスには、Azure Cosmos DB サービスから要求完了状態コードを取得するプロパティ `StatusCode` が含まれていました。 `StatusCode` プロパティの型は `System.Net.HttpStatusCode` であるため、実際にはその値を .NET [HTTP 状態コード][dotnet/api/system.net.httpstatuscode]のフィールド名と比較しています。  
+1. **CompleteTaskOnCosmosDB** という名前の関数のエラー処理を追加しましょう。 **45** 行目の関数 **Main** で **while** ループを特定し、**CompleteTaskOnCosmosDB** の呼び出しをエラー処理コードでラップします。 次のコードの **47** 行目の **CompleteTaskOnCosmosDB** ステートメントを置き換えます。  この新しいコードで最初に気付くのは、**catch** で型 **CosmosException** クラスの例外をキャプチャしていることです。  このクラスには、Azure Cosmos DB サービスから要求完了状態コードを返すプロパティ **StatusCode** が含まれています。 **StatusCode** プロパティは **System.Net.HttpStatusCode** 型です。この値を使用して、.NET [HTTP 状態コード][dotnet/api/system.net.httpstatuscode]のフィールド名と比較できます。  
 
     ```C#
         try
         {
-            await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+            await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
         }
         catch (CosmosException e)
         {
@@ -204,20 +205,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Insert Failed. 
     Response Code (409).
     Can not insert a duplicate partition key, customer with the same ID already exists.
-    Press [ENTER] to continue
     ```
 
-1. ドキュメント作成における 2 つの特定の例外、403 と 409 を処理しているのは良いことですが、他の 3 つの通信タイプの例外は、どのタイプの操作でも発生する可能性があります。  これらの例外は、それぞれ 429、503、および 408 であるか、要求が多すぎる、サービスが利用できない、および要求がタイムアウトになることです。 これらの例外のいずれかが見つかった場合は、次のコードを追加し、10 分待ってから、もう一度ドキュメントを挿入してみます。  コードを超えて追加しましょう。
-
-    ```C#
-                    default:
-                        Console.WriteLine(e.Message);
-                        break;
-    ```
-
-
-    例外処理用のコード:
-
+1. このコードでは、*403* および *409* 例外のエラー処理が追加されました。ここで、例外のいくつかの一般的な通信の種類のコードを追加しましょう。 例外の一般的な通信の種類は 3 つあります。*429*、*503*、*408* で、それぞれ要求が多すぎる、サービスが利用できない、および要求のタイムアウトです。 *66* 行目付近に **default** ステートメントが必要になったため、前の **break;** ステートメントの直後、かつ **default** ステートメントの直前に次のコードを追加します。  コードでは、これらの通信例外のいずれかが見つかったかどうかを確認し、見つかった場合は 10 秒待ってから、もう一度ドキュメントを挿入してみます。  コードを超えて追加しましょう。
 
     ```C#
                         case ("TooManyRequests"):
@@ -228,7 +218,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
                             try
                             {
                                 Console.WriteLine("Try one more time...");
-                                await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+                                await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
                             }
                             catch (CosmosException e2)
                             {
@@ -241,7 +231,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; 429、503、または 408 の例外が発生した場合のタスクをコード化しますが、このラボでは、そのタイプの例外でエラーを生成しないことに注意してください。
 
-1. 現在、`Main` 関数は次のようになります。
+1. 現在、**Main** 関数は次のようになります。
 
     ```C#
         public static async Task Main(string[] args)
@@ -266,31 +256,48 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
         
             while((consoleinputcharacter = Console.ReadLine()) != "5") 
             {
-                    try
-                    {
-                        await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
-                    }
-                    catch (CosmosException e)
-                    {
-                        switch (e.StatusCode.ToString())
-                        {
-                            case ("Conflict"):
-                                Console.WriteLine("Insert Failed. Response Code (409).");
-                                Console.WriteLine("Can not insert a duplicate partition key, customer with the same ID already exists."); 
+                 try
+                 {
+                     await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+                 }
+                 catch (CosmosException e)
+                 {
+                     switch (e.StatusCode.ToString())
+                     {
+                        case ("Conflict"):
+                            Console.WriteLine("Insert Failed. Response Code (409).");
+                            Console.WriteLine("Can not insert a duplicate partition key, customer with the same ID already exists."); 
+                            break;
+                        case ("Forbidden"):
+                            Console.WriteLine("Response Code (403).");
+                            Console.WriteLine("The request was forbidden to complete. Some possible reasons for this exception are:");
+                            Console.WriteLine("Firewall blocking requests.");
+                            Console.WriteLine("Partition key exceeding storage.");
+                            Console.WriteLine("Non-data operations are not allowed.");
+                            break;
+                        case ("TooManyRequests"):
+                        case ("ServiceUnavailable"):
+                        case ("RequestTimeout"):
+                            // Check if the issues are related to connectivity and if so, wait 10 seconds to retry.
+                            await Task.Delay(10000); // Wait 10 seconds
+                            try
+                            {
+                                Console.WriteLine("Try one more time...");
+                                await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+                            }
+                            catch (CosmosException e2)
+                            {
+                                Console.WriteLine("Insert Failed. " + e2.Message);
+                                Console.WriteLine("Can not insert a duplicate partition key, Connectivity issues encountered.");
                                 break;
-                            case ("Forbidden"):
-                                Console.WriteLine("Response Code (403).");
-                                Console.WriteLine("The request was forbidden to complete. Some possible reasons for this exception are:");
-                                Console.WriteLine("Firewall blocking requests.");
-                                Console.WriteLine("Partition key exceeding storage.");
-                                Console.WriteLine("Non-data operations are not allowed.");
-                                break;
-                            default:
-                                Console.WriteLine(e.Message);
-                                break;
-                        }
-
-                    }
+                            }
+                            break;
+                        default:
+                            Console.WriteLine(e.Message);
+                            break;
+                     }
+                }
+                
 
                 Console.WriteLine("Choose an action:");
                 Console.WriteLine("1) Add Document 1 with id = '0C297972-BE1B-4A34-8AE1-F39E6AA3D828'");
@@ -303,38 +310,15 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
         }
     ```
 
-1. `CreateDocument2` 関数は、上記の変更によっても修正されることに注意してください。
+1. 上記の変更によって **CreateDocument2** 関数も修正されることに注意してください。
 
-1. 最後に、関数 `DeleteDocument1` および `DeleteDocument2` も、`CreateDocument1` 関数と同様の適切なエラー処理コードに置換するために、次のコードを置換する必要があります。 **CreateItemAsync** の代わりに **DeleteItemAsync** を使用する以外のこれらの関数との唯一の違いは、[削除状態コード][/rest/api/cosmos-db/delete-a-document]が挿入状態コードとは異なるということです。 削除では、**404** 状態コードのみが考慮されます。 追加のケースで `CompeteTaskOnCosmosDB` 関数のエラー処理を更新しましょう。
-
+1. 最後に、関数 **DeleteDocument1** および **DeleteDocument2** も、**CreateDocument1** 関数と同様の適切なエラー処理コードにするために、次のコードを置換する必要があります。 **CreateItemAsync** の代わりに **DeleteItemAsync** を使用する以外のこれらの関数との唯一の違いは、[削除状態コード][/rest/api/cosmos-db/delete-a-document]が挿入状態コードとは異なるということです。 削除では、**404** 状態コードのみが考慮されます。これはドキュメントが見つからないことを表します。 追加の case で **CompleteTaskOnCosmosDB** 関数呼び出しのエラー処理を更新しましょう。  **Main** 関数では、**default** の case の上に次のコードを追加する必要があります。
 
     ```C#
                     case ("NotFound"):
                         Console.WriteLine("Delete Failed. Response Code (404).");
                         Console.WriteLine("Can not delete customer, customer not found.");
                         break;         
-    ```
-
-1.  先に進み、エラー処理を行うコードで削除関数を処理するための次のコードを追加します。 また、状態コード **429**、**503**、および **508** の再試行ロジックも含まれます。 `default` ケースの上に次のコードを追加する必要があります。
-
-    ```C#
-                        case ("TooManyRequests"):
-                        case ("ServiceUnavailable"):
-                        case ("RequestTimeout"):
-                            // Check if the issues are related to connectivity and if so, wait 10 seconds to retry.
-                            await Task.Delay(10000); // Wait 10 seconds
-                            try
-                            {
-                                Console.WriteLine("Try one more time...");
-                                await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
-                            }
-                            catch (CosmosException e2)
-                            {
-                                Console.WriteLine("Insert Failed. " + e2.Message);
-                                Console.WriteLine("Can not insert a duplicate partition key, Connectivity issues encountered.");
-                                break;
-                            }
-                            break;       
     ```
 
 1. すべての関数の修正が完了したら、すべてのメニュー オプションを数回テストして、例外が発生したときにアプリがメッセージを返し、クラッシュしないことを確認します。  アプリがクラッシュした場合は、エラーを修正し、コマンドを再実行します。
@@ -370,7 +354,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
             {
                     try
                     {
-                        await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+                        await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
                     }
                     catch (CosmosException e)
                     {
@@ -387,10 +371,6 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
                                 Console.WriteLine("Partition key exceeding storage.");
                                 Console.WriteLine("Non-data operations are not allowed.");
                                 break;
-                            case ("NotFound"):
-                                Console.WriteLine("Delete Failed. Response Code (404).");
-                                Console.WriteLine("Can not delete customer, customer not found.");
-                                break; 
                             case ("TooManyRequests"):
                             case ("ServiceUnavailable"):
                             case ("RequestTimeout"):
@@ -399,7 +379,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
                                 try
                                 {
                                     Console.WriteLine("Try one more time...");
-                                    await CompeteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
+                                    await CompleteTaskOnCosmosDB(consoleinputcharacter, CustomersDB_Customer_container);
                                 }
                                 catch (CosmosException e2)
                                 {
@@ -408,6 +388,10 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
                                     break;
                                 }
                                 break;    
+                            case ("NotFound"):
+                                Console.WriteLine("Delete Failed. Response Code (404).");
+                                Console.WriteLine("Can not delete customer, customer not found.");
+                                break; 
                             default:
                                 Console.WriteLine(e.Message);
                                 break;
