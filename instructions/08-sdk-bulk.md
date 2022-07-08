@@ -189,7 +189,7 @@ ms.locfileid: "145919961"
     Console.WriteLine("Bulk tasks complete");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;

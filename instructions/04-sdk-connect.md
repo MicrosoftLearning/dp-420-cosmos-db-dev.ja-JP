@@ -39,7 +39,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
-    | **設定** | **Value** |
+    | **設定** | **値** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
@@ -158,7 +158,7 @@ Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされる
     Console.WriteLine($"Primary Region:\t{account.WritableRegions.FirstOrDefault()?.Name}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
