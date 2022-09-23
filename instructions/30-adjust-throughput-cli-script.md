@@ -2,12 +2,12 @@
 lab:
   title: Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: f6eaf4f0e07037010cec92f3db348a4806304d94
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025108"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971460"
 ---
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
 
@@ -44,6 +44,27 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 1. Azure CLI では、Web ブラウザーのウィンドウまたはタブが自動的に開き、ブラウザー インスタンス内で、サブスクリプションに関連付けられている Microsoft 資格情報を使用して Azure CLI にサインインします。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
+
+1. 自分用のリソース グループをラボ プロバイダーが作成済みかどうかを確認します。それが済んでいる場合は、次のセクションで必要になるので、その名前をメモします。
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    このコマンドを実行すると、複数のリソース グループ名を返すことができます。
+
+1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。*_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
+
+    i. この一覧から、自分に最も近い場所の名前を取得します。
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. リソース グループを作成します。  *ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。*
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
 
 ## <a name="create-azure-cosmos-db-account-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB アカウントを作成する
 

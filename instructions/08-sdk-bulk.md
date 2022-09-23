@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して複数のドキュメントを一括移動する
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: db439a89114c0256884ad676c67d6e4ad6c27844
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 07d515ecfeb2ae59284d212323009770380ddcf0
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024972"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919961"
 ---
 # <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して複数のドキュメントを一括移動する
 
@@ -21,11 +21,11 @@ ms.locfileid: "138024972"
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]をご覧ください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用して、コマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -42,7 +42,7 @@ ms.locfileid: "138024972"
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **Location** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -64,11 +64,11 @@ ms.locfileid: "138024972"
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **データベース ID** | ''*新しい* &vert; *cosmicworks を作成します*'' |
-    | **コンテナー間でスループットを共有する** | *選択しないでください* |
-    | **コンテナー ID** | *products* |
-    | **パーティション キー** | */categoryId* |
-    | **コンテナーのスループット** | *自動スケーリング* &vert; *4000* |
+    | **データベース ID** | *新規作成* &vert; *`cosmicworks`* |
+    | **コンテナー間でスループットを共有する** | *選択しない* |
+    | **コンテナー ID** | *`products`* |
+    | **パーティション キー** | *`/categoryId`* |
+    | **コンテナーのスループット** | *自動スケーリング* &vert; *`4000`* |
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -84,7 +84,7 @@ ms.locfileid: "138024972"
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
 1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
 
@@ -92,13 +92,19 @@ ms.locfileid: "138024972"
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
 1. **script.cs** コード ファイルを **保存** します。
 
 1. **08-sdk-bulk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **08-sdk-bulk** フォルダーに既に設定されているターミナルが開きます。
+
+1. 次のコマンドを使用して、NuGet から Microsoft.Azure.Cosmos (nuget.org/packages/microsoft.azure.cosmos/3.22.1) パッケージを追加します。
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] コマンドを使用してプロジェクトをビルドします。
 
@@ -183,7 +189,7 @@ ms.locfileid: "138024972"
     Console.WriteLine("Bulk tasks complete");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;

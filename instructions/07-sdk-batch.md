@@ -2,16 +2,16 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して複数のポイント操作をまとめてバッチ処理する
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 9ad507d58db5b7522e2a6e24231e18caaa86e36a
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: a532bcefbd68b6ba99373035977522ad2c04d0a9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025060"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919952"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して複数のポイント操作をまとめてバッチ処理する
 
-[TransactionalBatch][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatch] および [TransactionalBatchResponse][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatchresponse] クラスをまとめると、操作を構成し、1 つの論理ステップに分解するための鍵となります。 これらのクラスを使用すると、複数の操作を実行するコードを記述し、サーバー側で正常に完了したかどうかを判断できます。
+[TransactionalBatch][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatch] と [TransactionalBatchResponse][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatchresponse] のクラスを一緒に使うことは、構成操作と分解操作を 1 つの論理ステップにまとめることができるため重要です。 これらのクラスを使用すると、複数の操作を実行するコードを記述し、サーバー側で正常に完了したかどうかを判断できます。
 
 このラボでは、SDK を使用して、2 つの項目を 1 つの論理ユニットとして作成しようとする 2 つのデュアル項目操作を実行します。
 
@@ -21,11 +21,11 @@ ms.locfileid: "138025060"
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]をご覧ください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用して、コマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -42,7 +42,7 @@ ms.locfileid: "138025060"
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **Location** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -72,7 +72,7 @@ ms.locfileid: "138025060"
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
 1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
 
@@ -80,13 +80,19 @@ ms.locfileid: "138025060"
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
 1. **script.cs** コード ファイルを **保存** します。
 
 1. **07-sdk-batch** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **07-sdk-batch** フォルダーに既に設定されているターミナルが開きます。
+
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] コマンドを使用してプロジェクトをビルドします。
 
@@ -140,7 +146,7 @@ ms.locfileid: "138025060"
     Console.WriteLine($"Status:\t{response.StatusCode}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -149,7 +155,7 @@ ms.locfileid: "138025060"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
@@ -243,7 +249,7 @@ ms.locfileid: "138025060"
     Console.WriteLine($"Status:\t{response.StatusCode}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -252,7 +258,7 @@ ms.locfileid: "138025060"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);

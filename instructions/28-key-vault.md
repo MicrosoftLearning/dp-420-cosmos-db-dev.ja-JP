@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API のアカウント キーを Azure Key Vault に保存する
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 929b8c5078ff27ae474f86393ad61f44dd3b66b3
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 56ecce7cf2b6460419f54813af06c0e0e01738b5
+ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025077"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145893423"
 ---
 # <a name="store-azure-cosmos-db-sql-api-account-keys-in-azure-key-vault"></a>Azure Cosmos DB SQL API のアカウント キーを Azure Key Vault に保存する
 
@@ -17,7 +17,7 @@ Azure Cosmos DB アカウントの接続コードをアプリケーションに�
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだ複製していない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
@@ -37,18 +37,18 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、 *[Cosmos DB]* を検索してから、次の設定で新しい **[Azure Cosmos DB SQL API]** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
-    | **アカウント名** | *グローバルに一意の名前を入力します* |
-    | **Location** | *使用可能なリージョンを選びます* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
-    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -68,7 +68,7 @@ Web アプリを作成する前に、*Azure Key Vault* で暗号化された *�
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **サブスクリプション** | *既存の Azure サブスクリプション* |
+    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **キー コンテナー名** | *グローバルに一意の名前を入力します* |
     | **リージョン** | *使用可能なリージョンを選びます* |
@@ -113,9 +113,9 @@ Azure Cosmos DB アカウントに接続し、いくつかのコンテナーと�
     ```
 
 
-1. そのコマンドによって Web アプリのシェルが作成されたので、複数のファイルとディレクトリが追加されました。 必要なすべてのコードを含むファイルが既に 2 つ存在します。 `.\KeyvaultFiles` ディレクトリ内のそれぞれのファイルの `.\Controllers\HomeController.cs` と `.\Views\Home\Index.cshtml` を置き換えます。
+1. そのコマンドによって Web アプリのシェルが作成されたので、複数のファイルとディレクトリが追加されました。 必要なすべてのコードを含むファイルが既に 2 つ存在します。 **.\KeyvaultFiles** ディレクトリ内のそれぞれのファイルについて、ファイル **.\Controllers\HomeController.cs** および **.\Views\Home\Index.cshtml** を置き換えます。
 
-1. ファイルを置き換えた後、`.\KeyvaultFiles` ディレクトリを ***削除*** します。
+1. ファイルを置き換えたら、_ *.\KeyvaultFiles** ディレクトリに対して ***DELETE** _ を実行します。
 
 ## <a name="import-the-multiple-missing-libraries-into-the-net-script"></a>不足している複数のライブラリを .NET スクリプトにインポートする
 
@@ -187,7 +187,7 @@ Azure Cosmos DB アカウントに接続し、いくつかのコンテナーと�
     - *104 から 105 行目* では、Azure Key Vault に接続する *Key Vault Client クライアント* を準備します。 Web アプリ トークンをパラメーターとして送信することに注目してください。 
     - *107 から 108 行目* では、Key Vault クライアントに **シークレット識別子** の URL アドレスを提供します。これは、そのキー コンテナーに格納されているシークレットを返します。 
 
-1.  Web アプリをデプロイする前に、依然として **シークレット識別子** URL を送信する必要があります。  *107 行目で*、文字列 **`<Key Vault Secret Identifier>`** を *[シークレット]* セクションに記録した **シークレット識別子** URL に置き換え、ファイルを保存します。
+1.  Web アプリをデプロイする前に、依然として **シークレット識別子** URL を送信する必要があります。  "*107 行目*" で、文字列 * **<Key Vault Secret Identifier>** _ を *[シークレット]* セクションに記録した "_ *シークレット識別子**" URL に置き換え、ファイルを保存します。
 
 ```
         var KeyVaultSecret = await KVClient.GetSecretAsync("<Key Vault Secret Identifier>")
@@ -214,6 +214,8 @@ Visual Studio でコマンド パレット (**Ctrl + Shift + P**) を起動し�
 1. Visual Studio Code で、コマンド パレットを開き、***Azure App Service: 新しい Web アプリの作成 (詳細)*** を検索します
 
 1. ***[Azure へのサインイン]*** を選択します。このオプションを選択すると、Web ブラウザー ウィンドウが開きます。サインイン プロセスに従って、完了したらブラウザーを閉じます。
+
+1. (省略可能) サブスクリプションを要求する場合は、サブスクリプションを選択します。
 
 1. グローバルに一意の Web アプリ名を入力します。
 

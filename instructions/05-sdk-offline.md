@@ -2,12 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK をオフライン開発用に構成する
   module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: d6d5bad51d4adc029e901352f0becc9268acab3e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: f977dc20266bbd843ab9c94bae8cf08672b99dd9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025080"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919967"
 ---
 # <a name="configure-the-azure-cosmos-db-sql-api-sdk-for-offline-development"></a>Azure Cosmos DB SQL API SDK をオフライン開発用に構成する
 
@@ -21,11 +21,11 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]を参照してください
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[作業の開始に関するドキュメント][code.visualstudio.com/docs/getstarted]をご覧ください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用して、コマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -37,7 +37,7 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
     > &#128221; エミュレーターを起動するための管理者アクセス権を付与するように求められる場合があります。 ラボ環境では、**管理者** アカウントのパスワードは **学生** アカウントと同じになります。
 
-    > &#128161; Azure Cosmos DB Emulator は、Windows タスクバーと [スタート] メニューの両方に固定されています。
+    > &#128161; Azure Cosmos DB Emulator は、Windows タスクバーと [スタート] メニューの両方に固定されています。"**Emulator がピン留めされたアイコンから始まらない場合は、"** _ _ *C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe***_" ファイル_** をダブルクリックして開いてみてください。" **  エミュレーターの起動には、20 から 30 秒かかることに注意してください。
 
 1. エミュレーターで自動的に既定のブラウザーが開き、**localhost:8081/_explorer/index.html** のランディング ページに移動するのを待ちます。
 
@@ -61,17 +61,15 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 1. **05-sdk-offline** フォルダー内の **script.cs** コード ファイルを開きます。
 
-    > &#128221; **[Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1]** ライブラリは、既に NuGet から事前にインポートされています。
-
 1. Azure Cosmos DB Emulator の **接続文字列** に値が設定された **connectionString** という名前の既存の変数を更新します。
   
     ```
     string connectionString = "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
     ```
 
-    > &#128221; エミュレーターの URI は通常、既定のポートが **8081** に設定された SSL を使用する ``localhost:[port]`` です。
+    > &#128221; エミュレーターの URI は通常、既定のポートが _*8081** に設定された SSL を使用する ***localhost:[port]** _ です。
 
-    > &#128221; ``C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==`` は、エミュレーターのすべてのインストールの既定のキーです。 このキーは、コマンド ライン オプションを使用して変更できます。
+    > &#128221; *C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==* は、エミュレーターのすべてのインストールに使用される既定のキーです。 このキーは、コマンド ライン オプションを使用して変更できます。
 
 1. エミュレーター内に作成する新しいデータベースの名前 (**cosmicworks**) を渡し、[Database][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database] 型の変数に結果を格納する **client** 変数の [CreateDatabaseIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.createdatabaseifnotexistsasync] メソッドを非同期的に呼び出します。
 
@@ -85,7 +83,7 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
     Console.WriteLine($"New Database:\tId: {database.Id}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -104,6 +102,12 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 1. **Visual Studio Code** で、**05-sdk-offline** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **05-sdk-offline** フォルダーに既に設定されているターミナルが開きます。
+
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -145,7 +149,7 @@ Azure Cosmos DB Emulator に新しいデータベースを作成したので、�
     Console.WriteLine($"New Container:\tId: {container.Id}");
     ```
 
-1. 完了すると、コード ファイルに次のものが含まれるはずです。
+1. 完了すると、コード ファイルに次の情報が表示されます。
   
     ```
     using System;
@@ -186,7 +190,7 @@ Azure Cosmos DB Emulator に新しいデータベースを作成したので、�
 
 ## <a name="stop-the-azure-cosmos-db-emulator"></a>Azure Cosmos DB Emulator を停止する
 
-環境でシステム リソースを使用できるため、使い終わったらエミュレーターを停止することが重要です。 システム トレイ アイコンを使用して、エミュレーターと実行中のすべてのインスタンスを停止します。
+作業が終了したら、エミュレーターを必ず停止してください。お使いの環境のシステム リソースを消費する可能性があります。 システム トレイ アイコンを使用して、エミュレーターと実行中のすべてのインスタンスを停止します。
 
 1. Windows システム トレイのエミュレーター アイコンに移動し、コンテキスト メニューを開き、 **[終了]** を選択してエミュレーターをシャットダウンします。
 

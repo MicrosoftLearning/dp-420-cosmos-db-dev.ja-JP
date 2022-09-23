@@ -2,12 +2,12 @@
 lab:
   title: 個別のコンテナーおよび埋め込みコンテナー内にあるエンティティのパフォーマンスを測定する
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: b3f7be3d3f7674fc19b2823de50d013e3bd4b04d
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 15b535ae9667402817f8a26d8f1ab51192f16b33
+ms.sourcegitcommit: 8911688483dd0aa3bcfad6bf87b9550eccf6e9ca
 ms.translationtype: HT
 ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024965"
+ms.lasthandoff: 06/02/2022
+ms.locfileid: "146017366"
 ---
 # <a name="measure-performance-of-entities-in-separate-and-embeded-containers"></a>個別のコンテナーおよび埋め込みコンテナー内にあるエンティティのパフォーマンスを測定する
 
@@ -15,15 +15,15 @@ ms.locfileid: "138024965"
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
-このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだ複製していない場合は、次の手順に従って複製します。 それ以外の場合は、以前に複製されたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスの詳細をまだ十分理解していない場合は、「[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]」を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリを複製します。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
-    > &#128161; **CTRL + SHIFT + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -35,7 +35,7 @@ ms.locfileid: "138024965"
 
     > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、 **+** 記号の横にあるプルダウンをクリックし、*Git Bash* を選択します。
 
-1. **Git Bash ターミナル** で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 *スクリプトで Azure アカウントに提供された資格情報が求められると、ビルドが完了するまでに 15 〜 20 分かかることがあるため、コーヒーやお茶を飲むのに適した時間かもしれません。*
+1. **Git Bash ターミナル** で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 *スクリプトで Azure アカウントに提供された資格情報が求められると、ビルドが完了するまでに 15 〜20 分かかる場合があるため、休憩を取るなどしてお待ちください。*
 
     ```
     az login
@@ -71,7 +71,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
@@ -87,7 +87,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
     ```
     SELECT * FROM c WHERE c.customerId = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
@@ -103,7 +103,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
@@ -126,11 +126,11 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
 1. **Database-v2** データベースを選択します。
 1. **Customer** コンテナーを選択します。
-1. 次のクエリを実行します。
+1. 次のクエリを実行します。 
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. 返されるデータは、顧客、住所、パスワード データの階層になっていることを確認します。
 
