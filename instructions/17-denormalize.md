@@ -2,16 +2,11 @@
 lab:
   title: データと集計を非正規化のコストと、参照整合性のための変更フィードの使用
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 15cd43fa0d9b901c235384a3f2e89f36216f812a
-ms.sourcegitcommit: afe4494c941a80ce5f692349bb002c9e984a6b24
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 06/02/2022
-ms.locfileid: "146018303"
 ---
+
 # <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>データと集計を非正規化のコストと、参照整合性のための変更フィードの使用
 
-リレーショナル モデルを使用すると、異なるエンティティを独自のコンテナーに配置できます。  ただし、NoSQL データベースではコンテナー間に *結合* はないので、*結合* の使用を排除するためにデータの非正規化を開始する必要があります。 さらに、NoSQL では、アプリケーションが可能な限り少ない要求でデータをフェッチできるようにデータをモデル化することで、要求の数を減らします。 データを非正規化すると発生する 1 つの問題は、エンティティ間の参照整合性である可能性があります。これには、変更フィードを使用してデータの同期を維持できます。また、カウントでグループ化のような集計を非正規化するのも、要求を減らすのに役立ちます。  
+リレーショナル モデルを使用すると、異なるエンティティを独自のコンテナーに配置できます。 ただし、NoSQL データベースではコンテナー間に _結合_ はないので、_結合_ の使用を排除するためにデータの非正規化を開始する必要があります。 さらに、NoSQL では、アプリケーションが可能な限り少ない要求でデータをフェッチできるようにデータをモデル化することで、要求の数を減らします。 データを非正規化すると発生する 1 つの問題は、エンティティ間の参照整合性である可能性があります。これには、変更フィードを使用してデータの同期を維持できます。また、カウントでグループ化のような集計を非正規化するのも、要求を減らすのに役立ちます。
 
 このラボでは、データと集計を非正規化はコスト削減にどのように役立つか、また、変更フィードを使用して非正規化されたデータの参照整合性を維持する方法の利点について説明します。
 
@@ -21,11 +16,11 @@ ms.locfileid: "146018303"
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+   > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに `https://github.com/microsoftlearning/dp-420-cosmos-db-dev` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+   > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -35,19 +30,19 @@ ms.locfileid: "146018303"
 
 1. ターミナルが **Windows Powershell** ターミナルとして開く場合は、新しい **Git Bash** ターミナルを開きます。
 
-    > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、 **+** 記号の横にあるプルダウンをクリックし、*Git Bash* を選択します。
+   > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、 **+** 記号の横にあるプルダウンをクリックし、_Git Bash_ を選択します。
 
-1. **Git Bash ターミナル** で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 *スクリプトで Azure アカウントに提供された資格情報が求められると、ビルドが完了するまでに 15 〜20 分かかる場合があるため、休憩を取るなどしてお待ちください。*
+1. **Git Bash ターミナル** で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 _スクリプトで Azure アカウントに提供された資格情報が求められると、ビルドが完了するまでに 15 〜20 分かかる場合があるため、休憩を取るなどしてお待ちください。_
 
-    ```
-    az login
-    cd 17-denormalize
-    bash init.sh
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
-    dotnet build
-    dotnet run --load-data
+   ```
+   az login
+   cd 17-denormalize
+   bash init.sh
+   dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+   dotnet build
+   dotnet run --load-data
 
-    ```
+   ```
 
 1. 統合ターミナルを閉じます。
 
@@ -57,7 +52,7 @@ ms.locfileid: "146018303"
 
 個々のコンテナーにデータが格納されている **database-v2** コンテナーでクエリを実行して、製品カテゴリ名を取得し、そのクエリの要求使用量を表示します。
 
-1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (`portal.azure.com`) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
@@ -66,38 +61,38 @@ ms.locfileid: "146018303"
 1. 左側のペインで、**[データ エクスプローラー]** を選択します。
 1. **[database-v2]** を展開します。
 1. **productCategory** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 1]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 1]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
-    SELECT * FROM c where c.type = 'category' and c.id = "AB952F9F-5ABA-4251-BC2D-AFF8DF412A4A"
-    ```
+   ```
+   SELECT * FROM c where c.type = 'category' and c.id = "AB952F9F-5ABA-4251-BC2D-AFF8DF412A4A"
+   ```
 
 1. **[結果]** タブを選択して結果を確認します。 このクエリからは、製品カテゴリの名前 "Component, Headsets" が返されることがわかります。
 
-    ![製品カテゴリ コンテナーに対するクエリの結果を示すスクリーンショット。](media/16-product-category-results.png)
+   ![製品カテゴリ コンテナーに対するクエリの結果を示すスクリーンショット。](media/16-product-category-results.png)
 
 1. **[Query Stats]\(クエリ統計\)** タブを選択し、2.93 RU (要求ユニット) の要求使用量を確認します。
 
-    ![Data Explorer で実行したクエリのクエリ統計のスクリーンショット。](media/16-product-category-stats.png)
+   ![Data Explorer で実行したクエリのクエリ統計のスクリーンショット。](media/16-product-category-stats.png)
 
 ### <a name="query-for-the-products-in-the-category"></a>カテゴリ内の製品のクエリを実行する
 
 次に、製品コンテナーのクエリを実行して、"Components, Headsets" カテゴリのすべての製品を取得します。
 
 1. **product** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 2]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 2]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
-    SELECT * FROM c where c.categoryId = "AB952F9F-5ABA-4251-BC2D-AFF8DF412A4A"
-    ```
+   ```
+   SELECT * FROM c where c.categoryId = "AB952F9F-5ABA-4251-BC2D-AFF8DF412A4A"
+   ```
 
 1. **[結果]** タブを選択して結果を確認します。 HL Headset、LL Headset、ML Headset という 3 つの製品が返されることがわかります。 各製品には、SKU、名前、価格、製品タグの配列があります。
 
 1. **[Query Stats]\(クエリ統計\)** タブを選択し、2.9 RU の要求使用量を確認します。
 
-    ![製品コンテナーのクエリの結果が示されている Azure Cosmos DB データ エクスプローラーのスクリーンショット。](media/16-product-results.png)
+   ![製品コンテナーのクエリの結果が示されている Azure Cosmos DB データ エクスプローラーのスクリーンショット。](media/16-product-results.png)
 
 ### <a name="query-for-each-products-tags"></a>各製品のタグのクエリを実行する
 
@@ -108,67 +103,67 @@ ms.locfileid: "146018303"
 最初に、クエリを実行して HL Headset のタグを取得します。
 
 1. **productTag** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 3]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 3]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
-    SELECT * FROM c where c.type = 'tag' and c.id IN ('87BC6842-2CCA-4CD3-994C-33AB101455F4', 'F07885AF-BD6C-4B71-88B1-F04295992176')
-    ```
+   ```
+   SELECT * FROM c where c.type = 'tag' and c.id IN ('87BC6842-2CCA-4CD3-994C-33AB101455F4', 'F07885AF-BD6C-4B71-88B1-F04295992176')
+   ```
 
-    このクエリからは、HL Headset 製品の 2 つのタグが返されます。
+   このクエリからは、HL Headset 製品の 2 つのタグが返されます。
 
 1. **[Query Stats]\(クエリ統計\)** タブを選択し、3.06 RU の要求使用量を確認します。
 
-    ![HL Headset のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-hl-stats.png)
+   ![HL Headset のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-hl-stats.png)
 
 #### <a name="ll-headset-tags"></a>LL Headset のタグ
 
 次に、クエリを実行して LL Headset のタグを取得します。
 
 1. **productTag** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 4]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 4]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
-    SELECT * FROM c where c.type = 'tag' and c.id IN ('18AC309F-F81C-4234-A752-5DDD2BEAEE83', '1B387A00-57D3-4444-8331-18A90725E98B', 'C6AB3E24-BA48-40F0-A260-CB04EB03D5B0', 'DAC25651-3DD3-4483-8FD1-581DC41EF34B', 'E6D5275B-8C42-47AE-BDEC-FC708DB3E0AC')
-    ```
+   ```
+   SELECT * FROM c where c.type = 'tag' and c.id IN ('18AC309F-F81C-4234-A752-5DDD2BEAEE83', '1B387A00-57D3-4444-8331-18A90725E98B', 'C6AB3E24-BA48-40F0-A260-CB04EB03D5B0', 'DAC25651-3DD3-4483-8FD1-581DC41EF34B', 'E6D5275B-8C42-47AE-BDEC-FC708DB3E0AC')
+   ```
 
-    このクエリからは、LL Headset 製品の 5 つのタグが返されます。
+   このクエリからは、LL Headset 製品の 5 つのタグが返されます。
 
 1. **[Query Stats]\(クエリ統計\)** タブを選択し、3.47 RU の要求使用量を確認します。
 
-    !['LL Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ll-stats.png)
+   !['LL Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ll-stats.png)
 
 #### <a name="ml-headset-tags"></a>ML Headset のタグ
 
 最後に、クエリを実行して ML Headset のタグを取得します。
 
 1. **productTag** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 5]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 5]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
-    SELECT * FROM c where c.type = 'tag' and c.id IN ('A34D34F7-3286-4FA4-B4B0-5E61CCEEE197', 'BA4D7ABD-2E82-4DC2-ACF2-5D3B0DEAE1C1', 'D69B1B6C-4963-4E85-8FA5-6A3E1CD1C83B')
-    ```
+   ```
+   SELECT * FROM c where c.type = 'tag' and c.id IN ('A34D34F7-3286-4FA4-B4B0-5E61CCEEE197', 'BA4D7ABD-2E82-4DC2-ACF2-5D3B0DEAE1C1', 'D69B1B6C-4963-4E85-8FA5-6A3E1CD1C83B')
+   ```
 
-    このクエリからは、ML Headset 製品の 3 つのタグが返されます。
+   このクエリからは、ML Headset 製品の 3 つのタグが返されます。
 
 1. **[Query Stats]\(クエリ統計\)** タブを選択し、3.2 RU の要求使用量を確認します。
 
-    !['ML Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ml-stats.png)
+   !['ML Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ml-stats.png)
 
 ### <a name="add-up-the-ru-charges"></a>RU 使用量を合計する
 
 次に、実行した各クエリのすべての RU コストを合計しましょう。
 
-|**クエリ**|**RU/s コスト**|
-|---------|---------|
-|カテゴリ名|2.93|
-|Product|2.9|
-|HL 製品タグ|3.06|
-|LL 製品タグ|3.47|
-|ML 製品タグ|3.2|
-|**RU コストの合計**|**15.56**|
+| **クエリ**          | **RU/s コスト** |
+| ------------------- | --------------- |
+| カテゴリ名          | 2.93            |
+| Product             | 2.9             |
+| HL 製品タグ         | 3.06            |
+| LL 製品タグ         | 3.47            |
+| ML 製品タグ         | 3.2             |
+| **RU コストの合計** | **15.56**       |
 
 ### <a name="run-the-same-queries-for-your-nosql-design"></a>NoSQL の設計に対して同じクエリを実行する
 
@@ -176,16 +171,16 @@ ms.locfileid: "146018303"
 
 1. Data Explorer で **database-v3** を選択します。
 1. **product** コンテナーを選択します。
-1. ページの上部にある **[新しい SQL クエリ]** を選択します。
-1. **[クエリ 6]** ペインに次の SQL コードを貼り付け、**[クエリの実行]** を選択します。
+1. ページの上部にある **[New SQL Query]** を選択します。
+1. **[クエリ 6]** ペインに次の SQL コードを貼り付け、**[Execute Query]** を選択します。
 
-    ```
+   ```
    SELECT * FROM c where c.categoryId = "AB952F9F-5ABA-4251-BC2D-AFF8DF412A4A"
    ```
 
-    結果は次のようになります。
+   結果は次のようになります。
 
-    ![新しくモデル化された製品コンテナーでの製品コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-query-v2.png)
+   ![新しくモデル化された製品コンテナーでの製品コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-query-v2.png)
 
 1. このクエリで返されたデータを確認します。 それには、3 つの各製品のカテゴリ名とタグ名など、このカテゴリの製品を表示するために必要なすべての情報が含まれています。
 
@@ -197,9 +192,9 @@ ms.locfileid: "146018303"
 
 NoSQL モデルで同じ情報を取得するために 1 つのクエリを実行し、要求使用量は 2.9 でした。
 
-利点は、このモデルのような NoSQL 設計の低コスト化だけではありません。 この種の設計は、必要な要求が 1 つだけなので、より高速でもあります。 さらに、データ自体は Web ページにレンダリングするために適した方法で提供されます。 これは、eコマース アプリケーションでダウンストリームを記述して管理するためのコードが少ないことを意味します。
+利点は、このモデルのような NoSQL 設計の低コスト化だけではありません。 この種の設計は、必要な要求が 1 つだけなので、より高速でもあります。 さらに、データ自体は Web ページにレンダリングするために適した方法で提供されます。 これは、e コマース アプリケーションでダウンストリームを記述して管理するためのコードが少ないことを意味します。
 
-データを非正規化すると、eコマース アプリケーションで生成するクエリが、よりシンプルで効率的になります。 アプリケーションに必要なすべてのデータを 1 つのコンテナーに格納し、1 つのクエリでそれをフェッチすることができます。 この種のデータ モデリングを使用すると、高コンカレンシーのクエリを処理するときの簡単さ、速度、コストに関して大きなメリットがある可能性があります。
+データを非正規化すると、e コマース アプリケーションで生成するクエリが、よりシンプルで効率的になります。 アプリケーションに必要なすべてのデータを 1 つのコンテナーに格納し、1 つのクエリでそれをフェッチすることができます。 この種のデータ モデリングを使用すると、高コンカレンシーのクエリを処理するときの簡単さ、速度、コストに関して大きなメリットがある可能性があります。
 
 ---
 
@@ -220,7 +215,7 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 変更フィード用に更新するコードに移動するために、以下を実行します。
 
-1. まだ開いていない場合は、Visual Studio Code を開き、*17-denormalize* フォルダーの *Program.cs* ファイルを開きます。
+1. まだ開いていない場合は、Visual Studio Code を開き、_17-denormalize_ フォルダーの _Program.cs_ ファイルを開きます。
 
 ### <a name="complete-the-code-for-change-feed"></a>変更フィードのコードを完成させる
 
@@ -232,7 +227,7 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. 次のコードが表示されます。
 
-    ![変更フィードが実装されている関数を示す Cloud Shell のスクリーンショット。](media/16-change-feed-function.png)
+   ![変更フィードが実装されている関数を示す Cloud Shell のスクリーンショット。](media/16-change-feed-function.png)
 
    588 と 589 行目には 2 つのコンテナー参照があります。 それらを正しいコンテナー名に更新する必要があります。 変更フィードは、コンテナー参照に変更フィード プロセッサのインスタンスを作成することで機能します。 この例では、productCategory コンテナーへの変更を監視しています。
 
@@ -240,73 +235,73 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. 589 行目にある **{container to update}** を `product` に置き換えます。 製品カテゴリ名が更新されたら、そのカテゴリ内のすべての製品を新しい製品カテゴリ名で更新する必要があります。
 
-1. *container to watch* と *container to update* の行の下にある *leaseContainer* の行を確認します。 leaseContainer は、コンテナーに対するチェック ポイントのように機能します。 変更フィード プロセッサによって最後にチェックされた後で更新されたものに関する情報が保持されています。
-  
+1. _container to watch_ と _container to update_ の行の下にある _leaseContainer_ の行を確認します。 leaseContainer は、コンテナーに対するチェック ポイントのように機能します。 変更フィード プロセッサによって最後にチェックされた後で更新されたものに関する情報が保持されています。
+
    変更フィードによって新しい変更が検出されるとデリゲートが呼び出され、読み取り専用のコレクションに変更が渡されます。
 
 1. 処理する必要がある新しい変更が変更フィードにある場合に呼び出されるコードを 603 行目に追加する必要があります。 そのためには、次のコード スニペットをコピーし、 **//To-Do:** で始まる行の下に貼り付けます
 
-    ```
-    //Fetch each change to productCategory container
-    foreach (ProductCategory item in input)
-    {
-        string categoryId = item.id;
-        string categoryName = item.name;
-    
-        tasks.Add(UpdateProductCategoryName(productContainer, categoryId, categoryName));
-    }
-    ```
+   ```
+   //Fetch each change to productCategory container
+   foreach (ProductCategory item in input)
+   {
+       string categoryId = item.id;
+       string categoryName = item.name;
+
+       tasks.Add(UpdateProductCategoryName(productContainer, categoryId, categoryName));
+   }
+   ```
 
 1. これでコードは次の画像のようになります。
 
-    ![完成した変更フィードのコードが表示されている Cloud Shell ウィンドウのスクリーンショット。](media/16-change-feed-function-delegate-code.png)
+   ![完成した変更フィードのコードが表示されている Cloud Shell ウィンドウのスクリーンショット。](media/16-change-feed-function-delegate-code.png)
 
-    既定では、変更フィードは 1 秒ごとに実行されます。 監視対象のコンテナーで多くの挿入や更新が行われるシナリオでは、デリゲートに複数の変更がある可能性があります。 そのため、デリゲート **input** を **IReadOnlyCollection** として入力します。
+   既定では、変更フィードは 1 秒ごとに実行されます。 監視対象のコンテナーで多くの挿入や更新が行われるシナリオでは、デリゲートに複数の変更がある可能性があります。 そのため、デリゲート **input** を **IReadOnlyCollection** として入力します。
 
-    このコード スニペットにより、デリゲート **input** のすべての変更がループ処理され、それらが **categoryId** と **categoryName** の文字列として保存されます。 その後、新しいカテゴリ名で製品コンテナーを更新する別の関数を呼び出すタスクが、タスク リストに追加されます。
+   このコード スニペットにより、デリゲート **input** のすべての変更がループ処理され、それらが **categoryId** と **categoryName** の文字列として保存されます。 その後、新しいカテゴリ名で製品コンテナーを更新する別の関数を呼び出すタスクが、タスク リストに追加されます。
 
 1. Ctrl + G キーを押し、「**647**」と入力して **UpdateProductCategoryName()** 関数を探します。 ここでは、変更フィードによってキャプチャされた新しいカテゴリ名で製品コンテナー内の各製品を更新するコードを記述します。
 
 1. 次のコード スニペットをコピーし、**//To-Do:** で始まる行の下に貼り付けます。 この関数では 2 つのことが行われます。 最初に、製品コンテナーに対して、**categoryId** で渡されたすべての製品のクエリが実行されます。 次に、各製品が新しい製品カテゴリ名で更新されます。
 
-    ```
-    //Loop through all products
-    foreach (Product product in response)
-    {
-        productCount++;
-        //update category name for product
-        product.categoryName = categoryName;
-    
-        //write the update back to product container
-        await productContainer.ReplaceItemAsync(
-            partitionKey: new PartitionKey(categoryId),
-            id: product.id,
-            item: product);
-    }
-    ```
+   ```
+   //Loop through all products
+   foreach (Product product in response)
+   {
+       productCount++;
+       //update category name for product
+       product.categoryName = categoryName;
 
-    コードは次のようになっているはずです。
+       //write the update back to product container
+       await productContainer.ReplaceItemAsync(
+           partitionKey: new PartitionKey(categoryId),
+           id: product.id,
+           item: product);
+   }
+   ```
 
-    ![変更フィード関数によって呼び出される、完全に実装された製品カテゴリ名更新関数を示す、Cloud Shell のスクリーンショット。](media/16-change-feed-function-update-product.png)
+   コードは次のようになっているはずです。
 
-    このコードにより、クエリの応答オブジェクトから行が読み取られた後、クエリによって返されたすべての製品で製品コンテナーが更新されます。
+   ![変更フィード関数によって呼び出される、完全に実装された製品カテゴリ名更新関数を示す、Cloud Shell のスクリーンショット。](media/16-change-feed-function-update-product.png)
 
-    ここでは、**foreach()** ループを使用して、クエリによって返された各製品を処理しています。 行ごとにカウンターを更新し、更新された製品の数を確認します。 その後、製品のカテゴリ名を新しい **categoryName** に変更します。 最後に、**ReplaceItemAsync()** を呼び出して、製品コンテナー内の製品を更新します。
+   このコードにより、クエリの応答オブジェクトから行が読み取られた後、クエリによって返されたすべての製品で製品コンテナーが更新されます。
+
+   ここでは、**foreach()** ループを使用して、クエリによって返された各製品を処理しています。 行ごとにカウンターを更新し、更新された製品の数を確認します。 その後、製品のカテゴリ名を新しい **categoryName** に変更します。 最後に、**ReplaceItemAsync()** を呼び出して、製品コンテナー内の製品を更新します。
 
 1. Ctrl + S キーを押して、変更内容を保存します。
 
-1. まだ開いていない場合は、Git Bash 統合ターミナルを開き、*17-denormalize* フォルダーの下にいることを確認します。
+1. まだ開いていない場合は、Git Bash 統合ターミナルを開き、_17-denormalize_ フォルダーの下にいることを確認します。
 
 1. プロジェクトをコンパイルして実行するには、次のコマンドを実行します。
 
-    ```
-    dotnet build
-    dotnet run
-    ```
+   ```
+   dotnet build
+   dotnet run
+   ```
 
 1. 画面にアプリケーションのメイン メニューが表示されます。
 
-    ![データを操作する複数のオプションがあるアプリケーションのメイン メニューを示すスクリーンショット。](media/16-main-menu.png)
+   ![データを操作する複数のオプションがあるアプリケーションのメイン メニューを示すスクリーンショット。](media/16-main-menu.png)
 
 ### <a name="run-the-change-feed-sample"></a>変更フィードのサンプルを実行する
 
@@ -314,21 +309,21 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. メイン メニューで「**a**」と入力し、変更フィード プロセッサを起動します。 画面に進行状況が表示されます。
 
-    ![変更フィードをビルドして開始すると表示されるアプリケーションの出力のスクリーンショット。](media/16-change-feed-start.png)
+   ![変更フィードをビルドして開始すると表示されるアプリケーションの出力のスクリーンショット。](media/16-change-feed-start.png)
 
 1. 任意のキーを押して、メイン メニューに戻ります。
 
 1. メイン メニューで「**b**」と入力し、製品カテゴリ名を更新します。 次のシーケンスが実行されます。
 
-    a. 製品コンテナーで "Accessories, Tires, and Tubes" カテゴリのクエリが実行され、そのカテゴリの製品の数がカウントされます。  
-    b. そのカテゴリ名が更新され、"and" という単語がアンパサンド (&) に置き換えられます。  
-    c. 変更フィードによってその変更が取得され、作成したコードを使用して、そのカテゴリのすべての製品が更新されます。  
-    d. 変更フィードにより、名前の変更が元に戻され、カテゴリ名が元のものに変更されて、名前の "&" が元の "and" に置き換えられます。  
-    e. 変更フィードによってその変更が取得され、すべての製品が元の製品カテゴリ名に更新されます。
+   a. 製品コンテナーで "Accessories, Tires, and Tubes" カテゴリのクエリが実行され、そのカテゴリの製品の数がカウントされます。  
+   b. そのカテゴリ名が更新され、"and" という単語がアンパサンド (&) に置き換えられます。  
+   c. 変更フィードによってその変更が取得され、作成したコードを使用して、そのカテゴリのすべての製品が更新されます。  
+   d. 変更フィードにより、名前の変更が元に戻され、カテゴリ名が元のものに変更されて、名前の "&" が元の "and" に置き換えられます。  
+   e. 変更フィードによってその変更が取得され、すべての製品が元の製品カテゴリ名に更新されます。
 
 1. メイン メニューで「**b**」と入力し、2 回目の変更フィードが実行されるまでプロンプトに従い、その後はそのままにします。 結果は次のようになります。
 
-    ![カテゴリ名が変更されたアプリケーションの出力のスクリーンショット。](media/16-change-feed-update-category-name.png)
+   ![カテゴリ名が変更されたアプリケーションの出力のスクリーンショット。](media/16-change-feed-update-category-name.png)
 
 1. クリックの回数が多すぎてメイン メニューに戻ってしまった場合は、もう一度「**b**」と入力して、変更内容を確認します。
 
@@ -338,13 +333,13 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 ## <a name="exercise-3-denormalizing-aggregates"></a>演習 3: 集計の非正規化
 
-このユニットでは、集計を非正規化して、eコマース サイトの上位 10 件の顧客クエリを作成する方法について説明します。 Azure Cosmos DB .NET SDK のトランザクション バッチ機能を使用して、新しい販売注文の挿入と、顧客の **salesOrderCount** プロパティの更新を同時に行います。これらはどちらも同じ論理パーティションに存在します。
+このユニットでは、集計を非正規化して、e コマース サイトの上位 10 件の顧客クエリを作成する方法について説明します。 Azure Cosmos DB .NET SDK のトランザクション バッチ機能を使用して、新しい販売注文の挿入と、顧客の **salesOrderCount** プロパティの更新を同時に行います。これらはどちらも同じ論理パーティションに存在します。
 
 この演習では、次の手順を行います。
 
 - 新しい販売注文を作成するコードを表示します。
-- 顧客の *salesOrderCount* をインクリメントするように、C# コードを更新します。
-- "*トランザクション バッチ*" を使用して、新しい販売注文を挿入して顧客レコードを更新するトランザクションを実装するように C# コードを更新します。
+- 顧客の _salesOrderCount_ をインクリメントするように、C# コードを更新します。
+- "_トランザクション バッチ_" を使用して、新しい販売注文を挿入して顧客レコードを更新するトランザクションを実装するように C# コードを更新します。
 - 特定の顧客のクエリを実行して、顧客レコードとその顧客の全注文を表示します。
 - その顧客の新しい販売注文を作成し、**salesOrderCount** プロパティを更新します。
 - 上位 10 件の顧客クエリを実行して、現在の結果を確認します。
@@ -354,7 +349,7 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 このユニットで使用するコードを取得するには、以下を実行します。
 
-1. まだ開いていない場合は、Visual Studio Code を開き、*17-denormalize* フォルダーの *Program.cs* ファイルを開きます。
+1. まだ開いていない場合は、Visual Studio Code を開き、_17-denormalize_ フォルダーの _Program.cs_ ファイルを開きます。
 
 ## <a name="complete-the-code-to-update-total-sales-orders"></a>合計販売注文を更新するコードを完成させる
 
@@ -364,72 +359,72 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. 次のコードが表示されます。
 
-    ![新規注文作成および顧客注文合計更新関数を示す Cloud Shell のスクリーンショット。](media/16-create-order-function.png)
+   ![新規注文作成および顧客注文合計更新関数を示す Cloud Shell のスクリーンショット。](media/16-create-order-function.png)
 
-    この関数により、トランザクション バッチを使用して、新しい販売注文が作成され、顧客レコードが更新されます。
+   この関数により、トランザクション バッチを使用して、新しい販売注文が作成され、顧客レコードが更新されます。
 
-    最初に、**ReadItemAsync()** を呼び出し、パーティション キーと ID の両方として **customerId** を渡すことにより、顧客レコードを取得します。
+   最初に、**ReadItemAsync()** を呼び出し、パーティション キーと ID の両方として **customerId** を渡すことにより、顧客レコードを取得します。
 
 1. 483 行目の **//To-Do:** コメントの下に、次のコード スニペットを貼り付けて **salesOrderCount** の値をインクリメントします。
 
-    ```
-    //Increment the salesOrderTotal property
-    customer.salesOrderCount++;
-    ```
+   ```
+   //Increment the salesOrderTotal property
+   customer.salesOrderCount++;
+   ```
 
-    画面はこちらのようになるはずです。
+   画面はこちらのようになるはずです。
 
-    ![新規注文作成および顧客合計更新関数の、販売注文数を 1 だけインクリメントするコード行のスクリーンショット。](media/16-create-order-sales-order-count.png)
+   ![新規注文作成および顧客合計更新関数の、販売注文数を 1 だけインクリメントするコード行のスクリーンショット。](media/16-create-order-sales-order-count.png)
 
 ## <a name="complete-the-code-to-implement-transactional-batch"></a>トランザクション バッチを実装するコードを完成させる
 
 1. 数行下にスクロールして、顧客に作成する新しい販売注文のデータを表示します。
 
-    新しい販売注文オブジェクトには、eコマース アプリケーションの販売注文に典型的なヘッダーと詳細情報の構造があります。
+   新しい販売注文オブジェクトには、e コマース アプリケーションの販売注文に典型的なヘッダーと詳細情報の構造があります。
 
-    販売注文ヘッダーには、**orderId**、**customerId**、**orderDate**、**shipDate** があります。これらは空白のままにします。
+   販売注文ヘッダーには、**orderId**、**customerId**、**orderDate**、**shipDate** があります。これらは空白のままにします。
 
-    顧客コンテナーには顧客と販売注文の両方のエンティティが含まれているため、販売注文オブジェクトにも、値が **salesOrder** である識別子プロパティ **type** が含まれています。 これにより、顧客コンテナー内の顧客オブジェクトと販売注文を区別することができます。
+   顧客コンテナーには顧客と販売注文の両方のエンティティが含まれているため、販売注文オブジェクトにも、値が **salesOrder** である識別子プロパティ **type** が含まれています。 これにより、顧客コンテナー内の顧客オブジェクトと販売注文を区別することができます。
 
-    さらに下には、販売注文の詳細セクションを構成する注文の 2 つの製品も表示されます。
+   さらに下には、販売注文の詳細セクションを構成する注文の 2 つの製品も表示されます。
 
 1. もう 1 つの **//To-Do:** コメントまで、もう少しスクロールします。 ここには、トランザクション バッチを使用して新しい販売注文を挿入し、顧客レコードを更新するコードを追加する必要があります。
 
 1. 次のコード スニペットをコピーし、 **//To-Do:** コメントの下の行に貼り付けます。
 
-    ```
-    TransactionalBatchResponse txBatchResponse = await container.CreateTransactionalBatch(
-        new PartitionKey(salesOrder.customerId))
-        .CreateItem<SalesOrder>(salesOrder)
-        .ReplaceItem<CustomerV4>(customer.id, customer)
-        .ExecuteAsync();
-    
-    if (txBatchResponse.IsSuccessStatusCode)
-        Console.WriteLine("Order created successfully");
-    ```
+   ```
+   TransactionalBatchResponse txBatchResponse = await container.CreateTransactionalBatch(
+       new PartitionKey(salesOrder.customerId))
+       .CreateItem<SalesOrder>(salesOrder)
+       .ReplaceItem<CustomerV4>(customer.id, customer)
+       .ExecuteAsync();
 
-    このコードでは、コンテナー オブジェクトで **CreateTransactionalBatch()** を呼び出します。 すべてのトランザクションは 1 つの論理パーティションにスコープされるので、それは必須パラメーターとしてパーティション キーの値を受け取ります。 また、新しい販売注文を **CreateItem()** の呼び出しに渡し、更新された顧客オブジェクトを **ReplaceItem()** の呼び出しに渡します。 次に、**ExecuteAsync()** を呼び出してトランザクションを実行します。
+   if (txBatchResponse.IsSuccessStatusCode)
+       Console.WriteLine("Order created successfully");
+   ```
 
-    最後に、応答オブジェクトを調べて、トランザクションが成功したかどうかを確認します。
+   このコードでは、コンテナー オブジェクトで **CreateTransactionalBatch()** を呼び出します。 すべてのトランザクションは 1 つの論理パーティションにスコープされるので、それは必須パラメーターとしてパーティション キーの値を受け取ります。 また、新しい販売注文を **CreateItem()** の呼び出しに渡し、更新された顧客オブジェクトを **ReplaceItem()** の呼び出しに渡します。 次に、**ExecuteAsync()** を呼び出してトランザクションを実行します。
 
-    画面は次のようになります。
+   最後に、応答オブジェクトを調べて、トランザクションが成功したかどうかを確認します。
 
-    ![トランザクション バッチ コードが関数に実装されていることを示す Cloud Shell のスクリーンショット。](media/16-create-order-transactional-batch.png)
+   画面は次のようになります。
+
+   ![トランザクション バッチ コードが関数に実装されていることを示す Cloud Shell のスクリーンショット。](media/16-create-order-transactional-batch.png)
 
 1. Ctrl + S キーを押して、変更内容を保存します。
 
-1. まだ開いていない場合は、Git Bash 統合ターミナルを開き、*17-denormalize* フォルダーの下にいることを確認します。
+1. まだ開いていない場合は、Git Bash 統合ターミナルを開き、_17-denormalize_ フォルダーの下にいることを確認します。
 
 1. プロジェクトをコンパイルして実行するには、次のコマンドを実行します。
 
-    ```
-    dotnet build
-    dotnet run
-    ```
+   ```
+   dotnet build
+   dotnet run
+   ```
 
 1. 次に示すように、画面にアプリケーションのメイン メニューが表示されます。
 
-    ![データを操作する複数のオプションがあるアプリケーションのメイン メニューを示すスクリーンショット。](media/16-main-menu.png)
+   ![データを操作する複数のオプションがあるアプリケーションのメイン メニューを示すスクリーンショット。](media/16-main-menu.png)
 
 ## <a name="query-for-the-customer-and-their-sales-orders"></a>顧客とその販売注文のクエリを実行する
 
@@ -437,7 +432,7 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. メイン メニューで「**c**」と入力し、**[顧客とすべての注文のクエリ]** のメニュー項目を実行します。 このクエリからは、顧客レコードが返された後、その顧客のすべての販売注文が返されます。 顧客のすべての販売注文の出力が画面に表示されます。
 
-   最後の注文は **Road-650 Red, 58** の $782.99 であったことに注意してください。
+   最後の注文は **Road-650 Red, 58** の \$782.99 であったことに注意してください。
 
 1. **[Print out customer record and all their orders]\(顧客レコードとそのすべての注文を出力する\)** まで上にスクロールします。
 
@@ -445,14 +440,14 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
    画面は次のようになります。
 
-    ![顧客レコードと 2 つの販売注文が含まれる顧客クエリおよび注文クエリの出力が示されている Cloud Shell のスクリーンショット。](media/16-query-customer-and-orders-initial.png)
+   ![顧客レコードと 2 つの販売注文が含まれる顧客クエリおよび注文クエリの出力が示されている Cloud Shell のスクリーンショット。](media/16-query-customer-and-orders-initial.png)
 
 ## <a name="create-a-new-sales-order-and-update-total-sales-orders-in-a-transaction"></a>トランザクションで新しい販売注文を作成して販売注文の合計を更新する
 
 同じ顧客に対して新しい販売注文を作成し、顧客レコードに保存されている販売注文の合計を更新します。
 
 1. ウィンドウで任意のキーを押して、メイン メニューに戻ります。
-1. 「**d**」と入力し、**[新しい注文の作成と注文合計の更新]** のメニュー項目を実行します。
+1. 「**d**」と入力し、**[Create new order and update order total]\(新しい注文の作成と注文合計の更新)** のメニュー項目を実行します。
 1. 任意のキーを押して、メイン メニューに戻ります。
 1. 「**c**」と入力し、同じクエリを再実行します。
 
@@ -464,15 +459,15 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. 画面は次のようになります。
 
-    ![Cloud Shell のスクリーンショット。更新された顧客レコードの販売注文数の値が 3 で、その下に 3 つの販売注文が表示されています。](media/16-query-customer-and-orders-next.png)
+   ![Cloud Shell のスクリーンショット。更新された顧客レコードの販売注文数の値が 3 で、その下に 3 つの販売注文が表示されています。](media/16-query-customer-and-orders-next.png)
 
 ## <a name="delete-an-order-by-using-transactional-batch"></a>トランザクション バッチを使用して注文を削除する
 
-他の eコマース アプリケーションと同様に、顧客は注文をキャンセルすることもあります。 ここでも同じようにできます。
+他の e コマース アプリケーションと同様に、顧客は注文をキャンセルすることもあります。 ここでも同じようにできます。
 
 1. 任意のキーを押して、メイン メニューに戻ります。
 
-1. 「**f**」と入力し、**[注文の削除と注文合計の更新]** のメニュー項目を実行します。
+1. 「**f**」と入力し、**[Delete order and update order total]\(注文の削除と注文合計の更新)** のメニュー項目を実行します。
 
 1. 任意のキーを押して、メイン メニューに戻ります。
 1. 「**c**」と入力して同じクエリを再実行し、顧客レコードが更新されたことを確認します。
@@ -486,15 +481,15 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 販売注文の削除方法は、作成とまったく同じ方法です。 どちらの操作もトランザクションにラップされ、同じ論理パーティションで実行されます。 それを行うコードを見てみましょう。
 
 1. 「**x**」と入力してアプリケーションを終了します。
-1. まだ開いていない場合は、Visual Studio Code を開き、*17-denormalize* フォルダーの *Program.cs* ファイルを開きます。
+1. まだ開いていない場合は、Visual Studio Code を開き、_17-denormalize_ フォルダーの _Program.cs_ ファイルを開きます。
 
 1. Ctrl + G キーを押し、「**529**」と入力します。
 
-    この関数により、新しい販売注文が削除されて、顧客レコードが更新されます。
+   この関数により、新しい販売注文が削除されて、顧客レコードが更新されます。
 
-    ここでは、コードによってまず顧客レコードが取得され、次に **salesOrderCount** が 1 だけデクリメントされていることがわかります。
+   ここでは、コードによってまず顧客レコードが取得され、次に **salesOrderCount** が 1 だけデクリメントされていることがわかります。
 
-    次に、**CreateTransactionalBatch()** を呼び出します。 ここでも論理パーティション キーの値が渡されていますが、今度は、注文 ID で **DeleteItem()** が呼び出され、更新された顧客レコードで **ReplaceItem()** が呼び出されています。
+   次に、**CreateTransactionalBatch()** を呼び出します。 ここでも論理パーティション キーの値が渡されていますが、今度は、注文 ID で **DeleteItem()** が呼び出され、更新された顧客レコードで **ReplaceItem()** が呼び出されています。
 
 ## <a name="view-the-code-for-your-top-10-customers-query"></a>上位 10 顧客クエリのコードを表示する
 
@@ -502,30 +497,30 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
 
 1. Ctrl + G キーを押し、「**566**」と入力します。
 
-    上部の近くに、クエリの定義があります。
+   上部の近くに、クエリの定義があります。
 
-    ```
-    SELECT TOP 10 c.firstName, c.lastName, c.salesOrderCount
-        FROM c WHERE c.type = 'customer'
-        ORDER BY c.salesOrderCount DESC
-    ```
+   ```
+   SELECT TOP 10 c.firstName, c.lastName, c.salesOrderCount
+       FROM c WHERE c.type = 'customer'
+       ORDER BY c.salesOrderCount DESC
+   ```
 
-    このクエリは、返されるレコードの数を制限する **TOP** ステートメントと、**salesOrderCount** プロパティに対する降順の **ORDER BY** による、非常に簡単なものです。
+   このクエリは、返されるレコードの数を制限する **TOP** ステートメントと、**salesOrderCount** プロパティに対する降順の **ORDER BY** による、非常に簡単なものです。
 
-    また、顧客コンテナーには顧客と販売注文の両方が含まれているため、顧客だけが返されるように、**customer** 識別子プロパティの値が **type** になっていることにも注意してください。
+   また、顧客コンテナーには顧客と販売注文の両方が含まれているため、顧客だけが返されるように、**customer** 識別子プロパティの値が **type** になっていることにも注意してください。
 
 1. アプリケーションがまだ実行されていない場合に再起動するには、次のコマンドを実行します。
 
-    ```
-    dotnet run
-    ```
+   ```
+   dotnet run
+   ```
 
 1. 最後に、「**e**」と入力してクエリを実行します。
 
-    ![Cloud Shell のスクリーンショット。上位 10 件の顧客クエリの出力が示されています。](media/16-top-10-customers.png)
+   ![Cloud Shell のスクリーンショット。上位 10 件の顧客クエリの出力が示されています。](media/16-top-10-customers.png)
 
-    気付いていないかもしれませんが、上位 10 顧客クエリは、コンテナー内のすべてのパーティションを対象とするクロスパーティション クエリです。
+   気付いていないかもしれませんが、上位 10 顧客クエリは、コンテナー内のすべてのパーティションを対象とするクロスパーティション クエリです。
 
-    このラボに付随するラボでは、クロスパーティション クエリは回避する必要があると指摘されています。 ただし、実際には、このようなクエリは、コンテナーがまだ小さい場合やクエリの実行頻度が低い場合には問題ありません。 このクエリが頻繁に実行される場合、またはコンテナーが非常に大きい場合は、このデータを別のコンテナーに具体化し、それを使用してこのクエリを処理する場合のコストを調べてみることをお勧めします。
+   このラボに付随するラボでは、クロスパーティション クエリは回避する必要があると指摘されています。 ただし、実際には、このようなクエリは、コンテナーがまだ小さい場合やクエリの実行頻度が低い場合には問題ありません。 このクエリが頻繁に実行される場合、またはコンテナーが非常に大きい場合は、このデータを別のコンテナーに具体化し、それを使用してこのクエリを処理する場合のコストを調べてみることをお勧めします。
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks
