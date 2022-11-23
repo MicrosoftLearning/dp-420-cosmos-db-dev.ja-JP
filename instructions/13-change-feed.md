@@ -2,12 +2,6 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
   module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 5cb8fe36f952140f0579df10bba19a4fcad33b54
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/05/2022
-ms.locfileid: '144773620'
 ---
 
 # <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
