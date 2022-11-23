@@ -2,12 +2,6 @@
 Lab:
   title: 復旧ポイントからデータベースまたはコンテナーを復旧する
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 5b3dca08e8c95281c3a06b688ec36b82c119ed2e
-ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/26/2022
-ms.locfileid: '145893414'
 ---
 
 # <a name="recover-a-database-or-container-from-a-recovery-point"></a>復旧ポイントからデータベースまたはコンテナーを復旧する
