@@ -72,7 +72,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
    |                **設定** | **Value**                     |
    | ----------------------: | :---------------------------- |
-   |     **データベース ID** | Use existing \| \_cosmicworks |
+   |     **データベース ID** | Use existing \| cosmicworks |
    |       **コンテナー ID** | _products_                    |
    | **パーティション キー** | _/categoryId_                 |
 
@@ -84,7 +84,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
    |                **設定** | **Value**                     |
    | ----------------------: | :---------------------------- |
-   |     **データベース ID** | Use existing \| \_cosmicworks |
+   |     **データベース ID** | Use existing \| cosmicworks |
    |       **コンテナー ID** | _productslease_               |
    | **パーティション キー** | _/partitionKey_               |
 
