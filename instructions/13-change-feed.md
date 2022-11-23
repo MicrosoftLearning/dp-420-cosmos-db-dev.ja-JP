@@ -2,6 +2,12 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
   module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
+ms.openlocfilehash: 5cb8fe36f952140f0579df10bba19a4fcad33b54
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 05/05/2022
+ms.locfileid: '144773620'
 ---
 
 # <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して変更フィード イベントを処理する
@@ -56,9 +62,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. リソース メニューで **[データ エクスプローラー]** を選択します。
 
-1. **[データ エクスプローラー]** ペインで、 **[New Container]** を展開してから、 **[新しいデータベース]** を選択します。
+1. **[データ エクスプローラー]** ペインで、 **[New Container]** を展開してから、 **[New Database]** を選択します。
 
-1. **[新しいデータベース]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
+1. **[New Database]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
 
    |            **設定** | **Value**     |
    | ------------------: | :------------ |
@@ -70,11 +76,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[New Container]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
 
-   |                **設定** | **Value**                     |
-   | ----------------------: | :---------------------------- |
+   |                **設定** | **Value**                   |
+   | ----------------------: | :-------------------------- |
    |     **データベース ID** | Use existing \| cosmicworks |
-   |       **コンテナー ID** | _products_                    |
-   | **パーティション キー** | _/categoryId_                 |
+   |       **コンテナー ID** | _products_                  |
+   | **パーティション キー** | _/categoryId_               |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
 
@@ -82,11 +88,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[New Container]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
 
-   |                **設定** | **Value**                     |
-   | ----------------------: | :---------------------------- |
+   |                **設定** | **Value**                   |
+   | ----------------------: | :-------------------------- |
    |     **データベース ID** | Use existing \| cosmicworks |
-   |       **コンテナー ID** | _productslease_               |
-   | **パーティション キー** | _/partitionKey_               |
+   |       **コンテナー ID** | _productslease_             |
+   | **パーティション キー** | _/partitionKey_             |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **productslease** コンテナー ノードを確認します。
 
