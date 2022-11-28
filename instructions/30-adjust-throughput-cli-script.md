@@ -2,13 +2,8 @@
 lab:
   title: Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
-ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/12/2022
-ms.locfileid: "144971460"
 ---
+
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
 
 Azure CLI は、Azure 全体のさまざまなリソースを管理するために使用できるコマンドのセットです。 Azure Cosmos DB には、選択した API に関係なく、Azure Cosmos DB アカウントのさまざまなファセットを管理するために使用できる豊富なコマンド グループがあります。
@@ -25,21 +20,21 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. 次のコマンドを使用して Azure CLI のバージョンを表示します。
 
-    ```
-    az --version
-    ```
+   ```
+   az --version
+   ```
 
 1. 次のコマンドを使用して、最も一般的な Azure CLI コマンド グループを表示します。
 
-    ```
-    az --help
-    ```
+   ```
+   az --help
+   ```
 
 1. 次のコマンドを使用して、Azure CLI の対話型ログイン プロシージャを開始します。
 
-    ```
-    az login
-    ```
+   ```
+   az login
+   ```
 
 1. Azure CLI では、Web ブラウザーのウィンドウまたはタブが自動的に開き、ブラウザー インスタンス内で、サブスクリプションに関連付けられている Microsoft 資格情報を使用して Azure CLI にサインインします。
 
@@ -47,24 +42,25 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. 自分用のリソース グループをラボ プロバイダーが作成済みかどうかを確認します。それが済んでいる場合は、次のセクションで必要になるので、その名前をメモします。
 
-    ```
-    az group list --query "[].{ResourceGroupName:name}" -o table
-    ```
-    
-    このコマンドを実行すると、複数のリソース グループ名を返すことができます。
+   ```
+   az group list --query "[].{ResourceGroupName:name}" -o table
+   ```
 
-1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。*_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
+   このコマンドを実行すると、複数のリソース グループ名を返すことができます。
 
-    i. この一覧から、自分に最も近い場所の名前を取得します。
+1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。\*\_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
 
-    ```
-    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
-    ```
+   i. この一覧から、自分に最も近い場所の名前を取得します。
 
-    ii. リソース グループを作成します。  *ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。*
-    ```
-    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
-    ```
+   ```
+   az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+   ```
+
+   ii. リソース グループを作成します。 _ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。_
+
+   ```
+   az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+   ```
 
 ## <a name="create-azure-cosmos-db-account-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB アカウントを作成する
 
@@ -74,54 +70,54 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. 次のコマンドを使用して、**Azure Cosmos DB** に関連するほとんどの Azure CLI コマンドを表示します。
 
-    ```
-    az cosmosdb --help
-    ```
+   ```
+   az cosmosdb --help
+   ```
 
 1. 次のコマンドを使用して、[Get-Random][docs.microsoft.com/powershell/module/microsoft.powershell.utility/get-random] PowerShell コマンドレットを使用して **suffix** という名前の新しい変数を作成します。
 
-    ```
-    $suffix=Get-Random -Maximum 1000000
-    ```
+   ```
+   $suffix=Get-Random -Maximum 1000000
+   ```
 
-    > &#128221; この Get-Random コマンドレットは、0 ～ 1,000,000 のランダムな整数を生成します。 サービスにグローバルに一意の名前が必要なので、これは便利です。
+   > &#128221; この Get-Random コマンドレットは、0 ～ 1,000,000 のランダムな整数を生成します。 サービスにグローバルに一意の名前が必要なので、これは便利です。
 
-1. ハードコードされた文字列 **csms** と変数置換を使用して、別の新しい変数名 **accountName** を作成し、次のコマンドを使用して **$suffix** 変数の値を挿入します。
+1. ハードコードされた文字列 **csms** と変数置換を使用して、別の新しい変数名 **accountName** を作成し、次のコマンドを使用して **\$suffix** 変数の値を挿入します。
 
-    ```
-    $accountName="csms$suffix"
-    ```
+   ```
+   $accountName="csms$suffix"
+   ```
 
 1. 次のコマンドを使用して、このラボで以前に作成または表示したリソース グループの名前を使用して、もう 1 つの新しい変数名 **resourceGroup** を作成します。
 
-    ```
-    $resourceGroup="<resource-group-name>"
-    ```
+   ```
+   $resourceGroup="<resource-group-name>"
+   ```
 
-    > &#128221; たとえば、リソース グループの名前が **dp420** の場合、コマンドは **$resourceGroup="dp420"** になります。
+   > &#128221; たとえば、リソース グループの名前が **dp420** の場合、コマンドは **\$resourceGroup="dp420"** になります。
 
-1. **echo** コマンドレットを使用して、次のコマンドを使用して **$accountName** 変数および **$resourceGroup** 変数の値をターミナル出力に書き込みます。
+1. **echo** コマンドレットを使用して、次のコマンドを使用して **\$accountName** 変数および **\$resourceGroup** 変数の値をターミナル出力に書き込みます。
 
-    ```
-    echo $accountName
-    echo $resourceGroup
-    ```
+   ```
+   echo $accountName
+   echo $resourceGroup
+   ```
 
 1. 次のコマンドを使用して、**az cosmosdb create** のオプションを表示します。
 
-    ```
-    az cosmosdb create --help
-    ```
+   ```
+   az cosmosdb create --help
+   ```
 
 1. 事前定義された変数と次のコマンドを使用して、新しい Azure Cosmos DB アカウントを作成します。
 
-    ```
-    az cosmosdb create --name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb create --name $accountName --resource-group $resourceGroup
+   ```
 
 1. **create** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
-    > &#128161; **create** コマンドが完了するまで、平均して 2 〜 12 分かかる場合があります。
+   > &#128161; **create** コマンドが完了するまで、平均して 2 〜 12 分かかる場合があります。
 
 ## <a name="create-azure-cosmos-db-sql-api-resources-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB SQL API リソースを作成する
 
@@ -131,39 +127,39 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** に関連するほとんどのコマンド Azure CLI コマンド グループを表示します。
 
-    ```
-    az cosmosdb sql --help
-    ```
+   ```
+   az cosmosdb sql --help
+   ```
 
 1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** データベースを管理するための Azure CLI コマンドを表示します。
 
-    ```
-    az cosmosdb sql database --help
-    ```
+   ```
+   az cosmosdb sql database --help
+   ```
 
 1. 事前定義された変数、データベース名 **cosmicworks**、および次のコマンドを使用して、新しい Azure Cosmos DB データベースを作成します。
 
-    ```
-    az cosmosdb sql database create --name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb sql database create --name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
+   ```
 
 1. **create** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
 1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** コンテナーを管理するための Azure CLI コマンドを表示します。
 
-    ```
-    az cosmosdb sql container --help
-    ```
+   ```
+   az cosmosdb sql container --help
+   ```
 
 1. 事前定義された変数、データベース名 **cosmicworks**、コンテナー名 **products**、および次のコマンドを使用して、新しい Azure Cosmos DB コンテナーを作成します。
 
-    ```
-    az cosmosdb sql container create --name "products" --throughput 400 --partition-key-path "/categoryId" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb sql container create --name "products" --throughput 400 --partition-key-path "/categoryId" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
+   ```
 
 1. **create** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
-1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (`portal.azure.com`) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
@@ -171,11 +167,11 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、 **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **products** コンテナー ノードを選択し、 **[Scale & Settings]** を選択します。
 
-1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
+1. **[Scale]** タブ内の値を確認します。具体的には、 **[Throughput]** セクションで **[Manual]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -187,35 +183,35 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
 
 1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** コンテナー スループットを管理するための Azure CLI コマンドを表示します。
 
-    ```
-    az cosmosdb sql container throughput --help
-    ```
+   ```
+   az cosmosdb sql container throughput --help
+   ```
 
 1. 次のコマンドを使用して、**products** コンテナーのスループットを手動プロビジョニングから自動スケーリングに移行します。
 
-    ```
-    az cosmosdb sql container throughput migrate --name "products" --throughput-type autoscale --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb sql container throughput migrate --name "products" --throughput-type autoscale --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
+   ```
 
 1. **migrate** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
 1. 次のコマンドを使用して、**products** コンテナーに対してクエリを実行して、考えられる最小スループット値を確認します。
 
-    ```
-    az cosmosdb sql container throughput show --name "products" --query "resource.minimumThroughput" --output "tsv" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb sql container throughput show --name "products" --query "resource.minimumThroughput" --output "tsv" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
+   ```
 
 1. 次のコマンドを使用して、**products** コンテナーの最大自動スケーリング スループットを既定値の **4,000** から新しい値の **5,000** に更新します。
 
-    ```
-    az cosmosdb sql container throughput update --name "products" --max-throughput 5000 --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
-    ```
+   ```
+   az cosmosdb sql container throughput update --name "products" --max-throughput 5000 --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
+   ```
 
 1. **update** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
 1. **Visual Studio Code** を閉じます。
 
-1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (`portal.azure.com`) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
@@ -223,9 +219,9 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、 **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **products** コンテナー ノードを選択し、 **[Scale & Settings]** を選択します。
 
 1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[自動スケーリング]** オプションが選択されており、プロビジョニングされたスループットが **5,000** RU/秒に設定されていることを確認します。
 

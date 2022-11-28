@@ -2,12 +2,6 @@
 lab:
   title: Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 4e50de8a4368336f952a8f966ff26340f86fa170
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919964"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
 

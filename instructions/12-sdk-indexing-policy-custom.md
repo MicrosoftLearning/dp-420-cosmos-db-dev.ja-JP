@@ -2,13 +2,8 @@
 lab:
   title: ポータルで Azure Cosmos DB SQL API コンテナーのインデックス ポリシーを構成する
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 8e111a060e68c32dfb03a2b2b239131298dd0919
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773638"
 ---
+
 # <a name="configure-an-azure-cosmos-db-sql-api-containers-index-policy-using-the-sdk"></a>SDK を使用して Azure Cosmos DB SQL API コンテナーのインデックス ポリシーを構成する
 
 インデックス作成ポリシーは、任意の Azure Cosmos DB SDK から管理できます。 特に、.NET SDK には、Azure Cosmos DB SQL API のコンテナーに新しいインデックス ポリシーを設計およびプッシュするために使用できる一連のクラスが含まれています。
@@ -21,11 +16,11 @@ ms.locfileid: "144773638"
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+   > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに `https://github.com/microsoftlearning/dp-420-cosmos-db-dev` GitHub リポジトリをクローンします。
 
-    > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
+   > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
 1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
@@ -33,22 +28,22 @@ ms.locfileid: "144773638"
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
 
-1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
+1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (`portal.azure.com`) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、_Cosmos DB_ を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
 
-    | **設定** | **Value** |
-    | ---: | :--- |
-    | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
-    | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
-    | **容量モード** | *プロビジョニング済みスループット* |
-    | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
+   |                                             **設定** | **Value**                                                         |
+   | ---------------------------------------------------: | :---------------------------------------------------------------- |
+   |                               **サブスクリプション** | ''_既存の Azure サブスクリプション_''                             |
+   |                                **リソース グループ** | ''_既存のリソース グループを選択するか、新しいものを作成します_'' |
+   |                                     **アカウント名** | ''_グローバルに一意の名前を入力します_''                          |
+   |                                             **場所** | ''_使用可能なリージョンを選びます_''                              |
+   |                                       **容量モード** | _プロビジョニング済みスループット_                                |
+   | **Apply Free Tier Discount (Free レベル割引の適用)** | _適用しない_                                                      |
 
-    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+   > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -56,9 +51,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+   1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+   1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -71,102 +66,102 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. **script.cs** コード ファイルを開きます。
 
 1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **endpoint** に設定された値で更新します。
-  
-    ```
-    string endpoint = "<cosmos-endpoint>";
-    ```
 
-    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+   ```
+   string endpoint = "<cosmos-endpoint>";
+   ```
+
+   > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
 1. **key** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **key** に設定された値で更新します。
 
-    ```
-    string key = "<cosmos-key>";
-    ```
+   ```
+   string key = "<cosmos-key>";
+   ```
 
-    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+   > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
 1. 既定の空のコンストラクターを使用して、**policy** という名前の型 [IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy] の新しい変数を作成します。
 
-    ```
-    IndexingPolicy policy = new ();
-    ```
+   ```
+   IndexingPolicy policy = new ();
+   ```
 
 1. **policy** 変数の [IndexingMode][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.indexingmode] プロパティを [IndexingMode.Consistent][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingmode#fields] の値に設定します。
 
-    ```
-    policy.IndexingMode = IndexingMode.Consistent;
-    ```
+   ```
+   policy.IndexingMode = IndexingMode.Consistent;
+   ```
 
-1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] プロパティが **/** _ の値に設定された型 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] の新しいオブジェクトを、_ *policy** 変数の [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] コレクション プロパティに追加します。
+1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] プロパティが **/** _ の値に設定された型 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] の新しいオブジェクトを、_ \*policy\*\* 変数の [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] コレクション プロパティに追加します。
 
-    ```
-    policy.ExcludedPaths.Add(
-        new ExcludedPath{ Path = "/*" }
-    );
-    ```
+   ```
+   policy.ExcludedPaths.Add(
+       new ExcludedPath{ Path = "/*" }
+   );
+   ```
 
 1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath.path] プロパティが **/name/?** の値に設定された型 [IncludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.includedpath] の新しいオブジェクトを、 **policy** 変数の [IncludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.includedpaths] コレクション プロパティに追加します。
 
-    ```
-    policy.IncludedPaths.Add(
-        new IncludedPath{ Path = "/name/?" }
-    );
-    ```
+   ```
+   policy.IncludedPaths.Add(
+       new IncludedPath{ Path = "/name/?" }
+   );
+   ```
 
-1. **options** という名前の型 [ContainerProperties][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties] の新しい変数を作成し、コンストラクター パラメーターとして値 ``products`` と ``/categoryId`` を渡します。
+1. **options** という名前の型 [ContainerProperties][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties] の新しい変数を作成し、コンストラクター パラメーターとして値 `products` と `/categoryId` を渡します。
 
-    ```
-    ContainerProperties options = new ("products", "/categoryId");
-    ```
+   ```
+   ContainerProperties options = new ("products", "/categoryId");
+   ```
 
 1. **policy** 変数を **options** 変数の [IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties.indexingpolicy] プロパティに割り当てます。
 
-    ```
-    options.IndexingPolicy = policy;
-    ```
+   ```
+   options.IndexingPolicy = policy;
+   ```
 
 1. **database** 変数の [CreateContainerIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync] メソッドを非同期に呼び出し、**options** 変数をコンストラクター パラメーターとして渡し、結果を **container** という名前の [Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 型の変数に格納します。
 
-    ```
-    Container container = await database.CreateContainerIfNotExistsAsync(options);
-    ```
+   ```
+   Container container = await database.CreateContainerIfNotExistsAsync(options);
+   ```
 
 1. 組み込みの **Console.WriteLine** 静的メソッドを使用して、Container クラスの [Id][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.id] プロパティを **Container Created** というタイトルのヘッダーと共に出力します。
 
-    ```
-    Console.WriteLine($"Container Created [{container.Id}]");
-    ```
+   ```
+   Console.WriteLine($"Container Created [{container.Id}]");
+   ```
 
 1. 完了すると、コード ファイルに次の情報が表示されます。
-  
-    ```
-    using System;
-    using Microsoft.Azure.Cosmos;
 
-    string endpoint = "<cosmos-endpoint>";
+   ```
+   using System;
+   using Microsoft.Azure.Cosmos;
 
-    string key = "<cosmos-key>";
+   string endpoint = "<cosmos-endpoint>";
 
-    CosmosClient client = new CosmosClient(endpoint, key);
+   string key = "<cosmos-key>";
 
-    Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
-    
-    IndexingPolicy policy = new ();
-    policy.IndexingMode = IndexingMode.Consistent;
-    policy.ExcludedPaths.Add(
-        new ExcludedPath{ Path = "/*" }
-    );
-    policy.IncludedPaths.Add(
-        new IncludedPath{ Path = "/name/?" }
-    );
+   CosmosClient client = new CosmosClient(endpoint, key);
 
-    ContainerProperties options = new ("products", "/categoryId");
-    options.IndexingPolicy = policy;
+   Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
-    Container container = await database.CreateContainerIfNotExistsAsync(options);
-    Console.WriteLine($"Container Created [{container.Id}]");
-    ```
+   IndexingPolicy policy = new ();
+   policy.IndexingMode = IndexingMode.Consistent;
+   policy.ExcludedPaths.Add(
+       new ExcludedPath{ Path = "/*" }
+   );
+   policy.IncludedPaths.Add(
+       new IncludedPath{ Path = "/name/?" }
+   );
+
+   ContainerProperties options = new ("products", "/categoryId");
+   options.IndexingPolicy = policy;
+
+   Container container = await database.CreateContainerIfNotExistsAsync(options);
+   Console.WriteLine($"Container Created [{container.Id}]");
+   ```
 
 1. **script.cs** ファイルを **保存** します。
 
@@ -174,15 +169,15 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
-    ```
-    dotnet run
-    ```
+   ```
+   dotnet run
+   ```
 
 1. スクリプトにより、新しく作成したコンテナーの名前が出力されます。
 
-    ```
-    Container Created [products]
-    ```
+   ```
+   Container Created [products]
+   ```
 
 1. 統合ターミナルを閉じます。
 
@@ -192,7 +187,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 他のインデックス作成ポリシーと同様に、データ エクスプローラーを使用して、.NET SDK を使用してプッシュしたポリシーを表示できます。 ここでは、ポータルを使用して、このラボで作成したポリシーをコードから確認します。
 
-1. Web ブラウザーで、Azure portal (``portal.azure.com``) に移動します。
+1. Web ブラウザーで、Azure portal (`portal.azure.com`) に移動します。
 
 1. **[リソース グループ]** を選択し、このラボで先ほど作成または表示したリソース グループを選び、このラボで作成した **Azure Cosmos DB アカウント** リソースを選択します。
 
@@ -200,31 +195,31 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、 **[スケールと設定]** を選択します。
+1. **SQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、 **[Scale & Settings]** を選択します。
 
-1. **[インデックス作成ポリシー]** セクションで、インデックス作成ポリシーを確認します。
+1. **[Indexing Policy]** セクションで、インデックス作成ポリシーを確認します。
 
-    ```
-    {
-      "indexingMode": "consistent",
-      "automatic": true,
-      "includedPaths": [
-        {
-          "path": "/name/?"
-        }
-      ],
-      "excludedPaths": [
-        {
-          "path": "/*"
-        },
-        {
-          "path": "/\"_etag\"/?"
-        }
-      ]
-    }
-    ```
+   ```
+   {
+     "indexingMode": "consistent",
+     "automatic": true,
+     "includedPaths": [
+       {
+         "path": "/name/?"
+       }
+     ],
+     "excludedPaths": [
+       {
+         "path": "/*"
+       },
+       {
+         "path": "/\"_etag\"/?"
+       }
+     ]
+   }
+   ```
 
-    > &#128221; これは、このラボで .NET SDK を使用して作成したインデックス作成ポリシーの JSON 表現です。
+   > &#128221; これは、このラボで .NET SDK を使用して作成したインデックス作成ポリシーの JSON 表現です。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
