@@ -1,39 +1,34 @@
 ---
 lab:
-  title: Azure Cognitive Search と Azure Cosmos DB SQL API を使用してデータを検索する
-  module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: e61608396e31d7892168cbf29086cb16be525087
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024970"
+  title: Azure Cognitive Search と Azure Cosmos DB for NoSQL を使用してデータを検索する
+  module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
-# <a name="search-data-using-azure-cognitive-search-and-azure-cosmos-db-sql-api"></a>Azure Cognitive Search と Azure Cosmos DB SQL API を使用してデータを検索する
+
+# <a name="search-data-using-azure-cognitive-search-and-azure-cosmos-db-for-nosql"></a>Azure Cognitive Search と Azure Cosmos DB for NoSQL を使用してデータを検索する
 
 Azure Cognitive Search では、サービスとしての検索エンジンと AI 機能の緊密な統合を組み合わせて、検索インデックスの情報を充実させます。
 
-このラボでは、Azure Cosmos DB SQL API コンテナー内のデータに自動的にインデックスを付け、Azure Cognitive Services Translator 機能を使用してデータを強化する Azure Cognitive Search インデックスを付けます。
+このラボでは、Azure Cosmos DB for NoSQL コンテナー内のデータに自動的にインデックスを付け、Azure Cognitive Services Translator 機能を使用してデータを強化する Azure Cognitive Search インデックスを作成します。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *サーバーレス* |
 
-    > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -41,11 +36,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
-    1. **[プライマリ接続文字列]** フィールドの値を記録します。 この **接続文字列** の値は、この演習で後ほど使用します。
+    1. **[プライマリ接続文字列]** フィールドの値を記録します。 この**接続文字列**の値は、この演習で後ほど使用します。
 
 1. リソース メニューで **[データ エクスプローラー]** を選択します。
 
@@ -63,7 +58,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="seed-your-azure-cosmos-db-sql-api-account-with-sample-data"></a>サンプル データを使用して Azure Cosmos DB SQL API アカウントにシードを設定する
+## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>Azure Cosmos DB for NoSQL アカウントにサンプル データをシードする
 
 **cosmicworks** データベースと **products** コンテナーを作成するコマンドライン ユーティリティを使用します。 ツールで一連の項目を作成して、ターミナル ウィンドウで実行されている変更フィード プロセッサを使用して確認します。
 
@@ -110,7 +105,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **名前** | ''*グローバルに一意の名前を入力します*'' |
     | **場所** | *使用可能な任意のリージョンを選択します* |
     | **[価格レベル]** | *Free* |
@@ -121,9 +116,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. 新しく作成された **Azure Cognitive Search** アカウント リソースに移動します。
 
-## <a name="build-indexer-and-index-for-azure-cosmos-db-sql-api-data"></a>Azure Cosmos DB SQL API データ用にインデクサーとインデックスを作成する
+## <a name="build-indexer-and-index-for-azure-cosmos-db-for-nosql-data"></a>Azure Cosmos DB for NoSQL データ用にインデクサーとインデックスを作成する
 
-特定の Azure Cosmos DB SQL API コンテナー内のデータのサブセットに 1 時間ごとにインデックスを付けるインデクサーを作成します。
+特定の Azure Cosmos DB for NoSQL コンテナー内のデータのサブセットに 1 時間ごとにインデックスを付けるインデクサーを作成します。
 
 1. **Azure Cognitive Search** リソース ブレードから、 **[データのインポート]** を選択します。
 
@@ -134,7 +129,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **[データ ソース名]** | *products-cosmossql-source* |
-    | **接続文字列** | *先ほど作成した Azure Cosmos DB SQL API アカウントの *_接続文字列_** |
+    | **接続文字列** | "*先ほど作成した Azure Cosmos DB for NoSQL アカウントの**接続文字列***" |
     | **[データベース]** | *cosmicworks* |
     | **コレクション** | *製品* |
 
@@ -161,7 +156,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[次へ: コグニティブ スキルの追加]** を選択します。
 
-1. **[次へ: 対象インデックスをカスタマイズします]** を選択します。
+1. **[スキップ先: 対象インデックスをカスタマイズします]** を選びます。
 
 1. ウィザードの **[対象インデックスをカスタマイズします]** の手順で、次の設定を使用してインデックスを構成し、残りのすべての設定を既定値のままにします。
 
@@ -198,11 +193,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; ブレードが自動的に更新されない場合は、 **[更新]** オプションを使用してブレードを更新しなければならない場合があります。
 
-1. **[インデックス]** タブに移動し、**products-index** インデックスを選択します。
+1. **[インデックス]** タブに移動し、**products-index**インデックスを選択します。
 
 ## <a name="validate-index-with-example-search-queries"></a>検索クエリの例を使用したインデックスの検証
 
-これで、Azure Cosmos DB SQL API データの具体化されたビューが検索インデックスに含まれるようになったため、Azure Cognitive Search の機能を利用するいくつかの基本的なクエリを実行できます。
+これで、Azure Cosmos DB for NoSQL データの具体化されたビューが検索インデックスに含まれるようになったため、Azure Cognitive Search の機能を利用するいくつかの基本的なクエリを実行できます。
 
 > &#128221; このラボは、Azure Cognitive Search 構文を説明するためのものではありません。 これらのクエリは、検索インデックスとエンジンで利用可能な機能の一部を紹介するためにキュレーションされました。
 

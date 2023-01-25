@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 個別のコンテナーおよび埋め込みコンテナー内にあるエンティティのパフォーマンスを測定する
-  module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 15b535ae9667402817f8a26d8f1ab51192f16b33
-ms.sourcegitcommit: 8911688483dd0aa3bcfad6bf87b9550eccf6e9ca
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 06/02/2022
-ms.locfileid: "146017366"
+  title: 顧客エンティティのパフォーマンスを測定する
+  module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
 ---
-# <a name="measure-performance-of-entities-in-separate-and-embeded-containers"></a>個別のコンテナーおよび埋め込みコンテナー内にあるエンティティのパフォーマンスを測定する
+
+# <a name="measure-performance-for-customer-entities"></a>顧客エンティティのパフォーマンスを測定する
 
 この演習では、エンティティを個別のコンテナーとしてモデリングした場合と、エンティティを 1 つのドキュメントに埋め込む NoSQL データベースのモデリングを行った場合について、顧客エンティティの違いを測定します。
 
@@ -21,7 +16,7 @@ ms.locfileid: "146017366"
 
     > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
@@ -35,7 +30,7 @@ ms.locfileid: "146017366"
 
     > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、 **+** 記号の横にあるプルダウンをクリックし、*Git Bash* を選択します。
 
-1. **Git Bash ターミナル** で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 *スクリプトで Azure アカウントに提供された資格情報が求められると、ビルドが完了するまでに 15 〜20 分かかる場合があるため、休憩を取るなどしてお待ちください。*
+1. **Git Bash ターミナル**で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 提供された Azure アカウントの資格情報を入力すると、ビルドが完了するまでに 15 から 20 分かかることがあるため、コーヒーやお茶を飲むのにいいかもしれません。**
 
     ```
     az login
@@ -73,7 +68,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客のクエリに関するクエリ統計情報を示すスクリーンショット。](media/17-customer-query-v1.png)
 
@@ -89,7 +84,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.customerId = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客住所のクエリに関するクエリの統計情報を示すスクリーンショット。](media/17-customer-address-query-v1.png)
 
@@ -105,7 +100,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客パスワードのクエリに関するクエリ統計情報を示すスクリーンショット。](media/17-customer-password-query-v1.png)
 
@@ -136,7 +131,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
     ![データベースの顧客に対するクエリ結果を示すスクリーンショット。](media/17-customer-query-v2.png)
 
-1. **[Query Stats]\(クエリの統計情報\)** を選択します。先ほど実行した 3 つのクエリの 8.49 RU/s に対し、要求料金が 2.83 であることを確認します。
+1. **[Query Stats](クエリの統計情報)** を選択します。先ほど実行した 3 つのクエリの 8.49 RU/s に対し、要求料金が 2.83 であることを確認します。
 
 ## <a name="compare-the-performance-of-the-two-models"></a>2 つのモデルのパフォーマンスを比較する
 

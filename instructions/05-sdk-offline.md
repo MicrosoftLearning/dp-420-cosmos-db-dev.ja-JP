@@ -1,17 +1,12 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK をオフライン開発用に構成する
-  module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: f977dc20266bbd843ab9c94bae8cf08672b99dd9
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919967"
+  title: Azure Cosmos DB for NoSQL SDK をオフライン開発用に構成する
+  module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
 ---
-# <a name="configure-the-azure-cosmos-db-sql-api-sdk-for-offline-development"></a>Azure Cosmos DB SQL API SDK をオフライン開発用に構成する
 
-Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB サービスをエミュレートするローカル ツールです。 エミュレーターでは SQL API がサポートされており、Azure SDK for .NET を使用してコードを開発するときにクラウド サービスの代わりに使用できます。
+# <a name="configure-the-azure-cosmos-db-for-nosql-sdk-for-offline-development"></a>Azure Cosmos DB for NoSQL SDK をオフライン開発用に構成する
+
+Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB サービスをエミュレートするローカル ツールです。 エミュレーターでは for NoSQL がサポートされており、Azure SDK for .NET を使用してコードを開発するときにクラウド サービスの代わりに使用できます。
 
 このラボでは、Azure SDK for .NET から Azure Cosmos DB Emulator に接続します。
 
@@ -35,9 +30,9 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 1. **Azure Cosmos DB Emulator** を起動します。
 
-    > &#128221; エミュレーターを起動するための管理者アクセス権を付与するように求められる場合があります。 ラボ環境では、**管理者** アカウントのパスワードは **学生** アカウントと同じになります。
+    > &#128221; エミュレーターを起動するための管理者アクセス権を付与するように求められる場合があります。 ラボ環境では、**管理者**アカウントのパスワードは**学生**アカウントと同じになります。
 
-    > &#128161; Azure Cosmos DB Emulator は、Windows タスクバーと [スタート] メニューの両方に固定されています。"**Emulator がピン留めされたアイコンから始まらない場合は、"** _ _ *C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe***_" ファイル_** をダブルクリックして開いてみてください。" **  エミュレーターの起動には、20 から 30 秒かかることに注意してください。
+    > &#128161; Azure Cosmos DB Emulator は、Windows タスクバーと [スタート] メニューの両方に固定されています。 ***Emulator がピン留めされたアイコンから始まらない場合は、*** **C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe** ***ファイル***をダブルクリックして開いてみてください。 エミュレーターの起動には、20 から 30 秒かかることに注意してください。
 
 1. エミュレーターで自動的に既定のブラウザーが開き、**localhost:8081/_explorer/index.html** のランディング ページに移動するのを待ちます。
 
@@ -45,11 +40,11 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[プライマリ接続文字列]** フィールドの値を記録します。 この **接続文字列** の値は、この演習で後ほど使用します。
+    1. **[プライマリ接続文字列]** フィールドの値を記録します。 この**接続文字列**の値は、この演習で後ほど使用します。
 
 1. **[エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**SQL API** ナビゲーション ツリー内にノードがないことを確認します。
+1. **[データ エクスプローラー]** で、**NoSQL API** ナビゲーション ツリー内にノードがないことを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -61,13 +56,13 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 1. **05-sdk-offline** フォルダー内の **script.cs** コード ファイルを開きます。
 
-1. Azure Cosmos DB Emulator の **接続文字列** に値が設定された **connectionString** という名前の既存の変数を更新します。
+1. Azure Cosmos DB Emulator の**接続文字列**に値が設定された **connectionString** という名前の既存の変数を更新します。
   
     ```
     string connectionString = "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
     ```
 
-    > &#128221; エミュレーターの URI は通常、既定のポートが _*8081** に設定された SSL を使用する ***localhost:[port]** _ です。
+    > &#128221; エミュレーターの URI は通常、既定のポートが **8081** に設定された SSL を使用する ***localhost:[port]*** です。
 
     > &#128221; *C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==* は、エミュレーターのすべてのインストールに使用される既定のキーです。 このキーは、コマンド ライン オプションを使用して変更できます。
 
@@ -97,7 +92,7 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
     Console.WriteLine($"New Database:\tId: {database.Id}");
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**05-sdk-offline** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -119,13 +114,13 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 
 ## <a name="view-the-changes-in-the-emulator"></a>エミュレーターで変更を表示する
 
-Azure Cosmos DB Emulator に新しいデータベースを作成したので、オンライン **データ エクスプローラー** を使用して、エミュレーター内の新しい SQL API データベースを確認します。
+Azure Cosmos DB エミュレーターに新しいデータベースを作成したので、オンライン **データ エクスプローラー**を使用して、エミュレーター内の新しい NoSQL API データベースを確認します。
 
 1. Windows システム トレイのエミュレーター アイコンに移動し、コンテキスト メニューを開き、 **[データ エクスプローラーを開く]** を選択して、既定のブラウザーを使用して **localhost: 8081/_explorer/** ランディング ページに移動します。
 
 1. **Azure Cosmos DB Emulator** のランディング ページで、 **[エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**SQL API** ナビゲーション ツリー内の新しい **cosmicworks** データベース ノードを確認します。
+1. **[データ エクスプローラー]** で、**NoSQL API** ナビゲーション ツリー内の新しい **cosmicworks** データベース ノードを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
@@ -166,7 +161,7 @@ Azure Cosmos DB Emulator に新しいデータベースを作成したので、�
     Console.WriteLine($"New Container:\tId: {container.Id}");
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**05-sdk-offline** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -184,7 +179,7 @@ Azure Cosmos DB Emulator に新しいデータベースを作成したので、�
 
 1. **Azure Cosmos DB Emulator** のランディング ページで、 **[エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 

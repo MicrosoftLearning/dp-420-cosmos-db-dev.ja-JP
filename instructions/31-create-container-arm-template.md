@@ -1,15 +1,10 @@
 ---
 lab:
-  title: Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
-  module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: d82920cf333d5d59f74d1990b623e9be33582647
-ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145890690"
+  title: Azure Resource Manager テンプレートを使用して Azure Cosmos DB for NoSQL コンテナーを作成する
+  module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
-# <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API コンテナーを作成する
+
+# <a name="create-an-azure-cosmos-db-for-nosql-container-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB for NoSQL コンテナーを作成する
 
 Azure Resource Manager テンプレートは、Azure にデプロイするインフラストラクチャを宣言的に定義する JSON ファイルです。 Azure Resource Manager テンプレートは、Azure にサービスをデプロイするための一般的なコードとしてのインフラストラクチャ ソリューションです。 Bicep は、JSON テンプレートの作成に使用できる、読みやすいドメイン固有言語を定義することで、概念をさらに詳しく説明します。
 
@@ -23,13 +18,13 @@ Azure Resource Manager テンプレートは、Azure にデプロイするイン
 
     > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB SQL API リソースを作成する
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB for NoSQL リソースを作成する
 
 Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダーを使用すると、JSON ファイルを使用してアカウント、データベース、およびコンテナーをデプロイできます。 ファイルは複雑な場合がありますが、予測可能な形式に従っており、Visual Studio Code 拡張機能を使用して書き込むことができます。
 
@@ -104,7 +99,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
     
     このコマンドを実行すると、複数のリソース グループ名を返すことができます。
 
-1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。*_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
+1. (省略可能) ***"リソース グループが作成されていない場合" は***、リソース グループ名を選んで作成します。 *ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。*
 
     i. この一覧から、自分に最も近い場所の名前を取得します。
 
@@ -139,7 +134,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 
 1. 統合ターミナルを開いたままにして、**deploy.json** ファイルのエディターに戻ります。
 
-1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB SQL API データベースを作成します。
+1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB for NoSQL データベースを作成します。
 
     ```
     ,
@@ -180,7 +175,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 
 1. 統合ターミナルを開いたままにして、**deploy.json** ファイルのエディターに戻ります。
 
-1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB SQL API コンテナーを作成します。
+1. **resources** 配列内に、別の新しい JSON オブジェクトを追加して、新しい Azure Cosmos DB for NoSQL コンテナーを作成します。
 
     ```
     ,
@@ -234,7 +229,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 
 ## <a name="observe-deployed-azure-cosmos-db-resources"></a>デプロイされた Azure Cosmos DB リソースを確認する
 
-Azure Cosmos DB SQL API リソースがデプロイされると、Azure portal のリソースに移動できます。 データ エクスプローラーを使用して、アカウント、データベース、およびコンテナーがすべて正しくデプロイおよび構成されていることを検証します。
+Azure Cosmos DB for NoSQL リソースがデプロイされたら、Azure portal でそのリソースに移動できます。 データ エクスプローラーを使用して、アカウント、データベース、およびコンテナーがすべて正しくデプロイおよび構成されていることを検証します。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
@@ -244,17 +239,17 @@ Azure Cosmos DB SQL API リソースがデプロイされると、Azure portal �
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
 
 1. **[スケール]** セクション内の値を確認します。 具体的には、 **[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
 
-1. **[設定]** セクション内の値を確認します。 具体的には、**パーティション キー** の値が **/categoryId** に設定されていることを確認します。
+1. **[設定]** セクション内の値を確認します。 具体的には、**パーティション キー**の値が **/categoryId** に設定されていることを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-bicep-templates"></a>Bicep テンプレートを使用して Azure Cosmos DB SQL API リソースを作成する
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-bicep-templates"></a>Bicep テンプレートを使用して Azure Cosmos DB for NoSQL リソースを作成する
 
 Bicep は、効率的なドメイン固有言語であり、Azure Resource Manager テンプレートよりも単純かつ簡単に Azure リソースをデプロイできます。 違いを説明するために、Bicep と別の名前を使用してまったく同じリソースをデプロイします。\[\]
 
@@ -417,13 +412,13 @@ Bicep デプロイは、Azure Resource Manager デプロイと同じ手法の多
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
 
 1. **[スケール]** セクション内の値を確認します。 具体的には、 **[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
 
-1. **[設定]** セクション内の値を確認します。 具体的には、**パーティション キー** の値が **/categoryId** に設定されていることを確認します。
+1. **[設定]** セクション内の値を確認します。 具体的には、**パーティション キー**の値が **/categoryId** に設定されていることを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
