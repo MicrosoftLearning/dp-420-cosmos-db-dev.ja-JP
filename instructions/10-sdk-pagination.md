@@ -1,15 +1,10 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
-  module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 0a353068db4047cb710b6937a89c5f3ccb652aed
-ms.sourcegitcommit: 63494c7409f08210c57aab19f2a61dd35851fd3b
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/11/2022
-ms.locfileid: "144940128"
+  title: Azure Cosmos DB for NoSQL SDK を使用して外積クエリの結果をページ分割する
+  module: Module 5 - Execute queries in Azure Cosmos DB for NoSQL
 ---
-# <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して外積クエリの結果を改ページする
+
+# <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用して外積クエリの結果をページ分割する
 
 Azure Cosmos DB クエリには、通常、複数の結果ページがあります。 改ページは、Azure Cosmos DB から 1 回の実行ですべてのクエリ結果を返せない場合に、自動的にサーバー側で行われます。 多くのアプリケーションでは、SDK を使用して、パフォーマンスの高い方法でクエリ結果を一括で処理するコードを記述する必要があります。
 
@@ -27,24 +22,24 @@ Azure Cosmos DB クエリには、通常、複数の結果ページがありま�
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -56,19 +51,19 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="seed-the-azure-cosmos-db-sql-api-account-with-data"></a>Azure Cosmos DB SQL API アカウントにデータをシードする
+## <a name="seed-the-azure-cosmos-db-for-nosql-account-with-data"></a>Azure Cosmos DB for NoSQL アカウントにデータをシードする
 
-[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB SQL API アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
+[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB for NoSQL アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
 
 1. **Visual Studio Code** で、 **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
-1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
+1. [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをご自分のコンピューターでグローバルに使用できるようにインストールします。
 
     ```
     dotnet tool install --global cosmicworks
@@ -231,7 +226,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     }
     ```
 
-1. **script.cs** ファイルを **保存** します。
+1. **script.cs** ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**10-paginate-results-sdk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 

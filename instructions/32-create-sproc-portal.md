@@ -1,14 +1,9 @@
 ---
 lab:
   title: Azure portal でストアド プロシージャを作成する
-  module: Module 13 - Create server-side programming constructs in Azure Cosmos DB SQL API
-ms.openlocfilehash: 0f390ab5e3bd796c3bfb17a060e2db4424e222e2
-ms.sourcegitcommit: 58caf52fefd9f9cbeeef3629e98245544a299b44
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 06/02/2022
-ms.locfileid: "146027671"
+  module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
+
 # <a name="create-a-stored-procedure-with-the-azure-portal"></a>Azure portal でストアド プロシージャを作成する
 
 ストアド プロシージャは、Azure Cosmos DB でサーバー側のビジネス ロジックを実行するための方法の 1 つです。 ストアド プロシージャを使用すると、1 つのトランザクション スコープ内の複数のドキュメントに対して 1 つのコンテナーを使用して基本的な CRUD (作成、読み取り、更新、削除) 操作を実行できます。
@@ -23,14 +18,14 @@ ms.locfileid: "146027671"
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -51,7 +46,7 @@ ms.locfileid: "146027671"
     | **インデックス作成** | *自動* |
     | **パーティション キー** | */categoryId* |
 
-1. 引き続き **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開してから、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを選択します。
+1. 引き続き **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開してから、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを選択します。
 
 1. **[新しいストアド プロシージャ]** を選択します。
 
@@ -67,7 +62,7 @@ ms.locfileid: "146027671"
     }
     ```
 
-1. **createDoc** 関数内で、組み込みの [getContext][azure.github.io/azure-cosmosdb-js-server/global.html] メソッドを呼び出し、その結果を **context** という名前の変数に格納します。
+1. **createDoc** 関数内で、組み込みの[getContext][azure.github.io/azure-cosmosdb-js-server/global.html] メソッドを呼び出し、その結果を **context** という名前の変数に格納します。
 
     ```
     var context = getContext();
@@ -223,7 +218,7 @@ ms.locfileid: "146027671"
 
 最後に、データ エクスプローラー を使用して、このラボで作成した 2 つのドキュメントを返す SQL クエリを発行します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開して、**SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開して、**NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択します。
 
 1. **[新しい SQL クエリ]** を選択します。
 

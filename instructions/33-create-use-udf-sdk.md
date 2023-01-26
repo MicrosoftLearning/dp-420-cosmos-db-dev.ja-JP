@@ -1,10 +1,10 @@
 ---
 lab:
-  title: SDK を使ってユーザー定義関数を実装してから使用する
+  title: SDK を使用して UDF を実装し、使用する
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
 
-# <a name="implement-and-then-use-user-defined-functions-with-the-sdk"></a>SDK を使ってユーザー定義関数を実装してから使用する
+# <a name="implement-and-then-use-a-udf-using-the-sdk"></a>SDK を使用して UDF を実装し、使用する
 
 Azure Cosmos DB for NoSQL 用の .NET SDK 使用して、コンテナーから直接サーバー側のプログラミング コンストラクトを管理し、呼び出すことができます。 新しいコンテナーを準備する際、データ エクスプローラーを使用して手動でタスクを実行する代わりに、.NET SDK を使用して UDF をコンテナーに直接発行する方が理にかなっている場合があります。
 
@@ -18,7 +18,7 @@ Azure Cosmos DB for NoSQL 用の .NET SDK 使用して、コンテナーから�
 
     > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
@@ -34,12 +34,12 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
-    | **設定** | **値** |
+    | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **Location** | *使用可能なリージョンを選びます* |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -73,7 +73,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. cosmicworks を実行し、次のコマンドライン オプションを使用して Azure Cosmos DB アカウントをシードします。
 
-    | **オプション** | **値** |
+    | **オプション** | **Value** |
     | ---: | :--- |
     | **--endpoint** | ''*このラボで先ほどコピーしたエンドポイントの値*'' |
     | **--key** | ''*このラボで先ほどコピーしたキーの値*'' |

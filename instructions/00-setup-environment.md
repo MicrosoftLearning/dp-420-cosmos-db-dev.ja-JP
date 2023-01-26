@@ -2,13 +2,8 @@
 lab:
   title: ラボ環境のセットアップ
   module: Setup
-ms.openlocfilehash: 6beb401fed4863929ed8772e2e8b3dff4b61434b
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025064"
 ---
+
 # <a name="setup-local-lab-environment"></a>ローカル ラボ環境のセットアップ
 
 これらのラボは、ホストされているラボ環境で実行することをお勧めします。 ご自分のコンピューターで実行する場合は、次のソフトウェアをインストールしてください。 独自の環境を使用すると、予期しないダイアログや動作が発生する場合があります。 さまざまなローカル構成が考えられるので、ご自分の環境で問題が発生しても、コース チームが問題をサポートすることはできません。

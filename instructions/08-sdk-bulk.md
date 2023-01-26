@@ -1,17 +1,12 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK を使用して複数のドキュメントを一括移動する
-  module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 07d515ecfeb2ae59284d212323009770380ddcf0
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919961"
+  title: Azure Cosmos DB for NoSQL SDK を使用して複数のドキュメントを一括移動する
+  module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
-# <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して複数のドキュメントを一括移動する
 
-一括操作を実行する方法を学習する最も簡単な方法は、クラウド内の Azure Cosmos DB SQL API アカウントに多くのドキュメントをプッシュしてみることです。 SDK の一括機能を使用すると、[System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 名前空間のわずかな助けを借りてこれを行うことができます。
+# <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用して複数のドキュメントを一括移動する
+
+一括操作を実行する方法を学習する最も簡単な方法は、クラウド内の Azure Cosmos DB for NoSQL アカウントに多くのドキュメントをプッシュしてみることです。 SDK の一括機能を使用すると、[System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 名前空間のわずかな助けを借りてこれを行うことができます。
 
 このラボでは、NuGet の [Bogus][nuget.org/packages/bogus/33.1.1] ライブラリを使用して架空のデータを生成し、それを Azure Cosmos DB アカウントに配置します。
 
@@ -29,20 +24,20 @@ ms.locfileid: "145919961"
 
 1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account-and-configure-the-sdk-project"></a>Azure Cosmos DB SQL API アカウントを作成し、SDK プロジェクトを構成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account-and-configure-the-sdk-project"></a>Azure Cosmos DB for NoSQL アカウントを作成し、SDK プロジェクトを構成する
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -54,9 +49,9 @@ ms.locfileid: "145919961"
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. 引き続き、新しく作成された **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
@@ -65,7 +60,7 @@ ms.locfileid: "145919961"
     | **設定** | **Value** |
     | ---: | :--- |
     | **データベース ID** | *新規作成* &vert; *`cosmicworks`* |
-    | **コンテナー間でスループットを共有する** | *選択しない* |
+    | **コンテナー間でスループットを共有する** | *選択しないでください* |
     | **コンテナー ID** | *`products`* |
     | **パーティション キー** | *`/categoryId`* |
     | **コンテナーのスループット** | *自動スケーリング* &vert; *`4000`* |
@@ -78,7 +73,7 @@ ms.locfileid: "145919961"
 
     > &#128221; **[Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1]** ライブラリは、既に NuGet から事前にインポートされています。
 
-1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定します。
+1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**エンドポイント**に設定します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -86,15 +81,15 @@ ms.locfileid: "145919961"
 
     > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
+1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**キー**に設定します。
 
     ```
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **08-sdk-bulk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -116,7 +111,7 @@ ms.locfileid: "145919961"
 
 ## <a name="bulk-inserting-a-twenty-five-thousand-documents"></a>25,000 ドキュメントの一括挿入
 
-"がんばって" 多くのドキュメントを挿入してみて、このしくみを確認しましょう。 内部テストでは、ラボ仮想マシンと Azure Cosmos DB SQL API アカウントが互いに地理的に比較的近い場合、これには約 1 分から 2 分かかる場合があります。
+"がんばって" 多くのドキュメントを挿入してみて、このしくみを確認しましょう。 内部テストでは、ラボ仮想マシンと Azure Cosmos DB for NoSQL アカウントが互いに地理的に比較的近い場合、これには約 1 分から 2 分かかる場合があります。
 
 1. **script.cs** コード ファイルのエディター タブに戻ります。
 
@@ -169,7 +164,7 @@ ms.locfileid: "145919961"
     }
     ```
 
-1. foreach ループ内に、Azure Cosmos DB SQL API に製品を非同期的に挿入する **Task** を作成します。必ず、パーティション キーを明示的に指定し、**concurrentTasks** という名前のタスクの一覧にタスクを追加してください。
+1. foreach ループ内に、Azure Cosmos DB for NoSQL に製品を非同期的に挿入する **Task** を作成します。必ず、パーティション キーを明示的に指定し、**concurrentTasks** という名前のタスクの一覧にタスクを追加してください。
 
     ```
     concurrentTasks.Add(
@@ -232,7 +227,7 @@ ms.locfileid: "145919961"
     Console.WriteLine("Bulk tasks complete");
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**08-sdk-bulk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -258,11 +253,11 @@ ms.locfileid: "145919961"
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを確認します。
 
 1. **products** ノードを展開してから、 **[項目]** ノードを選択します。 コンテナー内の項目の一覧を確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選んでから、 **[新しい SQL クエリ]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選んでから、 **[新しい SQL クエリ]** を選択します。
 
 1. エディター領域のコンテンツを削除します。
 

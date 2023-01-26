@@ -1,15 +1,10 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK を使用してアプリケーションのトラブルシューティングを行う
-  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 9e1d3220eac65806d0512c6a22b3ff1b4fe6d778
-ms.sourcegitcommit: e85dbb2b871e28631beea55bfbb47191bd979628
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 06/13/2022
-ms.locfileid: "146316630"
+  title: Azure Cosmos DB for NoSQL を使用してアプリケーションのトラブルシューティングを行う
+  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
-# <a name="troubleshoot-an-application-using-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用してアプリケーションのトラブルシューティングを行う
+
+# <a name="troubleshoot-an-application-using-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL を使用してアプリケーションのトラブルシューティングを行う
 
 Azure Cosmos DB には、さまざまな操作の型で発生する可能性のある問題のトラブルシューティングに役立つ、広範な応答コードのセットが用意されています。 キャッチは、Azure Cosmos DB 用のアプリを作成するときに適切なエラー処理をプログラムすることです。
 
@@ -27,24 +22,24 @@ Azure Cosmos DB には、さまざまな操作の型で発生する可能性の�
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、アカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得できます。 エンドポイントとキーを使用して、Azure Cosmos DB SQL API アカウントにプログラムで接続します。 Azure SDK for .NET またはその他の SDK の接続文字列でエンドポイントとキーを使用します。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、アカウントでサポートする API を選択します (たとえば、**Mongo API** や **NoSQL API**)。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得できます。 エンドポイントとキーを使用して、Azure Cosmos DB for NoSQL アカウントにプログラムで接続します。 Azure SDK for .NET またはその他の SDK の接続文字列でエンドポイントとキーを使用します。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *`Do Not Apply`* |
 
@@ -56,9 +51,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. 最小化しますが、ブラウザー ウィンドウは閉じません。 次の手順でバックグラウンド ワークロードを開始してから数分後に、Azure portal に戻ります。
 
@@ -121,7 +116,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 ## <a name="time-to-insert-and-delete-documents"></a>ドキュメントを挿入および削除する時間。
 
-1. **1** を選択し、**Enter キー** を押して最初のドキュメントを挿入します。 プログラムによって最初のドキュメントが挿入され、次のメッセージが返されます。
+1. **1** を選択し、**Enter キー**を押して最初のドキュメントを挿入します。 プログラムによって最初のドキュメントが挿入され、次のメッセージが返されます。
 
     ```
     Insert Successful.
@@ -129,7 +124,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Press [ENTER] to continue
     ```
 
-1. ここでも、**1** を選択し、**Enter キー** を押して最初のドキュメントを挿入します。 今回は、プログラムが例外でクラッシュします。 エラー スタックを調べると、プログラムが失敗した理由を見つけることができます。 エラー スタックから抽出されたメッセージからわかるように、ハンドルされない例外 "Conflict (409)" が発生します。
+1. ここでも、**1** を選択し、**Enter キー**を押して最初のドキュメントを挿入します。 今回は、プログラムが例外でクラッシュします。 エラー スタックを調べると、プログラムが失敗した理由を見つけることができます。 エラー スタックから抽出されたメッセージからわかるように、ハンドルされない例外 "Conflict (409)" が発生します。
 
     ```
     Unhandled exception. Microsoft.Azure.Cosmos.CosmosException : Response status code does not indicate success: Conflict (409);
@@ -199,7 +194,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     dotnet run
     ```
  
-1. ここでも、**1** を選択し、**Enter キー** を押して最初のドキュメントを挿入します。 今回はクラッシュしませんが、何が起こったのかについてユーザー フレンドリなメッセージを受け取ります。
+1. ここでも、**1** を選択し、**Enter キー**を押して最初のドキュメントを挿入します。 今回はクラッシュしませんが、何が起こったのかについてユーザー フレンドリなメッセージを受け取ります。
 
     ```
     Insert Failed. 

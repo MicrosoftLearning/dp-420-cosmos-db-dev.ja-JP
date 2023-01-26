@@ -4,7 +4,7 @@ lab:
   module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
 
-# <a name="create-an-azure-cosmos-db-for-nosql-container-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB for NoSQL コンテナーを作成する
+# <a name="create-an-azure-cosmos-db-for-nosqlcontainer-using-azure-resource-manager-templates"></a>Azure Resource Manager テンプレートを使用して Azure Cosmos DB for NoSQL コンテナーを作成する
 
 Azure Resource Manager テンプレートは、Azure にデプロイするインフラストラクチャを宣言的に定義する JSON ファイルです。 Azure Resource Manager テンプレートは、Azure にサービスをデプロイするための一般的なコードとしてのインフラストラクチャ ソリューションです。 Bicep は、JSON テンプレートの作成に使用できる、読みやすいドメイン固有言語を定義することで、概念をさらに詳しく説明します。
 
@@ -18,7 +18,7 @@ Azure Resource Manager テンプレートは、Azure にデプロイするイン
 
     > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
