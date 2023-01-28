@@ -1,19 +1,14 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK を使用して複数リージョンの書き込みアカウントに接続する
-  module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: bc9f23e136b5987fb55c386485916c701d016fd1
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025084"
+  title: Azure Cosmos DB for NoSQL SDK を使用して複数リージョンの書き込みアカウントに接続する
+  module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB for NoSQL
 ---
-# <a name="connect-to-a-multi-region-write-account-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用して複数リージョンの書き込みアカウントに接続する
 
-**CosmosClientBuilder** クラスは、コンテナーに接続して操作を実行する SDK クライアントをビルドするように設計されたフルーエント クラスです。 Azure Cosmos DB SQL API アカウントが複数リージョンの書き込み用に既に構成されている場合は、ビルダーを使用して、書き込み操作用に優先アプリケーション リージョンを構成できます。
+# <a name="connect-to-a-multi-region-write-account-with-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用して複数リージョンの書き込みアカウントに接続する
 
-このラボでは、リージョンが複数の Azure Cosmos DB SQL API アカウントを構成し、複数リージョンの書き込みを有効にします。 その後、SDK を使用して、特定のリージョンに対して操作を実行します。
+**CosmosClientBuilder** クラスは、コンテナーに接続して操作を実行する SDK クライアントをビルドするように設計されたフルーエント クラスです。 Azure Cosmos DB for NoSQL アカウントが複数リージョンの書き込み用に既に構成されている場合は、ビルダーを使用して、書き込み操作用に優先アプリケーション リージョンを構成できます。
+
+このラボでは、リージョンが複数の Azure Cosmos DB for NoSQL アカウントを構成し、複数リージョンの書き込みを有効にします。 その後、SDK を使用して、特定のリージョンに対して操作を実行します。
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
@@ -27,24 +22,24 @@ ms.locfileid: "138025084"
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -56,7 +51,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **[データをグローバルにレプリケートする]** ペインで、さらに少なくとも 1 つのリージョンをアカウントに追加します。
 
-1. **[データをグローバルにレプリケートする]** ペインのまま、**複数リージョンの書き込み** を有効にしてから、変更内容を **保存** します。
+1. **[データをグローバルにレプリケートする]** ペインのまま、**複数リージョンの書き込み**を有効にしてから、変更内容を**保存**します。
 
 1. このタスクを続行する前に、レプリケーション タスクが完了するのを待ちます。
 
@@ -73,24 +68,24 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | 新しい &vert; *cosmicworks* *を作成する* |
-    | **コンテナー間でスループットを共有する** | *選択しない* |
+    | **コンテナー間でスループットを共有する** | *選択しないでください* |
     | **コンテナー ID** | *製品* |
     | **パーティション キー** | */categoryId* |
     | **コンテナーのスループット** | *手動* &vert; *400* |
 
-1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
 
 1. リソース ブレードで、 **[キー]** ペインに移動します。
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="connect-to-the-azure-cosmos-db-sql-api-account-from-the-sdk"></a>SDK から Azure Cosmos DB SQL API アカウントに接続する
+## <a name="connect-to-the-azure-cosmos-db-for-nosql-account-from-the-sdk"></a>SDK から Azure Cosmos DB for NoSQL アカウントに接続する
 
 新しく作成したアカウントの資格情報を使用して、SDK クラスに接続し、新しいデータベースとコンテナー インスタンスを作成します。 次に、データ エクスプローラーを使用して、Azure portal でインスタンスが存在することを検証します。
 
@@ -118,7 +113,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; **[Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1]** ライブラリは、既に NuGet から事前にインポートされています。
 
-1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定します。
+1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**エンドポイント**に設定します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -126,15 +121,15 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
+1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**キー**に設定します。
 
     ```
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 ## <a name="configure-write-region-for-the-sdk"></a>SDK の書き込みリージョンを構成する
 
@@ -146,7 +141,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     CosmosClientBuilder builder = new (endpoint, key);
     ```
 
-1. ラボで先ほど作成した追加リージョンの名前を使用して、**string** 型の **region** という名前の新しい変数を作成します。 たとえば、**米国東部** リージョンに Azure Cosmos DB SQL API アカウントを作成し、**ブラジル南部** を追加した場合は、文字列変数に以下を含めます。
+1. ラボで先ほど作成した追加リージョンの名前を使用して、**string** 型の **region** という名前の新しい変数を作成します。 たとえば、**米国東部**リージョンに Azure Cosmos DB for NoSQL アカウントを作成し、その後**ブラジル南部**を追加した場合は、文字列変数に以下を含めます。
 
     ```
     string region = "Brazil South"; 
@@ -223,7 +218,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"Charge (RU):\t{response.RequestCharge:0.00}");
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**22-sdk-multi-region** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 

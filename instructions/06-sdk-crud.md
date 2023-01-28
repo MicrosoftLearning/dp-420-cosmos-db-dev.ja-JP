@@ -1,19 +1,14 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
-  module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 4e50de8a4368336f952a8f966ff26340f86fa170
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919964"
+  title: Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する
+  module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
-# <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>Azure Cosmos DB SQL API SDK を使用してドキュメントを作成および更新する
 
-[Microsoft.Azure.Cosmos.Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] クラスには、Azure Cosmos DB SQL API コンテナー内で項目を作成、取得、更新、削除するための一連のメンバー メソッドが用意されています。 これらのメソッドを組み合わせて、SQL API コンテナー内のさまざまな項目に対して、最も一般的な "CRUD" 操作の一部を実行します。
+# <a name="create-and-update-documents-with-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する
 
-このラボでは、この SDK を使用して、Azure Cosmos DB SQL API コンテナー内の項目に対して日常的な CRUD 操作を実行します。
+[Microsoft.Azure.Cosmos.Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] クラスには、Azure Cosmos DB for NoSQL コンテナー内の項目を作成、取得、更新、削除するための一連のメンバー メソッドが含まれています。 これらのメソッドを組み合わせて、NoSQL API コンテナー内のさまざまな項目に対して、最も一般的な "CRUD" 操作の一部を実行します。
+
+このラボでは、この SDK を使用して、Azure Cosmos DB for NoSQL コンテナー内の項目に対して日常的な CRUD 操作を実行します。
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
@@ -27,24 +22,24 @@ ms.locfileid: "145919964"
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -56,13 +51,13 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="connect-to-the-azure-cosmos-db-sql-api-account-from-the-sdk"></a>SDK から Azure Cosmos DB SQL API アカウントに接続する
+## <a name="connect-to-the-azure-cosmos-db-for-nosql-account-from-the-sdk"></a>SDK から Azure Cosmos DB for NoSQL アカウントに接続する
 
 新しく作成したアカウントの資格情報を使用して、SDK クラスに接続し、新しいデータベースとコンテナー インスタンスを作成します。 次に、データ エクスプローラーを使用して、Azure portal でインスタンスが存在することを検証します。
 
@@ -90,7 +85,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; **[Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1]** ライブラリは、既に NuGet から事前にインポートされています。
 
-1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定します。
+1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**エンドポイント**に設定します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -98,7 +93,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
+1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**キー**に設定します。
 
     ```
     string key = "<cosmos-key>";
@@ -134,7 +129,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**06-sdk-crud** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -154,13 +149,13 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
 ## <a name="perform-create-and-read-point-operations-on-items-with-the-sdk"></a>SDK を使用して項目に対して作成および読み取りポイント操作を実行する
 
-ここでは、Microsoft.Azure.Cosmos.Container クラスの非同期メソッド セットを使用して、SQL API コンテナー内の項目に対して一般的な操作を実行します。 これらの操作はすべて、C# のタスクの非同期プログラミング モデルを使用して行います。
+ここでは、Microsoft.Azure.Cosmos.Container クラスの非同期メソッド セットを使用して、NoSQL API コンテナー内の項目に対して一般的な操作を実行します。 これらの操作はすべて、C# のタスクの非同期プログラミング モデルを使用して行います。
 
 1. **Visual Studio Code** に戻ります。 **06-sdk-crud** フォルダー内の **product.cs** コード ファイルを開きます。
 
@@ -234,7 +229,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     await container.CreateItemAsync<Product>(saddle);
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**06-sdk-crud** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -323,7 +318,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"[{saddle.id}]\t{saddle.name} ({saddle.price:C})");
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**06-sdk-crud** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -349,7 +344,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
 
 1. **Items** ノードを選択します。 コンテナー内の唯一の項目を選択し、項目の **name** および **price** プロパティの値を確認します。
 
@@ -416,7 +411,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
     await container.UpsertItemAsync<Product>(saddle);
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**06-sdk-crud** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -436,7 +431,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
 
 1. **Items** ノードを選択します。 コンテナー内の唯一の項目を選択し、項目の **name** および **price** プロパティの値を確認します。
 
@@ -468,7 +463,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
     await container.DeleteItemAsync<Product>(id, partitionKey);
     ```
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**06-sdk-crud** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -488,7 +483,7 @@ SDK を学習しながら、オンラインの Azure Cosmos DB SDK アカウン�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを展開します。
 
 1. **Items** ノードを選択します。 項目リストが空になっていることを確認します。
 

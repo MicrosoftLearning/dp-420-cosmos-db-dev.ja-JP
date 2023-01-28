@@ -1,19 +1,14 @@
 ---
 lab:
-  title: Azure Cosmos DB SQL API コンテナーのインデックス作成ポリシーを書き込み操作用に最適化する
-  module: Module 10 - Optimize query performance in Azure Cosmos DB SQL API
-ms.openlocfilehash: d83af5c3783a7502a2f2e220b3b2ae566c0338fe
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025081"
+  title: 一般的な操作に対して Azure Cosmos DB for NoSQL コンテナーのインデックス作成ポリシーを最適化する
+  module: Module 10 - Optimize query and operation performance in Azure Cosmos DB for NoSQL
 ---
-# <a name="optimize-an-azure-cosmos-db-sql-api-containers-indexing-policy-for-write-operations"></a>Azure Cosmos DB SQL API コンテナーのインデックス作成ポリシーを書き込み操作用に最適化する
+
+# <a name="optimize-an-azure-cosmos-db-for-nosql-containers-indexing-policy-for-common-operations"></a>一般的な操作に対して Azure Cosmos DB for NoSQL コンテナーのインデックス作成ポリシーを最適化する
 
 書き込みの多いワークロードや大きな JSON オブジェクトを扱うワークロードでは、インデックス作成ポリシーをクエリで使用したいことがわかっているプロパティのインデックスのみを作成するように最適化すると都合が良い場合があります。
 
-このラボでは、テスト用の .NET アプリケーションを使用して、既定のインデックス作成ポリシーを使用し、次に、少し調整したインデックス作成ポリシーを使用して、Azure Cosmos DB SQL API コンテナーに大きな JSON 項目を挿入します。
+このラボでは、テスト用の .NET アプリケーションを使って Azure Cosmos DB for NoSQL コンテナーに大きな JSON 項目を挿入します。その際、既定のインデックス作成ポリシーを使用し、次に、少し調整したインデックス作成ポリシーを使用します。
 
 ## <a name="prepare-your-development-environment"></a>開発環境を準備する
 
@@ -27,27 +22,27 @@ ms.locfileid: "138025081"
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *サーバーレス* |
 
-    > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -63,21 +58,21 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **コンテナー ID** | *製品* |
     | **パーティション キー** | */categoryId* |
 
-1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
 
 1. リソース ブレードで、 **[キー]** ペインに移動します。
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
 ## <a name="run-the-test-net-application-using-the-default-indexing-policy"></a>既定のインデックス作成ポリシーを使用してテスト用の .NET アプリケーションを実行する
 
-このラボでは、大きな JSON オブジェクトを受け取り、Azure Cosmos DB SQL API コンテナーに新しい項目を作成するテスト用の .NET アプリケーションが事前構築されています。 1 回の書き込み操作が完了すると、このアプリケーションから、項目の一意識別子と RU 料金がコンソール ウィンドウに出力されます。
+このラボでは、大きな JSON オブジェクトを受け取り、Azure Cosmos DB for NoSQL コンテナーに新しい項目を作成するテスト用の .NET アプリケーションが事前構築されています。 1 回の書き込み操作が完了すると、このアプリケーションから、項目の一意識別子と RU 料金がコンソール ウィンドウに出力されます。
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインで、**23-index-optimization** フォルダーを参照します。
 
@@ -97,7 +92,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **script.cs** コード ファイルを開きます。
 
-1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **エンドポイント** に設定します。
+1. **endpoint** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**エンドポイント**に設定します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -105,7 +100,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
-1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの **キー** に設定します。
+1. **key** という名前の **string** 変数を見つけます。 その値を、先ほど作成した Azure Cosmos DB アカウントの**キー**に設定します。
 
     ```
     string key = "<cosmos-key>";
@@ -113,7 +108,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
-1. **script.cs** コード ファイルを **保存** します。
+1. **script.cs** コード ファイルを**保存**します。
 
 1. **Visual Studio Code**,で **23-index-optimization** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
@@ -147,7 +142,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノード、**products** コンテナー ノードの順に展開してから、 **[設定]** を選択します。
+1. **[データ エクスプローラー]** で、**cosmicworks**データベース ノード、**products** コンテナー ノードの順に展開してから、 **[設定]** を選択します。
 
 1. **[設定]** タブで、 **[インデックス作成ポリシー]** セクションに移動します。
 
@@ -170,7 +165,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     }    
     ```
 
-1. インデックス作成ポリシーを、次の変更した JSON オブジェクトに置き換え、変更内容を **保存** します。
+1. インデックス作成ポリシーを、次の変更した JSON オブジェクトに置き換え、変更内容を**保存**します。
 
     ```
     {
@@ -215,11 +210,11 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノード、**products** コンテナー ノードの順に展開してから、 **[設定]** を選択します。
+1. **[データ エクスプローラー]** で、**cosmicworks**データベース ノード、**products** コンテナー ノードの順に展開してから、 **[設定]** を選択します。
 
 1. **[設定]** タブで、 **[インデックス作成ポリシー]** セクションに移動します。
 
-1. インデックス作成ポリシーを、次の変更した JSON オブジェクトに置き換え、変更内容を **保存** します。
+1. インデックス作成ポリシーを、次の変更した JSON オブジェクトに置き換え、変更内容を**保存**します。
 
     ```
     {

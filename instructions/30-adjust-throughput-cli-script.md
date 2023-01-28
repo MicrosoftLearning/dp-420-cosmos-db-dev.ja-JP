@@ -1,14 +1,9 @@
 ---
 lab:
   title: Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
-  module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
-ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 05/12/2022
-ms.locfileid: "144971460"
+  module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
+
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
 
 Azure CLI は、Azure 全体のさまざまなリソースを管理するために使用できるコマンドのセットです。 Azure Cosmos DB には、選択した API に関係なく、Azure Cosmos DB アカウントのさまざまなファセットを管理するために使用できる豊富なコマンド グループがあります。
@@ -53,7 +48,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
     
     このコマンドを実行すると、複数のリソース グループ名を返すことができます。
 
-1. (省略可能) **"リソース グループが作成されていない場合" は**、リソース グループ名を選んで作成します。*_ ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。
+1. (省略可能) ***"リソース グループが作成されていない場合" は***、リソース グループ名を選んで作成します。 *ラボ環境によってはロックされている場合があるので、自分用のリソース グループを管理者に作成してもらう必要があることに注意してください。*
 
     i. この一覧から、自分に最も近い場所の名前を取得します。
 
@@ -123,19 +118,19 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
     > &#128161; **create** コマンドが完了するまで、平均して 2 〜 12 分かかる場合があります。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB SQL API リソースを作成する
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB for NoSQL リソースを作成する
 
-**cosmosdb sql** コマンド グループには、Azure Cosmos DB の SQL API 固有のリソースを管理するためのコマンドが含まれています。 いつでも **--help** フラグを使用して、これらのコマンド グループのオプションを確認できます。
+**cosmosdb sql** コマンド グループには、Azure Cosmos DB の NoSQL API 固有のリソースを管理するためのコマンドが含まれています。 いつでも **--help** フラグを使用して、これらのコマンド グループのオプションを確認できます。
 
 1. **Visual Studio Code** 内ですでに開いているターミナル インスタンスに戻ります。
 
-1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** に関連するほとんどのコマンド Azure CLI コマンド グループを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** に関連するほとんどのコマンド Azure CLI コマンド グループを表示します。
 
     ```
     az cosmosdb sql --help
     ```
 
-1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** データベースを管理するための Azure CLI コマンドを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** データベースを管理するための Azure CLI コマンドを表示します。
 
     ```
     az cosmosdb sql database --help
@@ -149,7 +144,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **create** コマンドの実行が完了して戻るのを待ってから、このラボに進んでください。
 
-1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** コンテナーを管理するための Azure CLI コマンドを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** コンテナーを管理するための Azure CLI コマンドを表示します。
 
     ```
     az cosmosdb sql container --help
@@ -171,9 +166,9 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
 
 1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
 
@@ -185,7 +180,7 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
 
 1. **Visual Studio Code** 内ですでに開いているターミナル インスタンスに戻ります。
 
-1. 次のコマンドを使用して、**Azure Cosmos DB SQL API** コンテナー スループットを管理するための Azure CLI コマンドを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** コンテナー スループットを管理するための Azure CLI コマンドを表示します。
 
     ```
     az cosmosdb sql container throughput --help
@@ -223,9 +218,9 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**SQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **SQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
 
 1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[自動スケーリング]** オプションが選択されており、プロビジョニングされたスループットが **5,000** RU/秒に設定されていることを確認します。
 

@@ -1,39 +1,34 @@
 ---
 lab:
-  title: Azure Functions を使用して Azure Cosmos DB SQL API のデータを処理する
-  module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 78a13ba0cb150925083d449bb9abae1169af8e71
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024971"
+  title: Azure Functions を使用して Azure Cosmos DB for NoSQL のデータを処理する
+  module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
-# <a name="process-azure-cosmos-db-sql-api-data-using-azure-functions"></a>Azure Functions を使用して Azure Cosmos DB SQL API のデータを処理する
 
-Azure Functions の Azure Cosmos DB トリガーは、変更フィード プロセッサを使用して実装されます。 この知識を活用して、Azure Cosmos DB SQL API コンテナーでの作成および更新操作に応答する関数を作成できます。 変更フィード プロセッサを手動で実装した場合、Azure Functions のセットアップも同様です。
+# <a name="process-azure-cosmos-db-for-nosql-data-using-azure-functions"></a>Azure Functions を使用して Azure Cosmos DB for NoSQL のデータを処理する
+
+Azure Functions の Azure Cosmos DB トリガーは、変更フィード プロセッサを使用して実装されます。 この知識を活用して、Azure Cosmos DB for NoSQL コンテナーでの作成および更新操作に応答する関数を作成できます。 変更フィード プロセッサを手動で実装した場合、Azure Functions のセットアップも同様です。
 
 この課題で行う内容
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>Azure Cosmos DB SQL API アカウントを作成する
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
 
-Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API を選択します (たとえば、**Mongo API** または **SQL API**)。 Azure Cosmos DB SQL API アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB SQL API アカウントに接続する場合にそれらを使用できます。
+Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
 1. 新しい Web ブラウザー ウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
 
 1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
 
-1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索してから、次の設定で新しい **Azure Cosmos DB SQL API** アカウント リソースを作成し、残りのすべての設定を既定値のままにします。
+1. **[+ リソースの作成]** を選択し、*Cosmos DB* を検索して、新しい **Azure Cosmos DB for NoSQL** アカウント リソースを作成します。以下を設定して、残りの設定はすべて既定値のままにします。
 
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | ''*使用可能なリージョンを選びます*'' |
+    | **場所** | *使用可能なリージョンを選びます* |
     | **容量モード** | *サーバーレス* |
 
-    > &#128221; お使いのラボ環境では、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -41,9 +36,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この **エンドポイント** の値は、この演習で後ほど使用します。
+    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この **キー** の値は、この演習で後ほど使用します。
+    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
 
 1. リソース メニューで **[データ エクスプローラー]** を選択します。
 
@@ -67,7 +62,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **コンテナー ID** | *製品* |
     | **パーティション キー** | */categoryId* |
 
-1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **products** コンテナー ノードを確認します。
+1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
 
 1. **[データ エクスプローラー]** ペインで、 **[新しいコンテナー]** を再度選択します。
 
@@ -92,13 +87,13 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
+    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
     | **名前** | *グローバルに一意の名前を入力します* |
     | **発行** | "*コード*" |
     | **ランタイム スタック** | *.NET* |
     | **Version** | *6* |
     | **リージョン** | *使用可能な任意のリージョンを選択します* |
-    | **ストレージ アカウント** | *Create a new storage account \(新しいストレージ アカウントの作成\)* |
+    | **ストレージ アカウント** | *Create a new storage account (新しいストレージ アカウントの作成)* |
 
     > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
@@ -199,17 +194,17 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128161; ストリーミング ログ サービスに接続するには数秒かかる場合があります。 接続すると、ログ出力にメッセージが表示されます。
 
-1. 現在の関数コードを **保存** します。
+1. 現在の関数コードを**保存**します。
 
 1. C# コード コンパイルの結果を確認します。 ログ出力の最後に **[コンパイルに成功しました]** というメッセージが表示されるはずです。
 
     > &#128221; ログ出力に警告メッセージが表示される場合があります。 これらの警告は、このラボに影響しません。
 
-1. ログ セクションを **最大化** して、出力ウィンドウを拡張し、使用可能な最大スペースを埋めます。
+1. ログ セクションを**最大化**して、出力ウィンドウを拡張し、使用可能な最大スペースを埋めます。
 
-    > &#128221; 別のツールを使用して、Azure Cosmos DB SQL API コンテナーに項目を生成します。 項目を生成したら、このターミナルに戻って出力を確認します。 ブラウザー ウィンドウを途中で閉じないでください。
+    > &#128221; 別のツールを使用して、Azure Cosmos DB for NoSQL コンテナーに項目を生成します。 項目を生成したら、このターミナルに戻って出力を確認します。 ブラウザー ウィンドウを途中で閉じないでください。
 
-## <a name="seed-your-azure-cosmos-db-sql-api-account-with-sample-data"></a>サンプル データを使用して Azure Cosmos DB SQL API アカウントにシードを設定する
+## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>Azure Cosmos DB for NoSQL アカウントにサンプル データをシードする
 
 **cosmicworks** データベースと **products** コンテナーを作成するコマンドライン ユーティリティを使用します。 ツールで一連の項目を作成して、ターミナル ウィンドウで実行されている変更フィード プロセッサを使用して確認します。
 

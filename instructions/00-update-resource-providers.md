@@ -2,13 +2,8 @@
 lab:
   title: リソース プロバイダーを有効にする
   module: Setup
-ms.openlocfilehash: 4bb2ea5cdd9d123d1b235b28da67f295b9e26969
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: ja-JP
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138025089"
 ---
+
 # <a name="enable-azure-resource-providers"></a>Azure リソース プロバイダーを登録する
 
 Azure サブスクリプションに登録する必要のあるリソース プロバイダーがいくつかあります。 次の手順に従って、登録されていることを確認してください。
