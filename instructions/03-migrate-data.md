@@ -4,13 +4,13 @@ lab:
   module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
 ---
 
-# <a name="migrate-existing-data-using-azure-data-factory"></a>Azure Data Factory を使用して既存のデータを移行する
+# Azure Data Factory を使用して既存のデータを移行する
 
 Azure Data Factory では、Azure Cosmos DB がデータ取り込みのソースとして、またデータ出力のターゲット (シンク) としてサポートされています。
 
 このラボでは、便利なコマンドライン ユーティリティを使用して Azure Cosmos DB を設定し、Azure Data Factory を使用してデータのサブセットをコンテナー間で移動します。
 
-## <a name="create-and-seed-your-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成してシードする
+## Azure Cosmos DB for NoSQL アカウントを作成してシードする
 
 コマンドライン ユーティリティを使用して、**4,000** RU/s (秒あたりの要求ユニット数) の **cosmicworks** データベースと **products** コンテナーを作成します。 作成後、スループットを調整して 400 RU/s に下げます。
 
@@ -110,7 +110,7 @@ products コンテナーを加えるために、このラボの最後に ETL 変
 
 1. Azure portal の **[ホーム]** に戻ります。
 
-## <a name="create-azure-data-factory-resource"></a>Azure Data Factory リソースを作成する
+## Azure Data Factory リソースを作成する
 
 これで Azure Cosmos DB for NoSQL リソースが配置されたので、Azure Data Factory リソースを作成し、NoSQL API コンテナー間で 1 回限りのデータ移動を実行してデータの抽出、変換、および別の NoSQL API コンテナーへの読み込みを行うために必要なすべてのコンポーネントと接続を構成します。
 
@@ -208,7 +208,7 @@ products コンテナーを加えるために、このラボの最後に ETL 変
         p.category, 
         p.price 
     FROM
-        products p
+        flatproducts p
     WHERE
         p.name = 'HL Headset'
     ```
