@@ -1,9 +1,8 @@
 ---
-Lab:
+lab:
   title: 復旧ポイントからデータベースまたはコンテナーを復旧する
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
-
 # <a name="recover-a-database-or-container-from-a-recovery-point"></a>復旧ポイントからデータベースまたはコンテナーを復旧する 
 
 Azure では、暗号化されたデータのバックアップを自動的に実行します。 これらのバックアップは、**定期的**バックアップ モードおよび**継続的**バックアップ モードの 2 つのモードで実行されます。
