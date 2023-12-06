@@ -4,27 +4,27 @@ lab:
   module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
 
-# <a name="process-change-feed-events-using-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用して変更フィード イベントを処理する
+# Azure Cosmos DB for NoSQL SDK を使用して変更フィード イベントを処理する
 
 Azure Cosmos DB for NoSQL の変更フィードは、プラットフォームからのイベントによって駆動される補足アプリケーションを作成するためのカギとなります。 Azure Cosmos DB for NoSQL 用の .NET SDK には、変更フィードと統合し、コンテナー内の操作に関する通知をリッスンするアプリケーションを構築するためのクラス一式が用意されています。
 
 このラボでは、.NET SDK の変更フィード プロセッサ機能を使用して、指定したコンテナー内の項目で作成または更新操作が実行されたという通知を受け取るアプリケーションを作成します。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
+## Azure Cosmos DB for NoSQL アカウントを作成する
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
@@ -37,12 +37,12 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | *使用可能なリージョンを選びます* |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *サーバーレス* |
 
-    > &#128221; ラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
+    > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
 1. デプロイ タスクが完了するまで待ってから、このタスクを続行してください。
 
@@ -50,19 +50,19 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
+    1. [**URI**] フィールドに注目します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
+    1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
 1. リソース メニューで **[データ エクスプローラー]** を選択します。
 
-1. **[データ エクスプローラー]** ペインで、 **[新しいコンテナー]** を展開してから、 **[新しいデータベース]** を選択します。
+1. **[データ エクスプローラー]** ペインで、**[新しいコンテナー]** を展開してから、**[新しいデータベース]** を選択します。
 
 1. **[新しいデータベース]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
 
     | **設定** | **Value** |
     | --: | :-- |
-    | **データベース ID** | *cosmicworks* |
+    | **データベース ID** | *``cosmicworks``* |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **cosmicworks** データベース ノードを確認します。
 
@@ -73,30 +73,30 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | ''*既存の* &vert; *cosmicworks を使用します*'' |
-    | **コンテナー ID** | *製品* |
-    | **パーティション キー** | */categoryId* |
+    | **コンテナー ID** | *``products``* |
+    | **パーティション キー** | *``/categoryId``* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
 
-1. **[データ エクスプローラー]** ペインで、 **[新しいコンテナー]** を再度選択します。
+1. **[データ エクスプローラー]** ペインで、**[新しいコンテナー]** を再度選択します。
 
 1. **[新しいコンテナー]** ポップアップで、各設定に次の値を入力してから **[OK]** を選択します。
 
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | ''*既存の* &vert; *cosmicworks を使用します*'' |
-    | **コンテナー ID** | *productslease* |
-    | **パーティション キー** | */partitionKey* |
+    | **コンテナー ID** | *``productslease``* |
+    | **パーティション キー** | *``/partitionKey``* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開し、階層内の **productslease** コンテナー ノードを確認します。
 
-1. Web ブラウザーのウィンドウまたはタブを閉じます。
+1. **Visual Studio Code** に戻ります。
 
-## <a name="implement-the-change-feed-processor-in-the-net-sdk"></a>.NET SDK で変更フィード プロセッサを実装する
+## .NET SDK で変更フィード プロセッサを実装する
 
 **Microsoft.Azure.Cosmos.Container** クラスには、変更フィード プロセッサをフルーエントにビルドするための一連のメソッドが用意されています。 開始するには、監視対象のコンテナーへの参照、リース コンテナー、C\# のデリゲート (変更の各バッチを処理するため) が必要です。
 
-1. **Visual Studio Code** の **[エクスプローラー]** ペインで、**13-change-feed** フォルダーを参照します。
+1. [**エクスプローラー**] ウィンドウで、**13-change-feed** フォルダーを参照します。
 
 1. **product.cs** コード ファイルを開きます。
 
@@ -118,7 +118,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
 1. **client** 変数の **GetContainer** メソッドを使用して、データベースの名前 (*cosmicworks*) とコンテナーの名前 (*products*) を使用して既存のコンテナーを取得し、結果を **Container** 型の **sourceContainer** という名前の変数に格納します。
 
@@ -135,12 +135,12 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. 2 つの入力パラメーターを持つ空の非同期匿名関数を使用して、[ChangesHandler<>][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.changefeedhandler-1] 型の **handleChanges** という名前の新しいデリゲート変数を作成します。
 
     1. **IReadOnlyCollection\<Product\>** 型の **changes** という名前のパラメーター。
-
+    
     1. **CancellationToken** 型の **cancellationToken** という名前のパラメーター。
 
     ```
     ChangesHandler<Product> handleChanges = async (
-        IReadOnlyCollection<Product> changes, 
+        IReadOnlyCollection<Product> changes,
         CancellationToken cancellationToken
     ) => {
     };
@@ -224,7 +224,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Container leaseContainer = client.GetContainer("cosmicworks", "productslease");
     
     ChangesHandler<Product> handleChanges = async (
-        IReadOnlyCollection<Product> changes, 
+        IReadOnlyCollection<Product> changes,
         CancellationToken cancellationToken
     ) => {
         Console.WriteLine($"START\tHandling batch of changes...");
@@ -255,7 +255,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **script.cs** ファイルを**保存**します。
 
-1. **Visual Studio Code** で、**13-change-feed** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **Visual Studio Code** で、**13-change-feed** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -267,16 +267,16 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; 別のツールを使用して、Azure Cosmos DB for NoSQL コンテナーに項目を生成します。 項目を生成したら、このターミナルに戻って出力を確認します。 ターミナルを早々に閉じないようにします。
 
-## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>Azure Cosmos DB for NoSQL アカウントにサンプル データをシードする
+## Azure Cosmos DB for NoSQL アカウントにサンプル データをシードする
 
 **cosmicworks** データベースと **products** コンテナーを作成するコマンドライン ユーティリティを使用します。 ツールで一連の項目を作成して、ターミナル ウィンドウで実行されている変更フィード プロセッサを使用して確認します。
 
-1. **Visual Studio Code**で、 **[ターミナル]** メニューを開き、 **[ターミナルの分割]** を選択して、新しいターミナルを既存のインスタンスと並べて開きます。
+1. **Visual Studio Code**で、**[ターミナル]** メニューを開き、**[ターミナルの分割]** を選択して、新しいターミナルを既存のインスタンスと並べて開きます。
 
-1. [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをご自分のコンピューターでグローバルに使用できるようにインストールします。
+1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
-    dotnet tool install --global cosmicworks
+    dotnet tool install cosmicworks --global --version 1.*
     ```
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
@@ -297,7 +297,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **cosmicworks** コマンドによって、データベース、コンテナー、および項目がアカウントに設定されるまで待ちます。
 
-1. .NET アプリケーションのターミナル出力を確認します。 ターミナルには、変更フィードを使用して送信された変更ごとに、**検出された操作**メッセージが出力されます。
+1. .NET アプリケーションのターミナル出力を確認します。 ターミナルには、変更フィードを使用して送信された変更ごとに、**[検出された操作]** というメッセージが出力されます。
 
 1. 両方の統合ターミナルを閉じます。
 

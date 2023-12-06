@@ -1,30 +1,30 @@
 ---
 lab:
-  title: SDK を使用して UDF を実装し、使用する
+  title: SDK を使ってユーザー定義関数を実装してから使用する
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
 
-# <a name="implement-and-then-use-a-udf-using-the-sdk"></a>SDK を使用して UDF を実装し、使用する
+# SDK を使ってユーザー定義関数を実装してから使用する
 
 Azure Cosmos DB for NoSQL 用の .NET SDK 使用して、コンテナーから直接サーバー側のプログラミング コンストラクトを管理し、呼び出すことができます。 新しいコンテナーを準備する際、データ エクスプローラーを使用して手動でタスクを実行する代わりに、.NET SDK を使用して UDF をコンテナーに直接発行する方が理にかなっている場合があります。
 
 このラボでは、.NET SDK を使用して新しい UDF を作成し、データ エクスプローラーを使用して UDF が正常に機能していることを検証します。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
+## Azure Cosmos DB for NoSQL アカウントを作成する
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
@@ -37,9 +37,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | *使用可能なリージョンを選びます* |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -51,22 +51,22 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
+    1. [**URI**] フィールドに注目します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
+    1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
-1. Web ブラウザーのウィンドウまたはタブを閉じます。
+1. ブラウザー ウィンドウを閉じずに、**Visual Studio Code** を開きます。
 
-## <a name="seed-the-azure-cosmos-db-for-nosql-account-with-data"></a>Azure Cosmos DB for NoSQL アカウントにデータをシードする
+## Azure Cosmos DB for NoSQL アカウントにデータをシードする
 
 [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB for NoSQL アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
 
 1. **Visual Studio Code** で、 **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
-1. [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをご自分のコンピューターでグローバルに使用できるようにインストールします。
+1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
-    dotnet tool install --global cosmicworks
+    dotnet tool install cosmicworks --global --version 1.*
     ```
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
@@ -89,7 +89,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. 統合ターミナルを閉じます。
 
-## <a name="create-a-user-defined-function-udf-using-the-net-sdk"></a>.NET SDK を使用してユーザー定義関数 (UDF) を作成する
+## .NET SDK を使用してユーザー定義関数 (UDF) を作成する
 
 .NET SDK の [Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] クラスには、SDK から直接ストアド プロシージャ、UDF、およびトリガーに対して CRUD 操作を実行するために使用する [Scripts][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.scripts] プロパティが用意されています。 このプロパティを使用して、新しい UDF を作成し、その UDF を Azure Cosmos DB for NoSQL コンテナーにプッシュします。 UDF を SDK を使用して作成すると、製品の税込み価格が計算され、税込み価格を使用して製品で SQL クエリを実行できるようになります。
 
@@ -103,7 +103,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     using Microsoft.Azure.Cosmos.Scripts;
     ```
 
-1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの**エンドポイント**に設定されている値で更新します。
+1. **endpoint** という名前の既存の変数を、先ほど作成した Azure Cosmos DB アカウントの **endpoint** に設定された値で更新します。
   
     ```
     string endpoint = "<cosmos-endpoint>";
@@ -117,7 +117,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; たとえば、ご自分のキーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
+    > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
 1. 既定の空のコンストラクターを使用して、props という名前の [UserDefinedFunctionProperties][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.scripts.userdefinedfunctionproperties] 型の新しい変数を作成します。
 
@@ -177,7 +177,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **script.cs** ファイルを**保存**します。
 
-1. **Visual Studio Code** で、**33-create-use-udf-sdk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **Visual Studio Code** で、**33-create-use-udf-sdk** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -195,25 +195,21 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Visual Studio Code** を閉じます。
 
-## <a name="test-the-udf-using-the-data-explorer"></a>データ エクスプローラーを使用して UDF をテストする
+## データ エクスプローラーを使用して UDF をテストする
 
 Azure Cosmos DB コンテナーに新しい UDF を作成したので、データ エクスプローラーを使用して UDF が想定どおりに動作していることを検証します。
 
-1. Web ブラウザーの新しいウィンドウまたはタブで、Azure portal (``portal.azure.com``) に移動します。
-
-1. ご利用のサブスクリプションに関連付けられている Microsoft 資格情報を使用して、ポータルにサインインします。
-
-1. **[リソース グループ]** を選択し、このラボで先ほど作成または表示したリソース グループを選び、このラボで作成した **Azure Cosmos DB アカウント** リソースを選択します。
+1. Web ブラウザーに戻ります。
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. [**データ エクスプローラー**] で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選んでから、 **[新しい SQL クエリ]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、[**新しい SQL クエリ**] を選択します。
 
-1. [クエリ] タブで、 **[クエリの実行]** を選択して、フィルターなしですべての項目を選択する標準クエリを表示します。
+1. [クエリ] タブで、**[クエリの実行]** を選択して、フィルターなしですべての項目を選択する標準クエリを表示します。
 
-1. エディター領域の内容を削除します。
+1. エディター領域のコンテンツを削除します。
 
 1. 2 つの価格値が射影されたすべてのドキュメントを返す新しい SQL クエリを作成します。 最初の値はコンテナーからの生の価格値で、2 番目の値は UDF によって計算された価格値です。
 
