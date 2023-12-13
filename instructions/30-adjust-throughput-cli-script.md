@@ -4,19 +4,19 @@ lab:
   module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
 
-# <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
+# Azure CLI スクリプトを使用してプロビジョニングされたスループットを調整する
 
 Azure CLI は、Azure 全体のさまざまなリソースを管理するために使用できるコマンドのセットです。 Azure Cosmos DB には、選択した API に関係なく、Azure Cosmos DB アカウントのさまざまなファセットを管理するために使用できる豊富なコマンド グループがあります。
 
 このラボでは、Azure CLI を使用して Azure Cosmos DB アカウント、データベース、およびコンテナーを作成します。 次に、Azure CLI を使用してプロビジョニングされたスループットを調整します。
 
-## <a name="log-in-to-the-azure-cli"></a>Azure CLI にログインする
+## Azure CLI にログインする
 
 Azure CLI を使用する前に、まず CLI のバージョンを確認し、Azure 資格情報を使用してログインする必要があります。
 
 1. **Visual Studio Code** を起動します。
 
-1. **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
+1. **[ターミナル]** メニューを開き、**[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
 1. 次のコマンドを使用して Azure CLI のバージョンを表示します。
 
@@ -28,6 +28,13 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
     ```
     az --help
+    ```
+
+1. Azure にログインする前に、tls/ssl 証明書をインストールします。
+
+    ```
+    CD "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\"
+    .\python.exe -m pip install pip-system-certs
     ```
 
 1. 次のコマンドを使用して、Azure CLI の対話型ログイン プロシージャを開始します。
@@ -61,7 +68,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
     az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
     ```
 
-## <a name="create-azure-cosmos-db-account-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB アカウントを作成する
+## Azure CLI を使用して Azure Cosmos DB アカウントを作成する
 
 **cosmosdb** コマンド グループには、CLI を使用して Azure Cosmos DB アカウントを作成および管理するための基本的なコマンドが含まれています。 Azure Cosmos DB アカウントにはアドレス指定可能な URI があるため、スクリプトを使用して作成する場合でも、新しいアカウントにグローバルに一意の名前を作成することが重要です。
 
@@ -118,7 +125,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
     > &#128161; **create** コマンドが完了するまで、平均して 2 〜 12 分かかる場合があります。
 
-## <a name="create-azure-cosmos-db-for-nosql-resources-using-the-azure-cli"></a>Azure CLI を使用して Azure Cosmos DB for NoSQL リソースを作成する
+## Azure CLI を使用して Azure Cosmos DB for NoSQL リソースを作成する
 
 **cosmosdb sql** コマンド グループには、Azure Cosmos DB の NoSQL API 固有のリソースを管理するためのコマンドが含まれています。 いつでも **--help** フラグを使用して、これらのコマンド グループのオプションを確認できます。
 
@@ -168,13 +175,13 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、**[スケールと設定]** を選択します。
 
-1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
+1. **[スケール]** タブ内の値を確認します。具体的には、**[スループット]** セクションで **[手動]** オプションが選択されており、プロビジョニングされたスループットが **400** RU/秒に設定されていることを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="adjust-the-throughput-of-an-existing-container-using-the-azure-cli"></a>Azure CLI を使用して既存のコンテナーのスループットを調整する
+## Azure CLI を使用して既存のコンテナーのスループットを調整する
 
 Azure CLI を使用して、スループットの手動プロビジョニングと自動スケーリング プロビジョニングの間でコンテナーを移行できます。 コンテナーが自動スケーリング スループットを使用している場合、CLI を使用して最大許容スループット値を動的に調整できます。
 
@@ -220,9 +227,9 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
 
 1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリー内の **products** コンテナー ノードを選択し、**[スケールと設定]** を選択します。
 
-1. **[スケール]** タブ内の値を確認します。具体的には、 **[スループット]** セクションで **[自動スケーリング]** オプションが選択されており、プロビジョニングされたスループットが **5,000** RU/秒に設定されていることを確認します。
+1. **[スケール]** タブ内の値を確認します。具体的には、**[スループット]** セクションで **[自動スケーリング]** オプションが選択されており、プロビジョニングされたスループットが **5,000** RU/秒に設定されていることを確認します。
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
