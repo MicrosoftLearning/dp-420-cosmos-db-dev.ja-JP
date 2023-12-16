@@ -4,29 +4,29 @@ lab:
   module: Module 5 - Execute queries in Azure Cosmos DB for NoSQL
 ---
 
-# <a name="execute-a-query-with-the-azure-cosmos-db-for-nosql-sdk"></a>Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
+# Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
 
-Azure Cosmos DB for NoSQL 用の .NET SDK の最新バージョンでは、コンテナーのクエリがこれまで以上に簡単になり、C# の最新のベスト プラクティスと言語機能を使用して結果セットを非同期的に反復できます。
+Azure Cosmos DB for NoSQL 用の .NET SDK の最新バージョンでは、C# の最新のベスト プラクティスと言語機能を使用して、コンテナーのクエリと結果セットの非同期反復処理がこれまで以上に簡単になります。
 
-> &#128161; このラボでは、NuGet の [Azure.Cosmos][nuget.org/packages/azure.cosmos/4.0.0-preview3] ライブラリの *4.0.0-preview3* リリースを使用します。 このライブラリには、[非同期ストリーム][docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams]を使用して Azure Cosmos DB にクエリを実行しやすくするための特別な機能があります。
+このライブラリには、[https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.cosmos.feediterator?view=azure-dotnet] を使用して Azure Cosmos DB にクエリを実行しやすくするための特別な機能があります。
 
 このラボでは、非同期ストリームを使用して、Azure Cosmos DB for NoSQL から返された大きな結果セットを反復処理します。 .NET SDK を使用して、結果のクエリと反復を行います。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
+## Azure Cosmos DB for NoSQL アカウントを作成する
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
@@ -39,9 +39,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | *使用可能なリージョンを選びます* |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -53,22 +53,22 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
+    1. [**URI**] フィールドに注目します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
+    1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
-1. Web ブラウザーのウィンドウまたはタブを閉じます。
+1. **Visual Studio Code** に戻ります。
 
-## <a name="seed-the-azure-cosmos-db-for-nosql-account-with-data"></a>Azure Cosmos DB for NoSQL アカウントにデータをシードする
+## Azure Cosmos DB for NoSQL アカウントにデータをシードする
 
 [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB for NoSQL アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。
 
 1. **Visual Studio Code** で、 **[ターミナル]** メニューを開き、 **[新しいターミナル]** を選択して新しいターミナル インスタンスを開きます。
 
-1. [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをご自分のコンピューターでグローバルに使用できるようにインストールします。
+1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
-    dotnet tool install --global cosmicworks
+    dotnet tool install cosmicworks --global --version 1.*
     ```
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
@@ -91,7 +91,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. 統合ターミナルを閉じます。
 
-## <a name="iterate-over-the-results-of-a-sql-query-using-the-sdk"></a>SDK を使用して SQL クエリの結果を反復処理する
+## SDK を使用して SQL クエリの結果を反復処理する
 
 ここでは、非同期ストリームを使用して、Azure Cosmos DB でのページ分割された結果に対して、わかりやすい foreach ループを作成します。 バックグラウンドでは、SDK でフィード反復子を管理し、後続の要求が正しく呼び出されるようにします。
 
@@ -131,21 +131,29 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     QueryDefinition query = new (sql);
     ```
 
-1. [CosmosContainer][docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer] クラスの汎用 [GetItemQueryIterator][docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer.getitemqueryiterator] メソッドを呼び出して、**query** 変数をパラメーターとして渡すことにより、新しい **await foreach** ループを作成します。次に、変数 **product** を使用して結果を非同期的に反復し、**Product** 型のインスタンスを表します。
+1. [CosmosContainer][docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer] クラスの汎用 [GetItemQueryIterator][docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer.getitemqueryiterator] メソッドを呼び出して、**query** 変数をパラメーターとして渡すことにより、新しい **while** ループを作成し、結果を反復処理します。
 
     ```
-    await foreach (Product product in container.GetItemQueryIterator<Product>(query))
+    using FeedIterator<Product> feed = container.GetItemQueryIterator<Product>(
+        queryDefinition: query
+    );
+
+    while (feed.HasMoreResults)
     {
     }
     ```
 
-1. **await foreach** ループ内で、組み込みの **Console.WriteLine** 静的メソッドを使用して、**product** 変数の **id**、**name**、および **price** プロパティを書式設定して出力します。
+1. **while** ループ内で、次の結果を非同期で読み取り、組み込みの **Console.WriteLine** 静的メソッドを使用して、**product** 変数の **id**、**name**、**price** プロパティを書式設定して出力します
 
     ```
-    Console.WriteLine($"[{product.id}]\t{product.name,35}\t{product.price,15:C}");
+    FeedResponse<Product> response = await feed.ReadNextAsync();
+    foreach (Product product in response)
+    {
+        Console.WriteLine($"[{product.id}]\t{product.name,35}\t{product.price,15:C}");
+    }
     ```
 
-1. 完了すると、コード ファイルに次の情報が表示されます。
+1. 完了すると、コード ファイルが次のようになるはずです。
   
     ```
     using System;
@@ -164,15 +172,23 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     string sql = "SELECT * FROM products p";
     QueryDefinition query = new (sql);
 
-    await foreach (Product product in container.GetItemQueryIterator<Product>(query))
+    using FeedIterator<Product> feed = container.GetItemQueryIterator<Product>(
+        queryDefinition: query
+    );
+
+    while (feed.HasMoreResults)
     {
-        Console.WriteLine($"[{product.id}]\t{product.name,35}\t{product.price,15:C}");
+        FeedResponse<Product> response = await feed.ReadNextAsync();
+        foreach (Product product in response)
+        {
+            Console.WriteLine($"[{product.id}]\t{product.name,35}\t{product.price,15:C}");
+        }
     }
     ```
 
 1. **script.cs** ファイルを**保存**します。
 
-1. **Visual Studio Code** で、**09-execute-query-sdk** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **Visual Studio Code** で、**09-execute-query-sdk** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -190,7 +206,6 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 [docs.microsoft.com/dotnet/api/azure.cosmos.querydefinition]: https://docs.microsoft.com/dotnet/api/azure.cosmos.querydefinition
 [docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer]: https://docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer
 [docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer.getitemqueryiterator]: https://docs.microsoft.com/dotnet/api/azure.cosmos.cosmoscontainer.getitemqueryiterator
-[docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams]: https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams
+[learn.microsoft.com/en-us/dotnet/api/microsoft.azure.cosmos.feediterator?view=azure-dotnet]: https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.cosmos.feediterator?view=azure-dotnet
 [docs.microsoft.com/dotnet/core/tools/dotnet-run]: https://docs.microsoft.com/dotnet/core/tools/dotnet-run
-[nuget.org/packages/azure.cosmos/4.0.0-preview3]: https://www.nuget.org/packages/azure.cosmos/4.0.0-preview3
 [nuget.org/packages/cosmicworks]: https://www.nuget.org/packages/cosmicworks/

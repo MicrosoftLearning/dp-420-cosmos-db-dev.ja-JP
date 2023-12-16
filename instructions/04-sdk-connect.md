@@ -4,27 +4,27 @@ lab:
   module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
 ---
 
-# <a name="connect-to-azure-cosmos-db-for-nosql-with-the-sdk"></a>SDK を使って Azure Cosmos DB for NoSQL に接続する
+# SDK を使って Azure Cosmos DB for NoSQL に接続する
 
 Azure SDK for .NET は、多くの Azure サービスと対話するための一貫した開発者インターフェイスを提供するライブラリのスイートです。 Azure SDK for .NET は .NET Standard 2.0 仕様に組み込まれており、.NET Framework (4.6.1 以上)、.NET Core (2.1 以上)、および .NET (5 以上) アプリケーションで使用できます。
 
 このラボでは、Azure SDK for .NET を使用して Azure Cosmos DB for NoSQL アカウントに接続します。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
-1. コマンド パレットを開き、**Git: Clone** を実行して、選択したローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
+1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
+## Azure Cosmos DB for NoSQL アカウントを作成する
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
@@ -37,9 +37,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | *使用可能なリージョンを選びます* |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
     | **このアカウントでプロビジョニングできるスループットの総量を制限する** | *Unchecked* |
@@ -52,17 +52,17 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
+    1. [**URI**] フィールドに注目します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
+    1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
-1. Web ブラウザーのウィンドウまたはタブを閉じます。
+1. 後で戻るので、ブラウザーのタブは開いたままにしておきます。
 
-## <a name="view-the-microsoftazurecosmos-library-on-nuget"></a>NuGet で Microsoft.Azure.Cosmos ライブラリを表示する
+## NuGet で Microsoft.Azure.Cosmos ライブラリを表示する
 
 NuGet Web サイトには、.NET アプリケーションにインポートできるパッケージの検索可能なインデックスが含まれています。 **Microsoft.Azure.Cosmos** などのプレリリース パッケージをインポートするには、NuGet Web サイトを使用して、パッケージをアプリケーションにインポートするための適切なバージョンとコマンドを取得できます。
 
-1. Web ブラウザーで、NuGet Web サイト (``nuget.org``) に移動します。
+1. 新しいブラウザー タブで、NuGet Web サイト (``nuget.org``) に移動します。
 
 1. .NET のパッケージ マネージャーである NuGet とその機能の説明を確認します。
 
@@ -74,25 +74,25 @@ NuGet Web サイトには、.NET アプリケーションにインポートで�
 
 1. Web ブラウザーのウィンドウまたはタブを閉じます。
 
-## <a name="import-the-microsoftazurecosmos-library-into-a-net-project"></a>Microsoft.Azure.Cosmos ライブラリを .NET プロジェクトにインポートする
+## Microsoft.Azure.Cosmos ライブラリを .NET プロジェクトにインポートする
 
 .NET CLI には、事前構成済みのパッケージ フィードからパッケージをインポートするための [add package][docs.microsoft.com/dotnet/core/tools/dotnet-add-package] コマンドが含まれています。 .NET インストールでは、既定のパッケージ フィードとして NuGet が使用されます。
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインで、**04-sdk-connect** フォルダーを参照します。
 
-1. **04-sdk-connect** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **04-sdk-connect** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **04-sdk-connect** フォルダーに既に設定されているターミナルが開きます。
 
-1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.*
     ```
 
 1. 統合ターミナルを閉じます。
 
-## <a name="use-the-microsoftazurecosmos-library"></a>Microsoft.Azure.Cosmos ライブラリを使用する
+## Microsoft.Azure.Cosmos ライブラリを使用する
 
 Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされたら、すぐに [Microsoft.Azure.Cosmos][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos] 名前空間内のそのクラスを使用して、Azure Cosmos DB for NoSQL アカウントに接続できます。 [CosmosClient][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient] クラスは、Azure Cosmos DB for NoSQL アカウントへの初期接続を確立するために使用されるコア クラスです。
 
@@ -119,7 +119,7 @@ Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされた
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
+    > &#128221; たとえば、ご自分のエンドポイントが **https&shy;://dp420.documents.azure.com:443/** の場合、C# ステートメントは **string endpoint = "https&shy;://dp420.documents.azure.com:443/";** になります。
 
 1. **key** という名前の **string** 変数を追加し、その値を先ほど作成した Azure Cosmos DB アカウントの **key** に設定します。
 
@@ -153,7 +153,7 @@ Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされた
     Console.WriteLine($"Primary Region:\t{account.WritableRegions.FirstOrDefault()?.Name}");
     ```
 
-1. 完了すると、コード ファイルに次の情報が表示されます。
+1. 完了すると、コード ファイルが次のようになるはずです。
   
     ```
     using System;
@@ -174,11 +174,11 @@ Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされた
 
 1. **script.cs** コード ファイルを**保存**します。
 
-## <a name="test-the-script"></a>スクリプトをテストする
+## スクリプトをテストする
 
 これで Azure Cosmos DB for NoSQL アカウントに接続するための .NET コードが完成したので、スクリプトをテストできます。 このスクリプトは、アカウントの名前と、最初の書き込み可能なリージョンの名前を出力します。 アカウントを作成したときに場所を指定したので、このスクリプトの結果として同じ場所の値が出力されるはずです。
 
-1. **Visual Studio Code** で、**04-sdk-connect** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **Visual Studio Code** で、**04-sdk-connect** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -207,4 +207,4 @@ Azure SDK for.NET の Azure Cosmos DB ライブラリがインポートされた
 [docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.readaccountasync]: https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.readaccountasync
 [docs.microsoft.com/dotnet/core/tools/dotnet-add-package]: https://docs.microsoft.com/dotnet/core/tools/dotnet-add-package
 [docs.microsoft.com/dotnet/core/tools/dotnet-run]: https://docs.microsoft.com/dotnet/core/tools/dotnet-run
-[nuget.org/packages/microsoft.azure.cosmos/3.22.1]: https://www.nuget.org/packages/Microsoft.Azure.Cosmos/3.22.1
+[nuget.org/packages/microsoft.azure.cosmos]: https://www.nuget.org/packages/Microsoft.Azure.Cosmos

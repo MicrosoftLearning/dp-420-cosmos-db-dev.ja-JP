@@ -4,27 +4,27 @@ lab:
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="configure-an-azure-cosmos-db-for-nosql-containers-index-policy-using-the-sdk"></a>SDK を使って Azure Cosmos DB for NoSQL コンテナーのインデックス ポリシーを構成する
+# SDK を使って Azure Cosmos DB for NoSQL コンテナーのインデックス ポリシーを構成する
 
 インデックス作成ポリシーは、任意の Azure Cosmos DB SDK から管理できます。 特に、.NET SDK には、Azure Cosmos DB for NoSQL のコンテナーに新しいインデックス ポリシーを設計およびプッシュするために使用できる一連のクラスが含まれています。
 
 このラボでは、.NET SDK を使用して、コンテナーのカスタム インデックス作成ポリシーを作成します。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
     > &#128161; **Ctrl + Shift + P** キーボード ショートカットを使用してコマンド パレットを開くことができます。
 
-1. リポジトリがクローンされたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
+1. リポジトリが複製されたら、**Visual Studio Code** で選択したローカル フォルダーを開きます。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>Azure Cosmos DB for NoSQL アカウントを作成する
+## Azure Cosmos DB for NoSQL アカウントを作成する
 
 Azure Cosmos DB は、複数の API をサポートするクラウドベースの NoSQL データベース サービスです。 Azure Cosmos DB アカウントを初めてプロビジョニングするときに、そのアカウントでサポートする API (たとえば、**Mongo API** や **NoSQL API**) を選択します。 Azure Cosmos DB for NoSQL アカウントのプロビジョニングが完了したら、エンドポイントとキーを取得し、Azure SDK for .NET または任意の他の SDK を使用して Azure Cosmos DB for NoSQL アカウントに接続する際に使用できます。
 
@@ -37,9 +37,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | ---: | :--- |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
-    | **リソース グループ** | *既存のリソース グループを選択するか、新しいものを作成します* |
+    | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
-    | **場所** | *使用可能なリージョンを選びます* |
+    | **場所** | ''*使用可能なリージョンを選びます*'' |
     | **容量モード** | *プロビジョニング済みスループット* |
     | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
@@ -51,17 +51,17 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. このペインには、SDK からアカウントに接続するために必要な接続の詳細と資格情報が含まれています。 具体的な内容は次のとおりです。
 
-    1. **[URI]** フィールドの値を記録します。 この**エンドポイント**の値は、この演習で後ほど使用します。
+    1. [**URI**] フィールドに注目します。 この**エンドポイント**の値は、この演習で後ほど使用します。
 
-    1. **[主キー]** フィールドの値を記録します。 この**キー**の値は、この演習で後ほど使用します。
+    1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
-1. Web ブラウザーのウィンドウまたはタブを閉じます。
+1. **Visual Studio Code** に戻ります。
 
-## <a name="create-a-new-indexing-policy-using-the-net-sdk"></a>.NET SDK を使用して新しいインデックス作成ポリシーを作成する
+## .NET SDK を使用して新しいインデックス作成ポリシーを作成する
 
 .NET SDK には、コードで新しいインデックスポリシーを構築するために、親 [Microsoft.Azure.Cosmos.IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy] クラスに関連する一連のクラスが含まれています。
 
-1. **Visual Studio Code** の **[エクスプローラー]** ペインで、**12-custom-index-policy** フォルダーを参照します。
+1. [**エクスプローラー**] ウィンドウで、**12-custom-index-policy** フォルダーを参照します。
 
 1. **script.cs** コード ファイルを開きます。
 
@@ -93,7 +93,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     policy.IndexingMode = IndexingMode.Consistent;
     ```
 
-1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] プロパティが **/** * の値に設定された型 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] の新しいオブジェクトを、**policy** 変数の [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] コレクション プロパティに追加します。
+1. [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] プロパティが **/*** の値に設定された型 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] の新しいオブジェクトを、**policy** 変数の [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] コレクション プロパティに追加します。
 
     ```
     policy.ExcludedPaths.Add(
@@ -133,7 +133,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     Console.WriteLine($"Container Created [{container.Id}]");
     ```
 
-1. 完了すると、コード ファイルに次の情報が表示されます。
+1. 完了すると、コード ファイルが次のようになるはずです。
   
     ```
     using System;
@@ -165,7 +165,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **script.cs** ファイルを**保存**します。
 
-1. **Visual Studio Code** で、**12-custom-index-policy** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **Visual Studio Code** で、**12-custom-index-policy** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
@@ -181,21 +181,17 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. 統合ターミナルを閉じます。
 
-1. **Visual Studio Code** を閉じます。
+1. Web ブラウザーに戻ります。
 
-## <a name="observe-an-indexing-policy-created-by-the-net-sdk-using-the-data-explorer"></a>データ エクスプローラーを使用して、.NET SDK によって作成されたインデックス作成ポリシーを確認する
+## データ エクスプローラーを使用して、.NET SDK によって作成されたインデックス作成ポリシーを確認する
 
 他のインデックス作成ポリシーと同様に、データ エクスプローラーを使用して、.NET SDK を使用してプッシュしたポリシーを表示できます。 ここでは、ポータルを使用して、このラボで作成したポリシーをコードから確認します。
-
-1. Web ブラウザーで、Azure portal (``portal.azure.com``) に移動します。
-
-1. **[リソース グループ]** を選択し、このラボで先ほど作成または表示したリソース グループを選び、このラボで作成した **Azure Cosmos DB アカウント** リソースを選択します。
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
 1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **NoSQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、 **[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、**[スケールと設定]** を選択します。
 
 1. **[インデックス作成ポリシー]** セクションで、インデックス作成ポリシーを確認します。
 

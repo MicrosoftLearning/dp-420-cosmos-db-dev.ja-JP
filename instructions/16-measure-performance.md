@@ -4,17 +4,17 @@ lab:
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="measure-performance-for-customer-entities"></a>顧客エンティティのパフォーマンスを測定する
+# 顧客エンティティのパフォーマンスを測定する
 
 この演習では、エンティティを個別のコンテナーとしてモデリングした場合と、エンティティを 1 つのドキュメントに埋め込む NoSQL データベースのモデリングを行った場合について、顧客エンティティの違いを測定します。
 
-## <a name="prepare-your-development-environment"></a>開発環境を準備する
+## 開発環境を準備する
 
-このラボで作業する環境に **DP-420** のラボ コード リポジトリをまだクローンしていない場合は、これらの手順に従って行います。 それ以外の場合は、以前にクローンされたフォルダーを **Visual Studio Code** で開きます。
+このラボで作業している環境に **DP-420** のラボ コードのリポジトリをまだクローンしていない場合は、次の手順に従ってクローンします。 それ以外の場合は、以前にクローンしたフォルダーを **Visual Studio Code** で開きます。
 
 1. **Visual Studio Code** を起動します。
 
-    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください。
+    > &#128221; Visual Studio Code インターフェイスについてまだよく理解していない場合は、[Visual Studio Code の入門ガイド][code.visualstudio.com/docs/getstarted]を参照してください
 
 1. コマンド パレットを開き、**Git: Clone** を実行して、任意のローカル フォルダーに ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub リポジトリをクローンします。
 
@@ -24,15 +24,16 @@ lab:
 
 1. **Visual Studio Code** の **[エクスプローラー]** ウィンドウで、**16-measure-performance** フォルダーを参照します。
 
-1. **16-measure-performance** フォルダーのコンテキスト メニューを開き、 **[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+1. **16-measure-performance** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
 
 1. ターミナルが **Windows Powershell** ターミナルとして開く場合は、新しい **Git Bash** ターミナルを開きます。
 
-    > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、 **+** 記号の横にあるプルダウンをクリックし、*Git Bash* を選択します。
+    > &#128161; **Git Bash** ターミナルを開くには、ターミナル メニューの右側で、**+** 記号の横にあるプルダウンをクリックし、*Git Bash* を選択します。
 
 1. **Git Bash ターミナル**で、次のコマンドを実行します。 コマンドを実行すると、ブラウザー ウィンドウが開き、指定されたラボ資格情報を使用する Azure portal に接続し、新しい Azure Cosmos DB アカウントを作成するスクリプトを実行した後、データベースにデータを入力して演習を完了するために使用するアプリをビルドして起動します。 提供された Azure アカウントの資格情報を入力すると、ビルドが完了するまでに 15 から 20 分かかることがあるため、コーヒーやお茶を飲むのにいいかもしれません。**
 
     ```
+    "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
     cd 16-measure-performance
     bash init.sh
@@ -44,11 +45,11 @@ lab:
 
 1. 統合ターミナルを閉じます。
 
-## <a name="measure-performance-of-entities-in-separate-containers"></a>個別のコンテナー内にあるエンティティのパフォーマンスを測定する
+## 個別のコンテナー内にあるエンティティのパフォーマンスを測定する
 
 Database-v1 では、データは個別のコンテナーに格納されます。 そのデータベースで、顧客、顧客住所、顧客パスワードを取得するクエリを実行します。 それぞれのクエリの要求料金を確認します。
 
-### <a name="query-for-customer-entity"></a>顧客エンティティのクエリ
+### 顧客エンティティのクエリ
 
 Database-v1 で、顧客エンティティを取得するクエリを実行し、要求料金を確認します。
 
@@ -68,11 +69,11 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客のクエリに関するクエリ統計情報を示すスクリーンショット。](media/17-customer-query-v1.png)
 
-### <a name="query-for-customer-address"></a>顧客住所のクエリ
+### 顧客住所のクエリ
 
 顧客住所エンティティを取得するクエリを実行し、要求料金を確認します。
 
@@ -84,11 +85,11 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.customerId = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客住所のクエリに関するクエリの統計情報を示すスクリーンショット。](media/17-customer-address-query-v1.png)
 
-### <a name="query-for-customer-password"></a>顧客パスワードのクエリ
+### 顧客パスワードのクエリ
 
 顧客パスワード エンティティを取得するクエリを実行し、要求料金を確認します。
 
@@ -100,11 +101,11 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
     ```
 
-1. **[Query Stats](クエリ統計情報)** タブを選択し、2.83 の要求料金を確認します。
+1. **[Query Stats]\(クエリ統計情報\)** タブを選択し、2.83 の要求料金を確認します。
 
     ![データベースの顧客パスワードのクエリに関するクエリ統計情報を示すスクリーンショット。](media/17-customer-password-query-v1.png)
 
-### <a name="add-up-the-request-charges"></a>要求料金を追加する
+### 要求料金を追加する
 
 すべてのクエリを実行したので、それらにかかった要求ユニットのコストをすべて加算しましょう。
 
@@ -115,7 +116,7 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 |顧客パスワード|2.83|
 |**合計 RU/s**|**8.49**|
 
-## <a name="measure-performance-of-embedded-entities"></a>埋め込みエンティティのパフォーマンスを測定する
+## 埋め込みエンティティのパフォーマンスを測定する
 
 今度は、エンティティを 1 つのドキュメントに埋め込んだ状態で、同じ情報のクエリを実行します。
 
@@ -131,9 +132,9 @@ Database-v1 で、顧客エンティティを取得するクエリを実行し�
 
     ![データベースの顧客に対するクエリ結果を示すスクリーンショット。](media/17-customer-query-v2.png)
 
-1. **[Query Stats](クエリの統計情報)** を選択します。先ほど実行した 3 つのクエリの 8.49 RU/s に対し、要求料金が 2.83 であることを確認します。
+1. **[Query Stats]\(クエリの統計情報\)** を選択します。先ほど実行した 3 つのクエリの 8.49 RU/s に対し、要求料金が 2.83 であることを確認します。
 
-## <a name="compare-the-performance-of-the-two-models"></a>2 つのモデルのパフォーマンスを比較する
+## 2 つのモデルのパフォーマンスを比較する
 
 実行した各クエリの RU/s を比較すると、顧客エンティティが 1 つのドキュメント内にある場合の最後のクエリは、3 つのクエリを個別に実行した場合の合計コストよりもはるかに低コストであることがわかります。 このデータが返されるまでの待機時間が短いのは、データが 1 回の操作で返されるからです。
 
