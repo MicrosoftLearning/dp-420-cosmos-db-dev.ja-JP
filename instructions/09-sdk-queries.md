@@ -119,7 +119,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
-1. *string* 型の **sql** という名前の新しい変数を **SELECT * FROM products p** の値で作成します。
+1. **script.cs** ファイルの末尾に新しいコードを追加して、*string* 型で値が **SELECT * FROM products p** である **sql** という新しい変数を作成しましょう。
 
     ```
     string sql = "SELECT * FROM products p";
@@ -157,17 +157,17 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
   
     ```
     using System;
-    using Azure.Cosmos;
+    using Microsoft.Azure.Cosmos;
 
     string endpoint = "<cosmos-endpoint>";
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClient client = new (endpoint, key);
 
-    CosmosDatabase database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
+    Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
-    CosmosContainer container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
 
     string sql = "SELECT * FROM products p";
     QueryDefinition query = new (sql);
@@ -189,6 +189,12 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. **script.cs** ファイルを**保存**します。
 
 1. **Visual Studio Code** で、**09-execute-query-sdk** フォルダーのコンテキスト メニューを開き、**[統合ターミナルで開く]** を選択して新しいターミナル インスタンスを開きます。
+
+1. 次のコマンドを使用して、NuGet から Microsoft.Azure.Cosmos (nuget.org/packages/microsoft.azure.cosmos/3.22.1) パッケージを追加します。
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
