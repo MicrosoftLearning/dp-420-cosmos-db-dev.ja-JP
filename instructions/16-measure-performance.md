@@ -40,6 +40,7 @@ lab:
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     dotnet build
     dotnet run --load-data
+    echo "Data load process completed."
 
     ```
 
