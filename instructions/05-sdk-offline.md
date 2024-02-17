@@ -189,7 +189,7 @@ Azure Cosmos DB エミュレーターに新しいデータベースを作成し�
 
  Windows システム トレイのエミュレーター アイコンに移動し、コンテキスト メニューを開き、**[終了]** を選択してエミュレーターをシャットダウンします。
 
-    > &#128221; It may take a minute for all instances of the emulator to exit.
+> &#128221; エミュレーターのすべてのインスタンスが終了するまでしばらくかかる場合があります。
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks
 [docs.microsoft.com/azure/cosmos-db/local-emulator]: https://docs.microsoft.com/azure/cosmos-db/local-emulator

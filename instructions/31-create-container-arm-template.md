@@ -72,7 +72,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
     | **API バージョン** | *2021-05-15* |
     | **アカウント名** | *csmsarm* &amp; *アカウント名から生成された一意の文字列*  |
     | **場所** | *リソース グループの現在の場所* |
-    | **アカウント オファーの種類** | *標準* |
+    | **アカウント オファーの種類** | *Standard* |
     | **場所** | *米国西部のみ* |
 
 1. **deploy.json** ファイルを保存します。
@@ -271,9 +271,11 @@ Bicep は、効率的なドメイン固有言語であり、Azure Resource Manag
 1. ファイル内に、新しいオブジェクトを追加して、新しい Azure Cosmos DB アカウントを作成します。
 
     ```
+    param location string = resourceGroup().location
+    
     resource Account 'Microsoft.DocumentDB/databaseAccounts@2021-05-15' = {
       name: 'csmsbicep${uniqueString(resourceGroup().id)}'
-      location: resourceGroup().location
+      location: location
       properties: {
         databaseAccountOfferType: 'Standard'
         locations: [
@@ -294,7 +296,7 @@ Bicep は、効率的なドメイン固有言語であり、Azure Resource Manag
     | **リソースの種類** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
     | **API バージョン** | *2021-05-15* |
     | **場所** | *リソース グループの現在の場所* |
-    | **アカウント オファーの種類** | *標準* |
+    | **アカウント オファーの種類** | *Standard* |
     | **場所** | *米国西部のみ* |
 
 1. **deploy.bicep** ファイルを保存します。
@@ -335,7 +337,7 @@ Bicep は、効率的なドメイン固有言語であり、Azure Resource Manag
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **親** | *テンプレートで前に作成したアカウント* |
+    | **Parent** | *テンプレートで前に作成したアカウント* |
     | **エイリアス** | *データベース* |
     | **名前** | *cosmicworks*  |
     | **リソースの種類** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
@@ -380,7 +382,7 @@ Bicep は、効率的なドメイン固有言語であり、Azure Resource Manag
 
     | **設定** | **Value** |
     | ---: | :--- |
-    | **親** | *テンプレートで前に作成したデータベース* |
+    | **Parent** | *テンプレートで前に作成したデータベース* |
     | **エイリアス** | *コンテナー* |
     | **名前** | *products*  |
     | **リソース ID** | *products* |
