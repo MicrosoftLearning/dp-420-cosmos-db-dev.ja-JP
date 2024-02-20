@@ -207,7 +207,7 @@ Azure CLI を使用して、スループットの手動プロビジョニング�
     az cosmosdb sql container throughput show --name "products" --query "resource.minimumThroughput" --output "tsv" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
     ```
 
-1. 次のコマンドを使用して、**products** コンテナーの最大自動スケーリング スループットを既定値の **4,000** から新しい値の **5,000** に更新します。
+1. 次のコマンドを使用して、**products** コンテナーの最大自動スケーリング スループットを、現在の既定値の **1,000** から新しい値の **5,000** に更新します。
 
     ```
     az cosmosdb sql container throughput update --name "products" --max-throughput 5000 --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
