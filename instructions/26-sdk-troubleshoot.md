@@ -98,6 +98,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; たとえば、キーが **fDR2ci9QgkdkvERTQ==** の場合、C# ステートメントは **private static readonly string key = "fDR2ci9QgkdkvERTQ==";** になります。
 
+1. ファイルを保存します。
+
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
 
     ```
@@ -315,6 +317,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
                         Console.WriteLine("Can not delete customer, customer not found.");
                         break;         
     ```
+
+1. ファイルを保存します。
 
 1. すべての関数の修正が完了したら、すべてのメニュー オプションを数回テストして、例外が発生したときにアプリがメッセージを返し、クラッシュしないことを確認します。  アプリがクラッシュした場合は、エラーを修正し、コマンドを再実行します。
 
