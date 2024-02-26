@@ -74,7 +74,7 @@ lab:
 
     ![製品カテゴリ コンテナーに対するクエリの結果を示すスクリーンショット。](media/16-product-category-results.png)
 
-1. **[Query Stats] (クエリ統計)** タブを選択し、2.8 RU (要求ユニット) の要求使用量を確認します。
+1. **[クエリ統計]** タブを選択し、2.92 RU (要求ユニット) の要求使用量を確認します。
 
     ![Data Explorer で実行したクエリのクエリ統計のスクリーンショット。](media/16-product-category-stats.png)
 
@@ -160,12 +160,12 @@ lab:
 
 |**クエリ**|**RU/s コスト**|
 |---------|---------|
-|カテゴリ名|2.8|
+|カテゴリ名|2.92|
 |Product|2.89|
 |HL 製品タグ|3.06|
 |LL 製品タグ|3.45|
 |ML 製品タグ|3.19|
-|**RU コストの合計**|**15.39**|
+|**RU コストの合計**|**15.51**|
 
 ### NoSQL の設計に対して同じクエリを実行する
 
@@ -400,7 +400,6 @@ NoSQL モデルで同じ情報を取得するために 1 つのクエリを実�
         .CreateItem<SalesOrder>(salesOrder)
         .ReplaceItem<CustomerV4>(customer.id, customer)
         .ExecuteAsync();
-    
     if (txBatchResponse.IsSuccessStatusCode)
         Console.WriteLine("Order created successfully");
     ```
