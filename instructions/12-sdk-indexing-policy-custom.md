@@ -1,6 +1,6 @@
 ---
 lab:
-  title: ポータルで Azure Cosmos DB for NoSQL コンテナーの既定のインデックス ポリシーを確認する
+  title: SDK を使って Azure Cosmos DB for NoSQL コンテナーのインデックス ポリシーを構成する
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
 ---
 
