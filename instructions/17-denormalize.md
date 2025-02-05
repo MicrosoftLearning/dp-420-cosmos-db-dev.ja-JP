@@ -37,7 +37,6 @@ lab:
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
-    cd 17-denormalize
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     ```
 
@@ -103,6 +102,8 @@ lab:
 
     ![製品コンテナーのクエリの結果が示されている Azure Cosmos DB データ エクスプローラーのスクリーンショット。](media/16-product-results.png)
 
+   > **注**: +/- 0.1 の範囲内で、この演習で報告されているものとは少し異なる要求料金が発生する場合があります。
+
 ### 各製品のタグのクエリを実行する
 
 次に、3 つの各製品 HL Headset、LL Headset、ML Headset について 1 回ずつ、productTag コンテナーのクエリを 3 回実行します。
@@ -139,7 +140,7 @@ lab:
 
     このクエリからは、LL Headset 製品の 5 つのタグが返されます。
 
-1. **[Query Stats] (クエリ統計)** タブを選択し、3.45 RU の要求使用量を確認します。
+1. **[Query Stats]\(クエリ統計\)** タブを選択し、3.47 RU の要求使用量を確認します。
 
     !['LL Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ll-stats.png)
 
@@ -157,7 +158,7 @@ lab:
 
     このクエリからは、ML Headset 製品の 3 つのタグが返されます。
 
-1. **[Query Stats] (クエリ統計)** タブを選択し、3.19 RU の要求使用量を確認します。
+1. **[Query Stats]\(クエリ統計\)** タブを選択し、3.2 RU の要求使用量を確認します。
 
     !['ML Headset' のクエリ統計の製品タグ コンテナーに対するクエリの結果のスクリーンショット。](media/16-product-tag-ml-stats.png)
 
@@ -170,9 +171,9 @@ lab:
 |カテゴリ名|2.92|
 |Product|2.89|
 |HL 製品タグ|3.06|
-|LL 製品タグ|3.45|
-|ML 製品タグ|3.19|
-|**RU コストの合計**|**15.51**|
+|LL 製品タグ|3.47|
+|ML 製品タグ|3.20|
+|**RU コストの合計**|**15.54**|
 
 ### NoSQL の設計に対して同じクエリを実行する
 
