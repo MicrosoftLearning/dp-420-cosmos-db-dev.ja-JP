@@ -33,7 +33,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 1. Azure にログインする前に、tls/ssl 証明書をインストールします。
 
     ```
-    CD "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\"
+    cd "C:\Program Files\Microsoft SDKs\Azure\CLI2\"
     .\python.exe -m pip install pip-system-certs
     ```
 
@@ -74,7 +74,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **Visual Studio Code** 内ですでに開いているターミナル インスタンスに戻ります。
 
-1. 次のコマンドを使用して、**Azure Cosmos DB** に関連するほとんどの Azure CLI コマンドを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB** に関連するほとんどの一般的な Azure CLI コマンドを表示します。
 
     ```
     az cosmosdb --help
@@ -131,7 +131,7 @@ Azure CLI を使用する前に、まず CLI のバージョンを確認し、Az
 
 1. **Visual Studio Code** 内ですでに開いているターミナル インスタンスに戻ります。
 
-1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** に関連するほとんどのコマンド Azure CLI コマンド グループを表示します。
+1. 次のコマンドを使用して、**Azure Cosmos DB for NoSQL** に関連するほとんどの一般的なコマンド Azure CLI コマンド グループを表示します。
 
     ```
     az cosmosdb sql --help
