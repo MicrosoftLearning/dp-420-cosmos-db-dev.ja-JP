@@ -85,7 +85,7 @@ Azure Resource Manager の **Microsoft.DocumentDB** リソース プロバイダ
 
     ```
     $CurrentDirectory=$pwd
-    CD "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\"
+    CD "C:\Program Files\Microsoft SDKs\Azure\CLI2\"
     .\python.exe -m pip install pip-system-certs
     CD $CurrentDirectory
     ```
