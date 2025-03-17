@@ -1,11 +1,7 @@
 ---
-title: 07.1 - Azure Cosmos DB for NoSQL のベクトル検索を有効にする
 lab:
   title: 07.1 - Azure Cosmos DB for NoSQL のベクトル検索を有効にする
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 10
-parent: Python SDK labs
 ---
 
 # Azure Cosmos DB for NoSQL のベクトル検索を有効にする

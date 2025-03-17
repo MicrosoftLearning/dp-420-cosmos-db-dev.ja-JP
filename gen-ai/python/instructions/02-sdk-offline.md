@@ -1,11 +1,7 @@
 ---
-title: '02: Azure Cosmos DB Python SDK をオフライン開発用に構成する'
 lab:
-  title: '02: Azure Cosmos DB Python SDK をオフライン開発用に構成する'
+  title: '02: Azure Cosmos DB JavaScript SDK をオフライン開発用に構成する'
   module: Configure the Azure Cosmos DB for NoSQL SDK
-layout: default
-nav_order: 5
-parent: Python SDK labs
 ---
 
 # Azure Cosmos DB Python SDK をオフライン開発用に構成する

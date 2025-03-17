@@ -1,11 +1,7 @@
 ---
-title: Azure Cosmos DB を設定する
 lab:
   title: Azure Cosmos DB を設定する
   module: Setup
-layout: default
-nav_order: 3
-parent: Common setup instructions
 ---
 
 # Azure Cosmos DB を設定する

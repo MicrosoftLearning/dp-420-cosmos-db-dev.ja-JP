@@ -1,11 +1,7 @@
 ---
-title: ラボ リソース グループを作成する
 lab:
   title: ラボ リソース グループを作成する
   module: Setup
-layout: default
-nav_order: 1
-parent: Common setup instructions
 ---
 
 # ラボ用の Azure リソース グループを作成する

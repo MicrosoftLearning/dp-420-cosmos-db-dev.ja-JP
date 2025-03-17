@@ -1,11 +1,7 @@
 ---
-title: 04 - Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
 lab:
   title: 04 - Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
   module: Perform cross-document transactional operations with the Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 7
-parent: Python SDK labs
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する

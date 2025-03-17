@@ -1,11 +1,7 @@
 ---
-title: '07.2: Azure OpenAI でベクトル埋め込みを生成し、Azure Cosmos DB for NoSQL に格納する'
 lab:
   title: '07.2: Azure OpenAI でベクトル埋め込みを生成し、Azure Cosmos DB for NoSQL に格納する'
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 11
-parent: Python SDK labs
 ---
 
 # Azure OpenAI でベクトル埋め込みを生成し、Azure Cosmos DB for NoSQL に格納する

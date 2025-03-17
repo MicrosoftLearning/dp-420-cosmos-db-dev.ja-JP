@@ -1,26 +1,22 @@
 ---
-title: '03: Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する'
 lab:
   title: '03: Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する'
   module: Implement Azure Cosmos DB for NoSQL point operations
-layout: default
-nav_order: 6
-parent: JavaScript SDK labs
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する
 
-`@azure/cosmos` ライブラリには、Azure Cosmos DB for NoSQL コンテナー内で (CRUD) 項目を作成、取得、更新、および削除するメソッドが含まれています。 これらのメソッドを組み合わせて、NoSQL API コンテナー内のさまざまな項目に対して、最も一般的な "CRUD" 操作の一部を実行します。
+`@azure/cosmos` ライブラリには、Azure Cosmos DB for NoSQL コンテナー内の (CRUD) 項目を作成、取得、更新、および削除するメソッドが含まれています。 これらのメソッドを組み合わせて、NoSQL API コンテナー内のさまざまな項目に対して、最も一般的な "CRUD" 操作の一部を実行します。
 
 このラボでは、JavaScript SDK を使用して、Azure Cosmos DB for NoSQL コンテナー内の項目に対して日常的な CRUD 操作を実行します。
 
 ## 開発環境を準備する
 
-「**Azure Cosmos DB を使用してコパイロットを構築する**」用のラボ コード リポジトリをまだクローンしておらず、またローカル環境を設定していない場合は、「[ローカル ラボ環境のセットアップ](00-setup-lab-environment.md)」の手順を参照してそれらを行ってください。
+「**Azure Cosmos DB を使用して Coplilot を構築する**」用のラボ コード リポジトリをまだクローンしておらず、またローカル環境を設定していない場合は、「[ローカル ラボ環境のセットアップ](00-setup-lab-environment.md)」の手順を参照して実行します。
 
 ## Azure Cosmos DB for NoSQL アカウントを作成する
 
-このサイトの「**Azure Cosmos DB を使用してコパイロットを構築する**」ラボ用の Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#import-the-azurecosmos-library)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
+このサイトの「**Azure Cosmos DB を使用して Copilot を構築する**」ラボ用に Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#import-the-azurecosmos-library)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
 
 ## @azure/cosmos ライブラリをインポートする
 
@@ -44,7 +40,7 @@ parent: JavaScript SDK labs
     npm install @azure/cosmos
     ```
 
-1. [@azure/identity][npmjs.com/package/@azure/identity] ライブラリをインストールします。すると、次のコマンドを使用して Azure 認証により Azure Cosmos DB ワークスペースに接続できます。
+1. [@azure/identity][npmjs.com/package/@azure/identity] ライブラリをインストールすると、次のコマンドを使用して Azure 認証により Azure Cosmos DB ワークスペースに接続できます。
 
     ```bash
     npm install @azure/identity
@@ -263,7 +259,7 @@ Azure SDK for JavaScript から Azure Cosmos DB ライブラリがインポー�
     const { resource: saddle } = await container.item(itemId, partitionKey).read();
     ```
 
-    > &#128161; `read` メソッドを使用すると、コンテナー内の項目に対してポイント読み取り操作を実行できます。 このメソッドでは、読み取る項目を特定するために `itemId` パラメーターと `partitionKey` パラメーターが必要です。 Cosmos DB の SQL クエリ言語を使用して 1 つの項目を検索するクエリを実行するのとは対照的に、`read` メソッドは 1 つの項目を取得するのにより効率的でコスト効率の高い方法です。 ポイント読み取りではデータを直接読み取ることができ、クエリ エンジンが要求を処理する必要はありません。
+    > &#128161; `read` メソッドを使用すると、コンテナー内の項目に対してポイント読み取り操作を実行できます。 このメソッドでは、読み取る項目を識別するために `itemId` パラメーターと `partitionKey` パラメーターが必要です。 Cosmos DB の SQL クエリ言語を使用して 1 つの項目を検索するクエリを実行するのとは対照的に、`read` メソッドは 1 つの項目を取得するのにより効率的でコスト効率の高い方法です。 ポイント読み取りではデータを直接読み取ることができ、クエリ エンジンが要求を処理する必要はありません。
 
 1. 書式設定された出力文字列を使用して saddle オブジェクトを出力します。
 
