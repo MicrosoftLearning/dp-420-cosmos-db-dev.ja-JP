@@ -1,11 +1,7 @@
 ---
-title: ラボ環境のセットアップ
 lab:
   title: ラボ環境のセットアップ
   module: Setup
-layout: default
-nav_order: 2
-parent: JavaScript SDK labs
 ---
 
 # ローカル ラボ環境のセットアップ

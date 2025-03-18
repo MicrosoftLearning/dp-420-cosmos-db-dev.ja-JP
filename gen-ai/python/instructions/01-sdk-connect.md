@@ -1,11 +1,7 @@
 ---
-title: 01 - SDK を使って Azure Cosmos DB for NoSQL に接続する
 lab:
-  title: 01 - SDK を使って Azure Cosmos DB for NoSQL に接続する
+  title: 01 - SDK を使用して Azure Cosmos DB for NoSQL に接続する
   module: Use the Azure Cosmos DB for NoSQL SDK
-layout: default
-nav_order: 4
-parent: Python SDK labs
 ---
 
 # SDK を使って Azure Cosmos DB for NoSQL に接続する

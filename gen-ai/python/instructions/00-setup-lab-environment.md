@@ -1,11 +1,5 @@
 ---
-title: ラボ環境のセットアップ
-lab:
-  title: ラボ環境のセットアップ
-  module: Setup
-layout: default
-nav_order: 2
-parent: Python SDK labs
+ラボ: タイトル: "ラボ環境のセットアップ" モジュール: "セットアップ"
 ---
 
 # ローカル ラボ環境のセットアップ

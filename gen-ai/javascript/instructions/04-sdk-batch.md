@@ -1,11 +1,7 @@
 ---
-title: 04 - Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
 lab:
   title: 04 - Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
   module: Perform cross-document transactional operations with the Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 7
-parent: JavaScript SDK labs
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
@@ -20,7 +16,7 @@ JavaScript SDK for Azure Cosmos DB の `TransactionalBatch` クラスには、�
 
 ## Azure Cosmos DB for NoSQL アカウントを作成する
 
-このサイトの「**Azure Cosmos DB を使用してコパイロットを構築する**」ラボ用の Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#import-the-azurecosmos-library)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
+このサイトの「**Azure Cosmos DB を使用して Copilot を構築する**」ラボ用に Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#import-the-azurecosmos-library)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
 
 ## @azure/cosmos ライブラリをインポートする
 
@@ -44,7 +40,7 @@ JavaScript SDK for Azure Cosmos DB の `TransactionalBatch` クラスには、�
     npm install @azure/cosmos
     ```
 
-1. [@azure/identity][npmjs.com/package/@azure/identity] ライブラリをインストールします。すると、次のコマンドを使用して Azure 認証により Azure Cosmos DB ワークスペースに接続できます。
+1. [@azure/identity][npmjs.com/package/@azure/identity] ライブラリをインストールすると、次のコマンドを使用して Azure 認証により Azure Cosmos DB ワークスペースに接続できます。
 
     ```bash
     npm install @azure/identity

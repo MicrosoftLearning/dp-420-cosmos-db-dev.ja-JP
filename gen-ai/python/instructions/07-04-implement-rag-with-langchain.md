@@ -1,11 +1,7 @@
 ---
-title: '07.4: LangChain と Azure Cosmos DB for NoSQL ベクトル検索を使用して RAG を実装する'
 lab:
   title: '07.4: LangChain と Azure Cosmos DB for NoSQL ベクトル検索を使用して RAG を実装する'
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 13
-parent: Python SDK labs
 ---
 
 # LangChain と Azure Cosmos DB for NoSQL ベクトル検索を使用して RAG を実装する
