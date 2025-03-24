@@ -1,11 +1,7 @@
 ---
-title: 05 - Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
 lab:
   title: 05 - Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
   module: Query the Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 8
-parent: Python SDK labs
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
@@ -18,11 +14,11 @@ parent: Python SDK labs
 
 ## 開発環境を準備する
 
-「**Azure Cosmos DB を使用してコパイロットを構築する**」用のラボ コード リポジトリをまだクローンしておらず、またローカル環境を設定していない場合は、「[ローカル ラボ環境のセットアップ](00-setup-lab-environment.md)」の手順を参照してそれらを行ってください。
+「**Azure Cosmos DB を使用して Coplilot を構築する**」用のラボ コード リポジトリをまだクローンしておらず、またローカル環境を設定していない場合は、「[ローカル ラボ環境のセットアップ](00-setup-lab-environment.md)」の手順を参照して実行します。
 
 ## Azure Cosmos DB for NoSQL アカウントを作成する
 
-このサイトの「**Azure Cosmos DB を使用してコパイロットを構築する**」ラボ用の Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#create-azure-cosmos-db-database-and-container-with-sample-data)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
+このサイトの「**Azure Cosmos DB を使用して Copilot を構築する**」ラボ用に Azure Cosmos DB for NoSQL アカウントを既に作成している場合は、そのアカウントをこのラボに使用して、[次のセクション](#create-azure-cosmos-db-database-and-container-with-sample-data)に進むことができます。 それ以外の場合は、「[Azure Cosmos DB を設定する](../../common/instructions/00-setup-cosmos-db.md)」の手順を参照して、ラボ モジュール全体で使用する Azure Cosmos DB for NoSQL アカウントを作成し、そのアカウントを **Cosmos DB 組み込みデータ共同作成者**ロールに割り当てることで、アカウント内のデータを管理するためのアクセス権をユーザー ID に付与してください。
 
 ## サンプル データを使用して Azure Cosmos DB のデータベースとコンテナーを作成する
 
