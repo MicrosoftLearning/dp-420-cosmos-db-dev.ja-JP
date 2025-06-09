@@ -36,6 +36,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -55,6 +56,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
+    1. [**プライマリ接続文字列**] フィールドに注目します。 この**接続文字列**の値は、この演習で後ほど使用します。
+
 1. ブラウザー ウィンドウを閉じずに、**Visual Studio Code** を開きます。
 
 ## Azure Cosmos DB for NoSQL アカウントにデータをシードする
@@ -66,7 +69,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
-    dotnet tool install cosmicworks --global --version 1.*
+    dotnet tool install --global CosmicWorks --version 2.3.1
     ```
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
@@ -75,15 +78,14 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **オプション** | **Value** |
     | ---: | :--- |
-    | **--endpoint** | ''*このラボで先ほどコピーしたエンドポイントの値*'' |
-    | **--key** | ''*このラボで先ほどコピーしたキーの値*'' |
-    | **--datasets** | *product* |
+    | **-c** | *このラボで先ほど確認した接続文字列の値* |
+    | **--number-of-employees** | *特に指定がない限り、cosmicworks コマンドは、従業員 1000 人と製品コンテナー 200 項目をデータベースに入力します* |
 
-    ```
-    cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
+    ```powershell
+    cosmicworks -c "connection-string" --number-of-employees 0 --disable-hierarchical-partition-keys
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
+    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks -c "AccountEndpoint=https://dp420.documents.azure.com:443/;AccountKey=fDR2ci9QgkdkvERTQ==" --number-of-employees 0 --disable-hierarchical-partition-keys``
 
 1. **cosmicworks** コマンドによって、データベース、コンテナー、および項目がアカウントに設定されるまで待ちます。
 
@@ -164,7 +166,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name");
 
     UserDefinedFunctionProperties props = new ();
     props.Id = "tax";

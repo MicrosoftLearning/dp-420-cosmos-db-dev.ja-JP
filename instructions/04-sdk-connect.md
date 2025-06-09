@@ -36,6 +36,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -87,7 +88,7 @@ NuGet Web サイトには、.NET アプリケーションにインポートで�
 1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.*
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
 1. 統合ターミナルを閉じます。

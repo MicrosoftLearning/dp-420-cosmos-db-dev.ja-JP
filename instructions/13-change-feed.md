@@ -36,11 +36,13 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
     | **場所** | ''*使用可能なリージョンを選びます*'' |
-    | **容量モード** | *サーバーレス* |
+    | **容量モード** | *プロビジョニング済みスループット* |
+    | **Apply Free Tier Discount (Free レベル割引の適用)** | *適用しない* |
 
     > &#128221; ご利用のラボ環境には、新しいリソース グループを作成できない制限が存在する場合があります。 その場合は、事前に作成されている既存のリソース グループを使用します。
 
@@ -54,6 +56,8 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     1. [**主キー**] フィールドに注目してください。 この**キー**の値は、この演習で後ほど使用します。
 
+    1. [**プライマリ接続文字列**] フィールドに注目します。 この**接続文字列**の値は、この演習で後ほど使用します。
+
 1. リソース メニューで **[データ エクスプローラー]** を選択します。
 
 1. **[データ エクスプローラー]** ペインで、**[新しいコンテナー]** を展開してから、**[新しいデータベース]** を選択します。
@@ -63,6 +67,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | **設定** | **Value** |
     | --: | :-- |
     | **データベース ID** | *``cosmicworks``* |
+    | **スループットのプロビジョニング** | 有効 |
+    | **データベースのスループット** | **[手動]** |
+    | **データベースに必要な RU/秒** | ``1000`` |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **cosmicworks** データベース ノードを確認します。
 
@@ -74,7 +81,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | ''*既存の* &vert; *cosmicworks を使用します*'' |
     | **コンテナー ID** | *``products``* |
-    | **パーティション キー** | *``/categoryId``* |
+    | **パーティション キー** | *``/category/name``* |
 
 1. **[データ エクスプローラー]** ペインに戻り、**cosmicworks** データベース ノードを展開して、階層内の **products** コンテナー ノードを確認します。
 
@@ -276,7 +283,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. コンピューターでグローバルに使用するために [cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールをインストールします。
 
     ```
-    dotnet tool install cosmicworks --global --version 1.*
+    dotnet tool install --global CosmicWorks --version 2.3.1
     ```
 
     > &#128161; このコマンドが完了するまで数分かかる場合があります。 過去にこのツールの最新バージョンを既にインストールしている場合は、このコマンドによって警告メッセージ (*ツール 'cosmicworks' は既にインストールされています) が出力されます。
@@ -285,15 +292,14 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **オプション** | **Value** |
     | ---: | :--- |
-    | **--endpoint** | ''*このラボで先ほどコピーしたエンドポイントの値*'' |
-    | **--key** | ''*このラボで先ほどコピーしたキーの値*'' |
-    | **--datasets** | *product* |
+    | **-c** | *このラボで先ほど確認した接続文字列の値* |
+    | **--number-of-employees** | *特に指定がない限り、cosmicworks コマンドは、従業員 1000 人と製品コンテナー 200 項目をデータベースに入力します* |
 
-    ```
-    cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
+    ```powershell
+    cosmicworks -c "connection-string" --number-of-employees 0 --disable-hierarchical-partition-keys
     ```
 
-    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
+    > &#128221; たとえば、エンドポイントが **https&shy;://dp420.documents.azure.com:443/** で、キーが **fDR2ci9QgkdkvERTQ==** の場合、コマンドは次のようになります。``cosmicworks -c "AccountEndpoint=https://dp420.documents.azure.com:443/;AccountKey=fDR2ci9QgkdkvERTQ==" --number-of-employees 0 --disable-hierarchical-partition-keys``
 
 1. **cosmicworks** コマンドによって、データベース、コンテナー、および項目がアカウントに設定されるまで待ちます。
 

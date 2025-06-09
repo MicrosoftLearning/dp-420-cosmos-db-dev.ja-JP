@@ -36,6 +36,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -112,7 +113,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 1. **options** という名前の型 [ContainerProperties][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties] の新しい変数を作成し、コンストラクター パラメーターとして値 ``products`` と ``/categoryId`` を渡します。
 
     ```
-    ContainerProperties options = new ("products", "/categoryId");
+    ContainerProperties options = new ("products", "/category/name");
     ```
 
 1. **policy** 変数を **options** 変数の [IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties.indexingpolicy] プロパティに割り当てます。
@@ -156,7 +157,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
         new IncludedPath{ Path = "/name/?" }
     );
 
-    ContainerProperties options = new ("products", "/categoryId");
+    ContainerProperties options = new ("products", "/category/name");
     options.IndexingPolicy = policy;
 
     Container container = await database.CreateContainerIfNotExistsAsync(options);
@@ -189,9 +190,9 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
 1. **Azure Cosmos DB** アカウント リソース内で、 **[データ エクスプローラー]** ペインに移動します。
 
-1. **[データ エクスプローラー]** で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
+1. [**データ エクスプローラー**] で、**cosmicworks** データベース ノードを展開し、**NoSQL API** ナビゲーション ツリー内の新しい **products** コンテナー ノードを確認します。
 
-1. **NoSQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、**[スケールと設定]** を選択します。
+1. **NoSQL API** ナビゲーション ツリーの **products** コンテナー ノード内で、**[設定]** を選択します。
 
 1. **[インデックス作成ポリシー]** セクションで、インデックス作成ポリシーを確認します。
 

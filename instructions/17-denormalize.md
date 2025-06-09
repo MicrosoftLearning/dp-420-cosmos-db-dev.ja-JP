@@ -37,7 +37,7 @@ lab:
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
     > &#128161; 最初に **[顧客エンティティのパフォーマンス測定]** ラボを実行し、そのラボによって作成された Azure リソースを削除しなかった場合は、統合ターミナルを閉じて、次の手順を無視して、次のセクションに進みます。 **[顧客エンティティのパフォーマンス測定]** で作成されたリソースが既にあり、以下のスクリプトを実行しようとすると、スクリプトは失敗します。
