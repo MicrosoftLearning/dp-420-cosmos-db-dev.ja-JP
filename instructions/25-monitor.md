@@ -36,6 +36,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -69,21 +70,21 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     > &#128221; このコマンドを実行すると、ターミナルが開き、開始ディレクトリが既に **25-monitor** フォルダーに設定されています。
 
-1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.49.0] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
-1. 次のコマンドを使用して、NuGet から [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.1] パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.3] パッケージを追加します。
 
     ```
-    dotnet add package Newtonsoft.Json --version 13.0.1
+    dotnet add package Newtonsoft.Json --version 13.0.3
     ```
 
 ## スクリプトを実行してコンテナーとワークロードを作成する
 
-これで、ワークロードを実行して、Azure Cosmos DB アカウントの使用状況を監視する準備ができました。  実行するスクリプトは、バックグラウンドで動作します。 このスクリプトで 3 つのコンテナーを作成し、それらのコンテナーにデータを読み込みます。 その後、スクリプトはいくつかの SQL クエリをランダムに実行し、Azure Cosmos DB アカウントにアクセスする複数のユーザー アプリケーションをエミュレートします。 
+これで、ワークロードを実行して、Azure Cosmos DB アカウントの使用状況を監視する準備ができました。  実行するスクリプトは、バックグラウンドで動作します。 このスクリプトで 3 つのコンテナーを作成し、それらのコンテナーにデータを読み込みます。 その後、スクリプトはいくつかの SQL クエリをランダムに実行し、Azure Cosmos DB アカウントにアクセスする複数のユーザー アプリケーションをエミュレートします。
 
 1. **Visual Studio Code** の **[エクスプローラー]** ペインで、**25-monitor** フォルダーを参照します。
 

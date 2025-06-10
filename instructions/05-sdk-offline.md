@@ -101,7 +101,7 @@ Azure Cosmos DB Emulator は、開発とテストのために Azure Cosmos DB �
 1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
 1. [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] コマンドを使用して、プロジェクトをビルドして実行します。
@@ -132,10 +132,10 @@ Azure Cosmos DB エミュレーターに新しいデータベースを作成し�
 
 1. 再度 **05-sdk-offline** フォルダー内の **script.cs** コード ファイルを開きます。
 
-1. **cosmicworks** データベース内に作成する新しいコンテナーの名前 (**products**)、パーティション キー パス (**/categoryId**)、およびスループット (**400**) を渡し、[Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 型の変数に結果を格納する **database** 変数の [CreateContainerIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync] メソッドを非同期的に呼び出します。
+1. **cosmicworks** データベース内に作成する新しいコンテナーの名前 (**products**)、パーティション キー パス (**/category/name**)、およびスループット (**400**) を渡して **database** 変数の [CreateContainerIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync] メソッドを非同期的に呼び出し、[Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 型の変数に結果を格納します。
 
     ```
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name", 400);
     ```
 
 1. 組み込みの **Console.WriteLine** 静的メソッドを使用して、Container クラスの [Id][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.id] プロパティを **New Container** というタイトルのヘッダーと共に出力します。
@@ -157,7 +157,7 @@ Azure Cosmos DB エミュレーターに新しいデータベースを作成し�
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Console.WriteLine($"New Database:\tId: {database.Id}");
     
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name", 400);
     Console.WriteLine($"New Container:\tId: {container.Id}");
     ```
 

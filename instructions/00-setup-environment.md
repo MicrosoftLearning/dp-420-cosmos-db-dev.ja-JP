@@ -22,9 +22,9 @@ lab:
 
 1. [microsoft.com/edge] から最新バージョンの Microsoft Edge をインストールします。
 
-### .NET 6 SDK
+### .NET 8 SDK
 
-1. [dotnet.microsoft.com/download/dotnet/6.0] から SDK (ランタイムではない) をダウンロードしてインストールします。
+1. [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) から SDK (ランタイムではない) をダウンロードしてインストールします。
 
 ### PowerShell 7
 

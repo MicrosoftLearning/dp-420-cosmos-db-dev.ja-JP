@@ -34,6 +34,7 @@ lab:
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -95,10 +96,10 @@ lab:
 
     > &#128221; このコマンドを実行すると、開始ディレクトリが **08-sdk-bulk** フォルダーに既に設定されているターミナルが開きます。
 
-1. 次のコマンドを使用して、NuGet から Microsoft.Azure.Cosmos (nuget.org/packages/microsoft.azure.cosmos/3.22.1) パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.49.0] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
 1. [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] コマンドを使用してプロジェクトをビルドします。

@@ -36,6 +36,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
 
     | **設定** | **Value** |
     | ---: | :--- |
+    | **ワークロードの種類** | **学習** |
     | **サブスクリプション** | ''*既存の Azure サブスクリプション*'' |
     | **リソース グループ** | ''*既存のリソース グループを選択するか、新しいものを作成します*'' |
     | **アカウント名** | ''*グローバルに一意の名前を入力します*'' |
@@ -120,16 +121,16 @@ Azure Cosmos DB アカウントに接続し、いくつかのコンテナーと�
 
 .NET CLI には、パッケージの追加 (docs.microsoft.com/dotnet/core/tools/dotnet-add-package) コマンドが含まれています。事前構成済みのパッケージ フィードからパッケージをインポートします。 .NET インストールでは、既定のパッケージ フィードとして NuGet が使用されます。
 
-1. 次のコマンドを使用して、NuGet から Microsoft.Azure.Cosmos (nuget.org/packages/microsoft.azure.cosmos/3.22.1) パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.49.0] パッケージを追加します。
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
-1. 次のコマンドを使用して、NuGet から Newtonsoft.Json (nuget.org/packages/Newtonsoft.Json/13.0.1) パッケージを追加します。
+1. 次のコマンドを使用して、NuGet から [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.3] パッケージを追加します。
 
     ```
-    dotnet add package Newtonsoft.Json --version 13.0.1
+    dotnet add package Newtonsoft.Json --version 13.0.3
     ```
 
 1. 次のコマンドを使用して、NuGet から Microsoft.Azure.KeyVault (nuget.org/packages/Microsoft.Azure.KeyVault) パッケージを追加します。
