@@ -155,7 +155,7 @@ products コンテナーを加えるために、このラボの最後に ETL 変
     ```
     SELECT 
         p.name, 
-        p.categoryName as category, 
+        p.category.name as category, 
         p.price 
     FROM 
         products p
