@@ -2,6 +2,14 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する
   module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
+  description: 新しく作成したアカウントの資格情報を使用して、SDK クラスに接続し、新しいデータベースとコンテナー インスタンスを作成します。 次に、データ エクスプローラーを使用して、Azure portal でインスタンスが存在することを検証します。
+  duration: 140 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
+    - Azure Portal
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用してドキュメントを作成および更新する

@@ -2,6 +2,13 @@
 lab:
   title: ポータルで Azure Cosmos DB for NoSQL コンテナーの既定のインデックス ポリシーを確認する
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
+  description: このラボでは、データ エクスプローラーを使用して、いくつかのコンテナーのデフォルトのインデックス ポリシーを監視および操作します。
+  duration: 96 minutes
+  level: 400
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # ポータルで Azure Cosmos DB for NoSQL コンテナーの既定のインデックス ポリシーを確認する

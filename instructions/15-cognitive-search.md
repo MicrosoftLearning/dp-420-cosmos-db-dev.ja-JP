@@ -2,6 +2,13 @@
 lab:
   title: Azure AI 検索と Azure Cosmos DB for NoSQL を使用してデータを検索する
   module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
+  description: 特定の Azure Cosmos DB for NoSQL コンテナー内のデータのサブセットに 1 時間ごとにインデックスを付けるインデクサーを作成します。
+  duration: 130 minutes
+  level: 400
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure AI 検索と Azure Cosmos DB for NoSQL を使用してデータを検索する
@@ -50,7 +57,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | *``cosmicworks``* |
     | **スループットのプロビジョニング** | 有効 |
-    | **データベースのスループット** | **[手動]** |
+    | **データベースのスループット** | **手動** |
     | **データベースに必要な RU/秒** | ``1000`` |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **cosmicworks** データベース ノードを確認します。

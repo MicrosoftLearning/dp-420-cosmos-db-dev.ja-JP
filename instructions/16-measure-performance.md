@@ -2,6 +2,10 @@
 lab:
   title: 顧客エンティティのパフォーマンスを測定する
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
+  description: この演習では、エンティティを個別のコンテナーとしてモデリングした場合と、エンティティを 1 つのドキュメントに埋め込む NoSQL データベースのモデリングを行った場合について、顧客エンティティの違いを測定します。
+  duration: 20 minutes
+  level: 300
+  islab: true
 ---
 
 # 顧客エンティティのパフォーマンスを測定する

@@ -2,6 +2,14 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用して変更フィード イベントを処理する
   module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
+  description: このラボでは、.NET SDK の変更フィード プロセッサ機能を使用して、指定したコンテナー内の項目で作成または更新操作が実行されたという通知を受け取るアプリケーションを作成します。
+  duration: 126 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - .NET
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して変更フィード イベントを処理する
@@ -68,7 +76,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | *``cosmicworks``* |
     | **スループットのプロビジョニング** | 有効 |
-    | **データベースのスループット** | **[手動]** |
+    | **データベースのスループット** | **手動** |
     | **データベースに必要な RU/秒** | ``1000`` |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **cosmicworks** データベース ノードを確認します。

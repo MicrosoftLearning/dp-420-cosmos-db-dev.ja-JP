@@ -2,6 +2,13 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK をオフライン開発用に構成する
   module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
+  description: Azure Cosmos DB エミュレーターに新しいデータベースを作成したので、オンライン データ エクスプローラーを使用して、エミュレーター内の新しい NoSQL API データベースを確認します。
+  duration: 100 minutes
+  level: 200
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK をオフライン開発用に構成する

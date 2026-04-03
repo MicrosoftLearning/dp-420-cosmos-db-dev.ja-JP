@@ -2,6 +2,14 @@
 lab:
   title: Azure Data Factory を使用して既存のデータを移行する
   module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
+  description: これで Azure Cosmos DB for NoSQL リソースが配置されたので、Azure Data Factory リソースを作成し、NoSQL API コンテナー間で 1 回限りのデータ移動を実行してデータの抽出、変換、および別の NoSQL API コンテナーへの読み込みを行うために必要なすべてのコンポーネントと接続を構成します。
+  duration: 116 minutes
+  level: 400
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
+    - Azure Data Factory
 ---
 
 # Azure Data Factory を使用して既存のデータを移行する
