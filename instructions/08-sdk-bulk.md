@@ -2,6 +2,13 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用して複数のドキュメントを一括移動する
   module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
+  description: 'このラボでは、NuGet の [Bogus][nuget.org/packages/bogus/33.1.1] ライブラリを使用して架空のデータを生成し、それを Azure Cosmos DB アカウントに配置します。'
+  duration: 5 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して複数のドキュメントを一括移動する
