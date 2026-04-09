@@ -2,6 +2,14 @@
 lab:
   title: SDK を使って Azure Cosmos DB for NoSQL コンテナーのインデックス ポリシーを構成する
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
+  description: このラボでは、.NET SDK を使用して、コンテナーのカスタム インデックス作成ポリシーを作成します。
+  duration: 90 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - .NET
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # SDK を使って Azure Cosmos DB for NoSQL コンテナーのインデックス ポリシーを構成する

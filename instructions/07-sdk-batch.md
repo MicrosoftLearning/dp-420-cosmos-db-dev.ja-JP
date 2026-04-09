@@ -2,6 +2,13 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する
   module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
+  description: このラボでは、SDK を使用して、2 つの項目を 1 つの論理ユニットとして作成しようとする 2 つのデュアル項目操作を実行します。
+  duration: 116 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して複数のポイント操作をまとめてバッチ処理する

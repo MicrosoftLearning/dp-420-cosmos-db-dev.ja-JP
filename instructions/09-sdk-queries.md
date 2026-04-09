@@ -2,6 +2,13 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する
   module: Module 5 - Execute queries in Azure Cosmos DB for NoSQL
+  description: ここでは、非同期ストリームを使用して、Azure Cosmos DB でのページ分割された結果に対して、わかりやすい foreach ループを作成します。 バックグラウンドでは、SDK でフィード反復子を管理し、後続の要求が正しく呼び出されるようにします。
+  duration: 86 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用してクエリを実行する

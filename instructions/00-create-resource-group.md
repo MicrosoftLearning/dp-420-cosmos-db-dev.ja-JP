@@ -2,6 +2,12 @@
 lab:
   title: ラボ リソース グループを作成する
   module: Setup
+  description: 'このラボを完了する前に、新しくデプロイした Azure リソースを配置する新しい[リソース グループ][docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal]を作成する必要があります。'
+  duration: 22 minutes
+  level: 200
+  islab: true
+  primarytopics:
+    - Azure
 ---
 
 # ラボ用の Azure リソース グループを作成する

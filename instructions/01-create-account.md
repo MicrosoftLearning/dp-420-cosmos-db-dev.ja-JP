@@ -2,6 +2,14 @@
 lab:
   title: Azure Cosmos DB for NoSQL アカウントを作成する
   module: Module 1 - Get started with Azure Cosmos DB for NoSQL
+  description: Azure portal で Azure Cosmos DB for NoSQL データベースおよびコンテナーを管理する場合にはデータ エクスプローラーが主要なツールになります。 このラボで使用する基本的なデータベースとコンテナーを作成します。
+  duration: 15 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
+    - Azure Portal
 ---
 
 # Azure Cosmos DB for NoSQL アカウントを作成する

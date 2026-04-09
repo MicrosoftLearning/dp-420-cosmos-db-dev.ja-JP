@@ -2,6 +2,14 @@
 lab:
   title: Azure portal を使用して Azure Cosmos DB for NoSQL のスループットを構成する
   module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
+  description: まず、サーバーレス アカウントを作成しましょう。 すべてがサーバーレスであるため、ここで構成することは多くありません。 データベースとコンテナーを作成するときに、スループットをプロビジョニングする必要はまったくありません。 このアカウントの作成に進めば、そのすべてがわかります。
+  duration: 15 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
+    - Azure Portal
 ---
 
 # Azure portal を使用して Azure Cosmos DB for NoSQL のスループットを構成する

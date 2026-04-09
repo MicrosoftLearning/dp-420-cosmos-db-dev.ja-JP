@@ -2,6 +2,14 @@
 lab:
   title: Azure Cosmos DB for NoSQL SDK を使用して外積クエリの結果をページ分割する
   module: Module 5 - Execute queries in Azure Cosmos DB for NoSQL
+  description: '[cosmicworks][nuget.org/packages/cosmicworks] コマンドライン ツールを使用して、Azure Cosmos DB for NoSQL アカウントにサンプル データをデプロイします。 このツールはオープンソースで、NuGet から入手できます。 このツールを Azure Cloud Shell にインストールして、データベースのシードに使用します。'
+  duration: 98 minutes
+  level: 300
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cloud Shell
+    - Azure Cosmos DB
 ---
 
 # Azure Cosmos DB for NoSQL SDK を使用して外積クエリの結果をページ分割する

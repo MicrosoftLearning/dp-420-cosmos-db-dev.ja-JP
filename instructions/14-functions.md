@@ -2,6 +2,14 @@
 lab:
   title: Azure Functions を使用して Azure Cosmos DB for NoSQL のデータを処理する
   module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
+  description: コードの記述を開始する前に、作成ウィザードを使用して Azure Functions リソースとそれに依存するリソース (Application Insights、Storage) を作成する必要があります。
+  duration: 124 minutes
+  level: 400
+  islab: true
+  primarytopics:
+    - Azure
+    - Azure Cosmos DB
+    - Azure Functions
 ---
 
 # Azure Functions を使用して Azure Cosmos DB for NoSQL のデータを処理する
@@ -50,7 +58,7 @@ Azure Cosmos DB は、複数の API をサポートするクラウドベース�
     | --: | :-- |
     | **データベース ID** | *``cosmicworks``* |
     | **スループットのプロビジョニング** | 有効 |
-    | **データベースのスループット** | **[手動]** |
+    | **データベースのスループット** | **手動** |
     | **データベースに必要な RU/秒** | ``1000`` |
 
 1. **[データ エクスプローラー]** ペインに戻り、階層内の **cosmicworks** データベース ノードを確認します。
